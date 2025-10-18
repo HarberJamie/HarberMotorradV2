@@ -1,11 +1,12 @@
 import './assets/css/style.css'
+import logoUrl from './assets/img/halliwell-jones-logo.png'  // <-- import the image
 
 export default function App() {
   return (
     <div className="app-wrapper">
       <header className="site-header">
         <img
-          src="/src/assets/img/halliwell-jones-logo.png"
+          src={logoUrl}
           alt="Halliwell Jones Motorrad"
           className="logo"
         />
