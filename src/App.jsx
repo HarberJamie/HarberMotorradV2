@@ -1,43 +1,88 @@
 // src/App.jsx
 import React from "react";
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header.jsx";
 
-// --- Simple placeholder pages so this runs without extra files ---
+// --- Placeholder pages (can be replaced with real components later) ---
 function Home() {
-  return <div style={styles.page}><h2>Home</h2><p>Welcome to Halliwell Jones Motorrad.</p></div>;
+  return (
+    <div style={styles.page}>
+      <h2>Home</h2>
+      <p>Welcome to Halliwell Jones Motorrad.</p>
+    </div>
+  );
 }
-function Inventory() {
-  return <div style={styles.page}><h2>Inventory</h2><p>List your bikes here.</p></div>;
+
+function Deals() {
+  return (
+    <div style={styles.page}>
+      <h2>Deals</h2>
+      <p>View or manage current motorcycle deals.</p>
+    </div>
+  );
 }
+
 function PartExchange() {
-  return <div style={styles.page}><h2>Part Exchange</h2><p>Evaluate and record PX details.</p></div>;
+  return (
+    <div style={styles.page}>
+      <h2>Part Exchange</h2>
+      <p>Evaluate and record part exchange details here.</p>
+    </div>
+  );
 }
-function Contact() {
-  return <div style={styles.page}><h2>Contact</h2><p>Get in touch with the team.</p></div>;
+
+function Bikes() {
+  return (
+    <div style={styles.page}>
+      <h2>Bikes</h2>
+      <p>Browse and manage available bikes in stock.</p>
+    </div>
+  );
+}
+
+function ToDo() {
+  return (
+    <div style={styles.page}>
+      <h2>To Do</h2>
+      <p>Track tasks, admin work, and upcoming customer actions.</p>
+    </div>
+  );
+}
+
+function AddNewDeal() {
+  return (
+    <div style={styles.page}>
+      <h2>Add New Deal</h2>
+      <p>Start a new deal and capture customer & bike details.</p>
+    </div>
+  );
 }
 
 // --- Main App ---
 export default function App() {
   return (
     <div style={styles.app}>
-      {/* Fixed header: logo + title + tabs */}
+      {/* Fixed header */}
       <Header />
 
-      {/* Add top margin to prevent content hiding behind fixed header */}
+      {/* Add top padding to prevent overlap with fixed header */}
       <main style={styles.main}>
         <Routes>
-          <Route path="/deals" element={<div style={styles.page}><h2>Deals</h2></div>} />
-          <Route path="/bikes" element={<div style={styles.page}><h2>Bikes</h2></div>} />
-          <Route path="/todo" element={<div style={styles.page}><h2>To Do</h2></div>} />
-          <Route path="/add-new-deal" element={<div style={styles.page}><h2>Add New Deal</h2></div>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/part-exchange" element={<PartExchange />} />
+          <Route path="/bikes" element={<Bikes />} />
+          <Route path="/todo" element={<ToDo />} />
+          <Route path="/add-new-deal" element={<AddNewDeal />} />
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
   );
 }
 
-// --- Minimal inline styles ---
+// --- Inline styling ---
 const styles = {
   app: {
     minHeight: "100vh",
@@ -50,7 +95,7 @@ const styles = {
   main: {
     maxWidth: "1100px",
     margin: "0 auto",
-    padding: "160px 16px 48px", // top padding = header height (fixed space)
+    padding: "160px 16px 48px", // top padding leaves space for the fixed header
   },
   page: {
     background: "rgba(255,255,255,0.04)",
