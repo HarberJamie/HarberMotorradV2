@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-      - feature/**      # deploy previews for feature branches
+      - feature/**         # preview deploys for feature branches
   pull_request:
     branches:
-      - main            # PRs into main get preview links
+      - main               # PRs into main get preview links
 
 permissions:
   contents: read
@@ -30,11 +30,15 @@ jobs:
         with:
           node-version: 20
 
+      # If you have a package-lock.json you can switch to npm ci
       - name: Install
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
