@@ -1,32 +1,28 @@
-import './assets/css/style.css'
-import logoUrl from './assets/img/halliwell-jones-logo.png'  // <-- import the image
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Login from './pages/Login.jsx'
+import Home from './pages/Home.jsx'
+import Deals from './pages/Deals.jsx'
+import PartEx from './pages/PartEx.jsx'
+import Bikes from './pages/Bikes.jsx'
+import ToDo from './pages/ToDo.jsx'
+import NewDeal from './pages/NewDeal.jsx'
 
-export default function App() {
+function App() {
   return (
-    <div className="app-wrapper">
-      <header className="site-header">
-        <img
-          src={logoUrl}
-          alt="Halliwell Jones Motorrad"
-          className="logo"
-        />
-        <div className="title-block">
-          <h1>Halliwell Jones Motorrad</h1>
-          <p className="subtitle">Harber Motorrad V2.0</p>
-        </div>
-      </header>
-
-      <main className="content">
-        <h2>Welcome to your clean slate</h2>
-        <p>
-          This is the base React + Vite setup for <strong>Harber Motorrad V2.0</strong>.
-          Start designing your interface and linking components here.
-        </p>
-      </main>
-
-      <footer className="footer">
-        <p>© {new Date().getFullYear()} Halliwell Jones Motorrad · Built with React &amp; Vite</p>
-      </footer>
-    </div>
+    <Routes>
+      {/* First load goes to Login */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/deals" element={<Deals />} />
+      <Route path="/part-ex" element={<PartEx />} />
+      <Route path="/bikes" element={<Bikes />} />
+      <Route path="/to-do" element={<ToDo />} />
+      <Route path="/new-deal" element={<NewDeal />} />
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   )
 }
+
+export default App
