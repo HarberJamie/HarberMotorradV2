@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/img/halliwell-jones-logo.png"; // correct path
@@ -10,7 +9,7 @@ export default function Header() {
     { path: "/part-exchange", label: "Part Exchange" },
     { path: "/bikes", label: "Bikes" },
     { path: "/todo", label: "To Do" },
-    { path: "/add-new-deal", label: "Add New Deal", primary: true }, // ⟵ CTA
+    { path: "/add-new-deal", label: "Add New Deal", primary: true }, // CTA
   ];
 
   return (
@@ -64,7 +63,6 @@ export default function Header() {
 }
 
 function NavTab({ to, label, primary = false }) {
-  // Palette (kept close to your existing theme)
   const ACCENT = "#7aa2ff";
   const ACCENT_HOVER = "#5b7cff";
   const TEXT_DEFAULT = "#e8eaf5";
@@ -103,56 +101,12 @@ function NavTab({ to, label, primary = false }) {
     <NavLink
       to={to}
       end
+      className={`nav-link ${primary ? "nav-link--primary" : "nav-link--text"}`}
       style={({ isActive }) => {
-        // Start with base
         let s = { ...baseStyle };
 
         if (primary) {
-          // Primary CTA styles
           s = { ...s, ...primaryStyle };
           if (isActive) s = { ...s, ...primaryActiveStyle };
         } else {
-          // Regular text tab styles
-          s.color = isActive ? ACCENT : TEXT_DEFAULT;
-          if (isActive) s = { ...s, ...textTabActiveStyle };
-        }
-
-        return s;
-      }}
-      onMouseEnter={(e) => {
-        if (primary) {
-          e.currentTarget.style.background = ACCENT_HOVER;
-          e.currentTarget.style.transform = "translateY(-1px)";
-        } else {
-          e.currentTarget.style.color = ACCENT;
-          e.currentTarget.style.transform = "translateY(-2px)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        if (primary) {
-          e.currentTarget.style.background = ACCENT;
-        } else {
-          // avoid overriding active state color for the current page
-          if (!e.currentTarget.matches('[aria-current="page"]')) {
-            e.currentTarget.style.color = TEXT_DEFAULT;
-          }
-        }
-      }}
-      onFocus={(e) => {
-        // keyboard focus ring (a11y)
-        e.currentTarget.style.boxShadow = primary
-          ? "0 0 0 3px rgba(122,162,255,0.35), 0 4px 12px rgba(0,0,0,0.25)"
-          : "0 0 0 3px rgba(122,162,255,0.35)";
-      }}
-      onBlur={(e) => {
-        e.currentTarget.style.boxShadow = primary
-          ? "0 4px 12px rgba(0,0,0,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)"
-          : "none";
-      }}
-      aria-label={primary ? `${label} (primary action)` : label}
-    >
-      {label}
-    </NavLink>
-  );
-}
+          s.color
