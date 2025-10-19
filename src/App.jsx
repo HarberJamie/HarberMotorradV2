@@ -3,7 +3,11 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header.jsx";
 
-// --- Placeholder pages (can be replaced with real components later) ---
+// Real pages
+import ToDo from "./pages/ToDo.jsx";
+import NewDeal from "./pages/NewDeal.jsx";
+
+// --- Placeholder pages (keep until you build real ones) ---
 function Home() {
   return (
     <div style={styles.page}>
@@ -40,24 +44,6 @@ function Bikes() {
   );
 }
 
-function ToDo() {
-  return (
-    <div style={styles.page}>
-      <h2>To Do</h2>
-      <p>Track tasks, admin work, and upcoming customer actions.</p>
-    </div>
-  );
-}
-
-function AddNewDeal() {
-  return (
-    <div style={styles.page}>
-      <h2>Add New Deal</h2>
-      <p>Start a new deal and capture customer & bike details.</p>
-    </div>
-  );
-}
-
 // --- Main App ---
 export default function App() {
   return (
@@ -72,8 +58,11 @@ export default function App() {
           <Route path="/deals" element={<Deals />} />
           <Route path="/part-exchange" element={<PartExchange />} />
           <Route path="/bikes" element={<Bikes />} />
+
+          {/* Real pages wired up */}
           <Route path="/todo" element={<ToDo />} />
-          <Route path="/add-new-deal" element={<AddNewDeal />} />
+          <Route path="/add-new-deal" element={<NewDeal />} />
+
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
