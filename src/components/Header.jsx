@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/img/Halliwell-jones-logo.png"; // adjust path if needed
+import logo from "../assets/img/halliwell-jones-logo.png"; // adjust path if needed
 
 export default function Header() {
   const links = [
