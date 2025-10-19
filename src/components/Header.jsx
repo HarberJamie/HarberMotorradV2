@@ -1,14 +1,16 @@
 // src/components/Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/img/halliwell-jones-logo.png"; // adjust path if needed
+import logo from "../assets/img/halliwell-jones-logo.png"; // correct path
 
 export default function Header() {
   const links = [
     { path: "/", label: "Home" },
-    { path: "/inventory", label: "Inventory" },
+    { path: "/deals", label: "Deals" },
     { path: "/part-exchange", label: "Part Exchange" },
-    { path: "/contact", label: "Contact" },
+    { path: "/bikes", label: "Bikes" },
+    { path: "/todo", label: "To Do" },
+    { path: "/add-new-deal", label: "Add New Deal" },
   ];
 
   return (
@@ -35,11 +37,7 @@ export default function Header() {
           borderBottom: "1px solid #1c2143",
         }}
       >
-        <img
-          src={logo}
-          alt="Halliwell Jones Logo"
-          style={{ height: "40px" }}
-        />
+        <img src={logo} alt="Halliwell Jones Logo" style={{ height: "40px" }} />
         <h1 style={{ fontSize: "1.25rem", fontWeight: "600" }}>
           Halliwell Jones Motorrad
         </h1>
@@ -65,7 +63,6 @@ export default function Header() {
   );
 }
 
-// --- Reusable NavTab component ---
 function NavTab({ to, label }) {
   const baseStyle = {
     textDecoration: "none",
@@ -73,12 +70,13 @@ function NavTab({ to, label }) {
     fontSize: "0.95rem",
     position: "relative",
     transition: "color 0.25s ease, transform 0.25s ease",
+    padding: "6px 0",
   };
 
   const activeStyle = {
-    color: "#007bff", // BMW blue
+    color: "#007bff",
     borderBottom: "2px solid #007bff",
-    paddingBottom: "2px",
+    paddingBottom: "4px",
   };
 
   return (
@@ -95,10 +93,10 @@ function NavTab({ to, label }) {
         e.target.style.transform = "translateY(-2px)";
       }}
       onMouseLeave={(e) => {
-        if (!e.target.classList.contains("active")) {
+        e.target.style.transform = "translateY(0)";
+        if (!e.currentTarget.matches('[aria-current="page"]')) {
           e.target.style.color = "#e8eaf5";
         }
-        e.target.style.transform = "translateY(0)";
       }}
     >
       {label}

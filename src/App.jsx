@@ -27,12 +27,10 @@ export default function App() {
       {/* Add top margin to prevent content hiding behind fixed header */}
       <main style={styles.main}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/part-exchange" element={<PartExchange />} />
-          <Route path="/contact" element={<Contact />} />
-          {/* Redirect any unknown route to Home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/deals" element={<div style={styles.page}><h2>Deals</h2></div>} />
+          <Route path="/bikes" element={<div style={styles.page}><h2>Bikes</h2></div>} />
+          <Route path="/todo" element={<div style={styles.page}><h2>To Do</h2></div>} />
+          <Route path="/add-new-deal" element={<div style={styles.page}><h2>Add New Deal</h2></div>} />
         </Routes>
       </main>
     </div>
