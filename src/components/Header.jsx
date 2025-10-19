@@ -1,3 +1,4 @@
+// src/components/Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/img/halliwell-jones-logo.png"; // correct path
@@ -109,4 +110,34 @@ function NavTab({ to, label, primary = false }) {
           s = { ...s, ...primaryStyle };
           if (isActive) s = { ...s, ...primaryActiveStyle };
         } else {
-          s.color
+          s.color = isActive ? ACCENT : TEXT_DEFAULT;
+          if (isActive) s = { ...s, ...textTabActiveStyle };
+        }
+
+        return s;
+      }}
+      onMouseEnter={(e) => {
+        if (primary) {
+          e.currentTarget.style.background = ACCENT_HOVER;
+          e.currentTarget.style.transform = "translateY(-1px)";
+        } else {
+          e.currentTarget.style.color = ACCENT;
+          e.currentTarget.style.transform = "translateY(-2px)";
+        }
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        if (primary) {
+          e.currentTarget.style.background = ACCENT;
+        } else {
+          if (!e.currentTarget.matches('[aria-current="page"]')) {
+            e.currentTarget.style.color = TEXT_DEFAULT;
+          }
+        }
+      }}
+      aria-label={primary ? `${label} (primary action)` : label}
+    >
+      {label}
+    </NavLink>
+  );
+}
