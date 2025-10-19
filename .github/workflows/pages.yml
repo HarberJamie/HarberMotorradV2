@@ -2,8 +2,12 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main ]          # production deploys
-  pull_request:                  # preview deploys for any PR
+    branches:
+      - main
+      - feature/**      # deploy previews for feature branches
+  pull_request:
+    branches:
+      - main            # PRs into main get preview links
 
 permissions:
   contents: read
@@ -11,7 +15,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-${{ github.ref }}"
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -26,23 +30,23 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm ci || npm i
+      - name: Install
+        run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
