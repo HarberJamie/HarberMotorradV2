@@ -9,7 +9,7 @@ export default function Header() {
     { path: "/deals", label: "Deals" },
     { path: "/part-exchange", label: "Part Exchange" },
     { path: "/bikes", label: "Bikes" },
-    { path: "/todo", label: "To Do" },
+    { path: "/to-do", label: "To Do" },
     { path: "/add-new-deal", label: "Add New Deal", primary: true }, // CTA
   ];
 
@@ -82,14 +82,16 @@ function NavTab({ to, label, primary = false }) {
   const primaryStyle = {
     background: ACCENT,
     borderRadius: "999px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)",
+    boxShadow:
+      "0 4px 12px rgba(0,0,0,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)",
     transform: "translateY(0)",
     border: "1px solid rgba(255,255,255,0.08)",
   };
 
   const primaryActiveStyle = {
     background: ACCENT_HOVER,
-    boxShadow: "0 6px 16px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2)",
+    boxShadow:
+      "0 6px 16px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2)",
   };
 
   const textTabActiveStyle = {
@@ -101,11 +103,10 @@ function NavTab({ to, label, primary = false }) {
   return (
     <NavLink
       to={to}
-      end
+      end={to === "/"}
       className={`nav-link ${primary ? "nav-link--primary" : "nav-link--text"}`}
       style={({ isActive }) => {
         let s = { ...baseStyle };
-
         if (primary) {
           s = { ...s, ...primaryStyle };
           if (isActive) s = { ...s, ...primaryActiveStyle };
@@ -113,7 +114,6 @@ function NavTab({ to, label, primary = false }) {
           s.color = isActive ? ACCENT : TEXT_DEFAULT;
           if (isActive) s = { ...s, ...textTabActiveStyle };
         }
-
         return s;
       }}
       onMouseEnter={(e) => {
@@ -129,10 +129,8 @@ function NavTab({ to, label, primary = false }) {
         e.currentTarget.style.transform = "translateY(0)";
         if (primary) {
           e.currentTarget.style.background = ACCENT;
-        } else {
-          if (!e.currentTarget.matches('[aria-current="page"]')) {
-            e.currentTarget.style.color = TEXT_DEFAULT;
-          }
+        } else if (!e.currentTarget.matches('[aria-current="page"]')) {
+          e.currentTarget.style.color = TEXT_DEFAULT;
         }
       }}
       aria-label={primary ? `${label} (primary action)` : label}
