@@ -1,0 +1,28 @@
+{
+  "sections": [
+    {
+      "title": "Deal Basics",
+      "fields": [
+        { "id": "dealType", "label": "Deal Type", "type": "select", "options": ["New", "Used"], "required": true },
+        { "id": "saleBikeModel", "label": "Sale Bike Model", "type": "text", "placeholder": "e.g., R1300 GS Adventure", "required": true },
+        { "id": "agreedPrice", "label": "Agreed Price (£)", "type": "number", "min": 0, "step": 1, "required": true }
+      ]
+    },
+    {
+      "title": "Customer",
+      "fields": [
+        { "id": "customerName", "label": "Customer Name", "type": "text", "required": true },
+        { "id": "contactNumber", "label": "Contact Number", "type": "tel" },
+        { "id": "email", "label": "Email", "type": "email" }
+      ]
+    },
+    {
+      "title": "Part-Exchange",
+      "fields": [
+        { "id": "hasPX", "label": "Part Exchange?", "type": "select", "options": ["No", "Yes"], "required": true },
+        { "id": "pxReg", "label": "PX Registration", "type": "text", "showIf": { "hasPX": "Yes" } },
+        { "id": "pxMileage", "label": "PX Mileage", "type": "number", "min": 0, "showIf": { "hasPX": "Yes" } }
+      ]
+    }
+  ]
+}
