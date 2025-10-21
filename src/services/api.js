@@ -1,5 +1,5 @@
 import { db } from "../lib/db";
-import { deriveEvents, eventsToTasks } from "../lib/rules";
+import { deriveEvents, eventsToTasks } from "@/lib/rules";
 
 // Create a deal and generate tasks from answers via the rules engine
 export async function createDeal(answers){
