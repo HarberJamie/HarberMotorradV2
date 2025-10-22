@@ -2,56 +2,61 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches:
-      - main
-      - feature/**         # preview deploys for feature branches
+    branches: [ main, feature/**, feat/** ]   # prod deploys on push
   pull_request:
-    branches:
-      - main               # PRs into main get preview links
+    branches: [ main ]                        # PR previews for PRs into main
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# isolate previews vs prod so they don't cancel each other
 concurrency:
-  group: "pages"
+  group: pages-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # If you have a package-lock.json you can switch to npm ci
-      - name: Install
-        run: npm install
+      # use ci if you have a lockfile, fallback to install
+      - run: npm ci || npm install
 
-      - name: Build
-        run: npm run build
+      - run: npm run build
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-  deploy:
+  # PR previews (environment: preview)
+  deploy-preview:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Production deploys on push (environment: github-pages)
+  deploy-prod:
+    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
