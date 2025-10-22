@@ -2,6 +2,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header.jsx";
+import Deals from "./pages/Deals.jsx";
+// --- Import your real pages ---
+import NewDeal from "./pages/NewDeal.jsx"; // ✅ Add this import
 
 // --- Placeholder pages (can be replaced with real components later) ---
 function Home() {
@@ -9,15 +12,6 @@ function Home() {
     <div style={styles.page}>
       <h2>Home</h2>
       <p>Welcome to Halliwell Jones Motorrad.</p>
-    </div>
-  );
-}
-
-function Deals() {
-  return (
-    <div style={styles.page}>
-      <h2>Deals</h2>
-      <p>View or manage current motorcycle deals.</p>
     </div>
   );
 }
@@ -49,15 +43,6 @@ function ToDo() {
   );
 }
 
-function AddNewDeal() {
-  return (
-    <div style={styles.page}>
-      <h2>Add New Deal</h2>
-      <p>Start a new deal and capture customer & bike details.</p>
-    </div>
-  );
-}
-
 // --- Main App ---
 export default function App() {
   return (
@@ -65,15 +50,15 @@ export default function App() {
       {/* Fixed header */}
       <Header />
 
-      {/* Add top padding to prevent overlap with fixed header */}
+      {/* Main content with top padding to clear the fixed header */}
       <main style={styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/deals" element={<Deals />} />
           <Route path="/part-exchange" element={<PartExchange />} />
           <Route path="/bikes" element={<Bikes />} />
-          <Route path="/todo" element={<ToDo />} />
-          <Route path="/add-new-deal" element={<AddNewDeal />} />
+          <Route path="/to-do" element={<ToDo />} />
+          <Route path="/add-new-deal" element={<NewDeal />} />
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
@@ -95,7 +80,7 @@ const styles = {
   main: {
     maxWidth: "1100px",
     margin: "0 auto",
-    padding: "160px 16px 48px", // top padding leaves space for the fixed header
+    padding: "160px 16px 48px", // ✅ keeps space for the fixed header
   },
   page: {
     background: "rgba(255,255,255,0.04)",
