@@ -2,16 +2,15 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main, feature/**, feat/** ]   # prod deploys on push
+    branches: [ main ]          # Only main deploys production
   pull_request:
-    branches: [ main ]                        # PR previews for PRs into main
+    branches: [ main ]          # PRs into main get preview links
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# isolate previews vs prod so they don't cancel each other
 concurrency:
   group: pages-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
@@ -21,41 +20,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      # use ci if you have a lockfile, fallback to install
+        with: { node-version: 20 }
       - run: npm ci || npm install
-
       - run: npm run build
-
       - uses: actions/configure-pages@v5
-
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+        with: { path: dist }
 
-  # PR previews (environment: preview)
+  # PR previews use a fresh environment name ('pages-preview')
   deploy-preview:
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: preview
+      name: pages-preview
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
 
-  # Production deploys on push (environment: github-pages)
+  # Production uses a fresh environment name ('pages-production')
   deploy-prod:
     if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
+      name: pages-production
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
