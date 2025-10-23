@@ -5,6 +5,10 @@ import Header from "./components/Header.jsx";
 import Deals from "./pages/Deals.jsx";
 // --- Import your real pages ---
 import NewDeal from "./pages/NewDeal.jsx"; // ✅ Add this import
+import PartEx from "./pages/PartEx.jsx"; // exact case
+
+// inside <Routes> ...
+<Route path="/part-ex" element={<PartEx />} />
 
 // --- Placeholder pages (can be replaced with real components later) ---
 function Home() {
@@ -55,7 +59,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/deals" element={<Deals />} />
-          <Route path="/part-exchange" element={<PartExchange />} />
+          <Route path="/part-exchange" element={<PartEx />} />
           <Route path="/bikes" element={<Bikes />} />
           <Route path="/to-do" element={<ToDo />} />
           <Route path="/add-new-deal" element={<NewDeal />} />
