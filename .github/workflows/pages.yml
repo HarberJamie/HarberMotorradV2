@@ -1,10 +1,10 @@
-name: Deploy Vite site to GitHub Pages (with PR previews)
+name: Deploy Vite site to GitHub Pages
 
 on:
   push:
-    branches: [ main ]          # Only main deploys production
+    branches: [ main ]
   pull_request:
-    branches: [ main ]          # PRs into main get preview links
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -21,32 +21,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+        with:
+          node-version: 20
       - run: npm ci || npm install
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
-        with: { path: dist }
+        with:
+          path: dist
 
-  # PR previews use a fresh environment name ('pages-preview')
-  deploy-preview:
-    if: github.event_name == 'pull_request'
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: pages-preview
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
-  # Production uses a fresh environment name ('pages-production')
-  deploy-prod:
-    if: github.event_name == 'push'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: pages-production
+      name: github-pages      # <- important
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
