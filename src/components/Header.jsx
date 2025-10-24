@@ -6,10 +6,10 @@ import logo from "../assets/img/halliwell-jones-logo.png"; // correct path
 export default function Header() {
   const links = [
     { path: "/", label: "Home" },
-    { path: "/deals", label: "Deals" },
     { path: "/part-exchange", label: "Part Exchange" },
     { path: "/bikes", label: "Bikes" },
     { path: "/to-do", label: "To Do" },
+    { path: "/deals", label: "Deals" },
     { path: "/add-new-deal", label: "Add New Deal", primary: true }, // CTA
   ];
 
