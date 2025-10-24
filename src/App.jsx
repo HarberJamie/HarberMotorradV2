@@ -58,10 +58,10 @@ export default function App() {
       <main style={styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/deals" element={<Deals />} />
           <Route path="/part-exchange" element={<PartEx />} />
           <Route path="/bikes" element={<Bikes />} />
           <Route path="/to-do" element={<ToDo />} />
+          <Route path="/deals" element={<Deals />} />
           <Route path="/add-new-deal" element={<NewDeal />} />
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
