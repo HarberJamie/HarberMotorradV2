@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import TabsHeader from "./TabsHeader";
 import Field from "./Field";
 
@@ -61,16 +61,8 @@ export default function PartEx() {
     { id: "prep", label: "Preparation" },
   ];
 
-  const initialTab = useMemo(() => {
-    const hash = (typeof window !== "undefined" && window.location.hash.replace("#", "")) || "";
-    return TABS.some((t) => t.id === hash) ? hash : "details";
-  }, []);
-
-  const [active, setActive] = useState(initialTab);
-  const setTab = (id) => {
-    setActive(id);
-    if (typeof window !== "undefined") window.location.hash = id;
-  };
+  const [active, setActive] = useState("details");
+  const setTab = (id) => setActive(id);
 
   return (
     <div className="container">
@@ -113,7 +105,6 @@ export default function PartEx() {
         </div>
       </form>
 
-      {/* Component-scoped styles to keep it self-contained */}
       <style>{`
         .container { max-width: 960px; margin: 0 auto; padding: 1.25rem; }
         .page-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; }

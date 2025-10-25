@@ -5,6 +5,7 @@ export default function TabsHeader({ tabs, active, onChange }) {
     <div className="tabs" role="tablist" aria-label="Part-Exchange Sections">
       {tabs.map((t) => (
         <button
+          type="button"
           key={t.id}
           role="tab"
           aria-selected={active === t.id}
@@ -12,7 +13,7 @@ export default function TabsHeader({ tabs, active, onChange }) {
           id={`tab-${t.id}`}
           tabIndex={active === t.id ? 0 : -1}
           className={`tab ${active === t.id ? "tab--active" : ""}`}
-          onClick={() => onChange(t.id)}
+          onClick={(e) => { e.preventDefault(); onChange(t.id); }}
         >
           {t.label}
         </button>
