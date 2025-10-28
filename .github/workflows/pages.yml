@@ -26,13 +26,13 @@ jobs:
           node-version: 20
           cache: npm
 
-      # Compute the correct base path for GitHub Pages / PR previews
+      # Compute the correct base path for Pages / PR previews
       - id: pages
         uses: actions/configure-pages@v5
 
       - run: npm ci
 
-      # Build using the computed base path so assets resolve correctly
+      # Build with the correct base so assets resolve
       - name: Build with Pages base path
         run: npm run build
         env:
