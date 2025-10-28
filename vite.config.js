@@ -7,7 +7,7 @@ import { dirname, resolve } from 'node:path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-// BASE_PATH is injected by the workflow for main & PR previews.
+// BASE_PATH is injected on GitHub Actions for main & PR previews.
 // Locally it's undefined, so default to '/'.
 const base = process.env.BASE_PATH || '/'
 
