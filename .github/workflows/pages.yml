@@ -2,9 +2,9 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]            # main → production
   pull_request:
-    branches: [ main ]
+    branches: [ main ]            # PRs → preview builds
 
 permissions:
   contents: read
@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
