@@ -1,14 +1,22 @@
 // vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+// BASE_PATH is injected on GitHub Actions for main & PR previews.
+// Locally it's undefined, so default to '/'.
+const base = process.env.BASE_PATH || '/'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/HarberMotorradV2/', // MUST match repo name exactly (case-sensitive)
+  base,
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // ✅ enables "@/..." imports
+      '@': resolve(__dirname, 'src'),
     },
   },
 })

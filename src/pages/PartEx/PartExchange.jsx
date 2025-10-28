@@ -1,4 +1,4 @@
-// src/pages/PartEx/PartEx.jsx
+// src/pages/PartEx/PartExchange.jsx
 import React, { useState } from "react";
 
 // TabsHeader lives in src/pages/, so from /PartEx/ it's one level up:

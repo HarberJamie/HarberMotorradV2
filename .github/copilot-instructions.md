@@ -42,12 +42,12 @@
 - `src/lib/rules.js` — rules → events → tasks mapping
 - `src/schemas/newDealSchema.json` — new-deal form schema
 - `src/components/Header.jsx`, `src/components/TopNav.jsx` — navigation patterns and inline-style approach
-- `src/pages/PartEx.jsx` — an example multi-tab form using local state and submit placeholder
+- `src/pages/PartEx/PartExchange.jsx` — an example multi-tab form using local state and submit placeholder
 
 ## Example snippets (how components interact)
 
 - Create deal (from UI) → calls `createDeal(answers)` in `src/services/api.js` → saves deal in `db.saveDeal` and generates tasks via `deriveEvents`/`eventsToTasks`.
-- Part-exchange form (`src/pages/PartEx.jsx`) uses local `useState` and calls a placeholder submit handler; real submit should call `createDeal`.
+- Part-exchange form (`src/pages/PartEx/PartExchange.jsx`) uses local `useState` and calls a placeholder submit handler; real submit should call `createDeal`.
 
 ## If you're an AI coding agent: do this first
 

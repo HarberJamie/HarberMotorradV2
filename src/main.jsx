@@ -1,15 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter, HashRouter } from 'react-router-dom'
-import App from './App.jsx'
-import '@/assets/css/style.css'  // keep if '@' alias is configured
+// src/main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { HashRouter } from "react-router-dom";
+import App from "./App.jsx";
+import "@/assets/css/style.css";
 
-const Router = import.meta.env.MODE === 'production' ? HashRouter : BrowserRouter
-
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
+    <HashRouter>
       <App />
-    </Router>
+    </HashRouter>
   </React.StrictMode>
-)
+);

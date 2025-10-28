@@ -98,3 +98,11 @@ nav {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3),
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
+/* ──────────────────────────────
+   FORM ELEMENTS
+─────────────────────────────────*/
+.input {
+  @apply border border-gray-300 rounded-lg px-3 py-2 w-full text-sm text-gray-900;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+  background-color: #fff;
+}

@@ -1,4 +1,4 @@
-name: Deploy Vite site to GitHub Pages
+name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
@@ -23,9 +23,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci || npm install
-      - run: npm run build
-      - uses: actions/configure-pages@v5
+          cache: npm
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Show event and base path
+        run: |
+          echo "EVENT=${{ github.event_name }}"
+          echo "BASE_PATH=${{ steps.pages.outputs.base_path }}"
+
+      - run: npm ci
+
+      - name: Build with Pages base path
+        run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -34,8 +48,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages      # <- important
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          preview: ${{ github.event_name == 'pull_request' }}
