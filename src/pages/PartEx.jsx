@@ -1,14 +1,18 @@
+// src/pages/PartEx/PartEx.jsx
 import React, { useState } from "react";
-import TabsHeader from "./TabsHeader";
-import Field from "./Field";
 
-import DetailsPanel from "./panels/DetailsPanel";
-import HistoryPanel from "./panels/HistoryPanel";
-import SpecPanel from "./panels/SpecPanel";
-import ConditionPanel from "./panels/ConditionPanel";
-import PrepPanel from "./panels/PrepPanel";
+// TabsHeader lives in src/pages/, so from /PartEx/ it's one level up:
+import TabsHeader from "../TabsHeader.jsx";
 
-export default function PartEx() {
+// These files are in the same folder as PartEx.jsx:
+import Field from "./Field.jsx";
+import DetailsPanel from "./panels/DetailsPanel.jsx";
+import HistoryPanel from "./panels/HistoryPanel.jsx";
+import SpecPanel from "./panels/SpecPanel.jsx";
+import ConditionPanel from "./panels/ConditionPanel.jsx";
+import PrepPanel from "./panels/PrepPanel.jsx";
+
+function PartEx() {
   const [form, setForm] = useState({
     // Bike Details
     registration: "",
@@ -128,3 +132,5 @@ export default function PartEx() {
     </div>
   );
 }
+
+export default PartEx;

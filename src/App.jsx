@@ -5,10 +5,9 @@ import Header from "./components/Header.jsx";
 import Deals from "./pages/Deals.jsx";
 // --- Import your real pages ---
 import NewDeal from "./pages/NewDeal.jsx"; // ✅ Add this import
-import PartEx from "./pages/PartEx.jsx"; // exact case
-
-// inside <Routes> ...
-<Route path="/part-ex" element={<PartEx />} />
+import PartEx from "./pages/PartEx/PartExchange.jsx"; // exact case
+import BikesPage from "./pages/Bikes/BikesPage.jsx";
+import AddBike from "./pages/AddBike.jsx";
 
 // --- Placeholder pages (can be replaced with real components later) ---
 function Home() {
@@ -58,10 +57,11 @@ export default function App() {
       <main style={styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/part-exchange" element={<PartEx />} />
-          <Route path="/bikes" element={<Bikes />} />
-          <Route path="/to-do" element={<ToDo />} />
+          <Route path="/bikes" element={<BikesPage />} />
+          <Route path="/add-bike" element={<AddBike />} />
+          <Route path="/part-exchange" element={<PartExchange />} />
           <Route path="/deals" element={<Deals />} />
+          <Route path="/to-do" element={<ToDo />} />
           <Route path="/add-new-deal" element={<NewDeal />} />
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />

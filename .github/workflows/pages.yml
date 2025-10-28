@@ -2,9 +2,9 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main ]            # main → production
+    branches: [ main ]
   pull_request:
-    branches: [ main ]            # PRs → preview builds
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -25,11 +25,9 @@ jobs:
           node-version: 20
           cache: npm
 
-      # Compute the correct base path for Pages / PR previews
       - id: pages
         uses: actions/configure-pages@v5
 
-      # Optional: print for sanity
       - name: Show event and base path
         run: |
           echo "EVENT=${{ github.event_name }}"
@@ -37,7 +35,6 @@ jobs:
 
       - run: npm ci
 
-      # Build with the computed base so assets resolve
       - name: Build with Pages base path
         run: npm run build
         env:
