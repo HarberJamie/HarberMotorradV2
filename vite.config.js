@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 // BASE_PATH is injected by the GitHub Actions workflow for both main and PR previews.
-// Locally (npm run dev / npm run build), it will be undefined, so default to '/'.
+// Locally, it will be undefined, so default to '/'.
 const base = process.env.BASE_PATH || '/'
 
 export default defineConfig({
