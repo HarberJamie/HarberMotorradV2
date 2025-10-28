@@ -1,14 +1,10 @@
 // vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
 
+// BASE_PATH is injected by the workflow for both main and PR previews.
+// Fallback to '/HarberMotorradV2/' for local one-off builds or manual deployments.
 export default defineConfig({
   plugins: [react()],
-  base: '/HarberMotorradV2/', // MUST match repo name exactly (case-sensitive)
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'), // ✅ enables "@/..." imports
-    },
-  },
+  base: process.env.BASE_PATH || '/HarberMotorradV2/',
 })

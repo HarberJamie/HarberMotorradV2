@@ -1,10 +1,10 @@
-name: Deploy Vite site to GitHub Pages
+name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]            # main = production
   pull_request:
-    branches: [ main ]
+    branches: [ main ]            # PRs into main get preview links
 
 permissions:
   contents: read
@@ -20,12 +20,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci || npm install
-      - run: npm run build
-      - uses: actions/configure-pages@v5
+          cache: npm
+
+      # Compute the correct base path for GitHub Pages / PR previews
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - run: npm ci
+
+      # Build using the computed base path so assets resolve correctly
+      - name: Build with Pages base path
+        run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -34,7 +46,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages      # <- important
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
