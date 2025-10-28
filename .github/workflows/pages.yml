@@ -2,9 +2,9 @@ name: Deploy Vite site to GitHub Pages (with PR previews)
 
 on:
   push:
-    branches: [ main ]            # main → production
+    branches: [ main ]
   pull_request:
-    branches: [ main ]            # PRs → preview builds
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -25,14 +25,23 @@ jobs:
           node-version: 20
           cache: npm
 
+      # Compute the correct base path for Pages / PR previews
       - id: pages
         uses: actions/configure-pages@v5
 
-      - run: npm ci
-      - name: Build with Pages base path
+      # Optional: print for sanity
+      - name: Show event and base path
         run: |
-          export BASE_PATH="${{ steps.pages.outputs.base_path }}"
-          npm run build
+          echo "EVENT=${{ github.event_name }}"
+          echo "BASE_PATH=${{ steps.pages.outputs.base_path }}"
+
+      - run: npm ci
+
+      # Build with the computed base so assets resolve
+      - name: Build with Pages base path
+        run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -41,7 +50,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # 👇 These two lines make the PR deploy correctly
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -49,5 +57,4 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # 👇 This makes PRs deploy as previews, not override main
           preview: ${{ github.event_name == 'pull_request' }}
