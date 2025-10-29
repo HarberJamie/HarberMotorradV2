@@ -1,7 +1,8 @@
-// src/pages/Bikes/BikesPage.jsx
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Modal from "@/components/Modal.jsx"; // if @ alias isn't set, use: ../../components/Modal.jsx
+// If you DON'T have '@' alias, use the RELATIVE path below:
+import Modal from "../../components/Modal.jsx";
+// If you DO have '@' working, you could use: import Modal from "@/components/Modal.jsx";
 import SearchBar from "./SearchBar.jsx";
 import ResultsList from "./ResultsList.jsx";
 import SelectedBike from "./SelectedBike.jsx";
