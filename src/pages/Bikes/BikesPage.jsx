@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "./SearchBar.jsx";
@@ -7,6 +7,7 @@ import SelectedBike from "./SelectedBike.jsx";
 
 const BIKES_STORAGE_KEY = "harbermotorrad:bikes";
 
+/* --------------------------------- Storage -------------------------------- */
 function getBikes() {
   try {
     return JSON.parse(localStorage.getItem(BIKES_STORAGE_KEY)) || [];
@@ -26,10 +27,13 @@ function saveBike(bike) {
   return id;
 }
 
+/* ---------------------------------- Page ---------------------------------- */
 export default function BikesPage() {
   const [params, setParams] = useSearchParams();
   const bikeId = params.get("bikeId") || null;
+
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
 
   // Merge helper: writes only non-empty values; deletes null/"" keys
   const updateParams = (next) => {
@@ -42,6 +46,17 @@ export default function BikesPage() {
     }
 
     setParams(merged);
+  };
+
+  // When a bikeId appears in the URL (via list click), open the overlay
+  useEffect(() => {
+    if (bikeId) setShowViewModal(true);
+  }, [bikeId]);
+
+  const closeViewModal = () => {
+    setShowViewModal(false);
+    // keep selection in URL if you prefer; otherwise clear it:
+    // updateParams({ bikeId: "" });
   };
 
   return (
@@ -61,29 +76,44 @@ export default function BikesPage() {
         <SearchBar onChange={updateParams} />
       </div>
 
-      <div className="col-span-12 md:col-span-4">
+      {/* List left */}
+      <div className="col-span-12 md:col-span-5 lg:col-span-4">
         <ResultsList
           selectedId={bikeId}
           onSelect={(id) => updateParams({ bikeId: id })}
         />
       </div>
 
-      <div className="col-span-12 md:col-span-8">
-        {bikeId ? <SelectedBike bikeId={bikeId} /> : <EmptyState />}
+      {/* (Optional) Right column placeholder on wide screens */}
+      <div className="hidden md:block md:col-span-7 lg:col-span-8">
+        <EmptyState />
       </div>
 
-      {/* Modal via Portal so it overlays the whole page */}
-      {showAddModal &&
-        createPortal(
-          <AddBikeModal
-            onClose={() => setShowAddModal(false)}
-            onSaved={(id) => {
-              setShowAddModal(false);
-              updateParams({ bikeId: id }); // auto-select newly added bike
-            }}
-          />,
-          document.body
-        )}
+      {/* View Bike Overlay */}
+      <OverlayModal
+        open={!!bikeId && showViewModal}
+        onClose={closeViewModal}
+        title="Bike Details"
+        widthClass="w-[min(980px,95vw)]"
+      >
+        {bikeId ? <SelectedBike bikeId={bikeId} /> : <p>No bike selected</p>}
+      </OverlayModal>
+
+      {/* Add Bike Overlay */}
+      <OverlayModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        title="Add New Bike"
+        widthClass="w-[min(680px,95vw)]"
+      >
+        <AddBikeForm
+          onCancel={() => setShowAddModal(false)}
+          onSaved={(id) => {
+            setShowAddModal(false);
+            updateParams({ bikeId: id }); // auto-open the newly added bike
+          }}
+        />
+      </OverlayModal>
     </div>
   );
 }
@@ -91,16 +121,94 @@ export default function BikesPage() {
 function EmptyState() {
   return (
     <div className="text-sm text-gray-600 bg-white rounded-2xl shadow p-6">
-      Search and select a bike to view details.
+      Select a bike to view details in a pop-up.
     </div>
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*                            Add Bike Modal (Portal)                          */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------- Reusable Overlay ---------------------------- */
+/** Lightweight modal overlay with portal, backdrop, ESC/Click-outside close,
+ *  and basic fade/scale animation using Tailwind utilities.
+ */
+function OverlayModal({ open, onClose, title, children, widthClass = "w-[min(900px,92vw)]" }) {
+  const panelRef = useRef(null);
+  const [state, setState] = useState("enter"); // enter -> entered (for simple animation)
 
-function AddBikeModal({ onClose, onSaved }) {
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Animate in on next frame
+    const raf = requestAnimationFrame(() => setState("entered"));
+
+    // Close on ESC
+    const onKeyDown = (e) => e.key === "Escape" && onClose?.();
+    window.addEventListener("keydown", onKeyDown);
+
+    // focus
+    panelRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKeyDown);
+      cancelAnimationFrame(raf);
+      setState("enter");
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const onBackdropMouseDown = (e) => {
+    if (e.target === e.currentTarget) onClose?.();
+  };
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[1000] flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      onMouseDown={onBackdropMouseDown}
+    >
+      {/* Backdrop */}
+      <div
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${
+          state === "entered" ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      {/* Panel */}
+      <div
+        ref={panelRef}
+        tabIndex={-1}
+        className={[
+          "relative z-[1001] max-h-[90vh] overflow-auto rounded-2xl bg-white shadow-2xl outline-none p-5 sm:p-6",
+          widthClass,
+          "transition-all duration-200",
+          state === "entered"
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 translate-y-2 scale-[0.98]",
+        ].join(" ")}
+      >
+        <div className="flex items-start justify-between gap-4 mb-3">
+          {title ? <h2 className="text-xl font-semibold leading-6">{title}</h2> : <span />}
+          <button
+            onClick={onClose}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+/* ----------------------------- Add Bike Form ------------------------------ */
+function AddBikeForm({ onCancel, onSaved }) {
   const [form, setForm] = useState({
     make: "",
     model: "",
@@ -131,101 +239,50 @@ function AddBikeModal({ onClose, onSaved }) {
       updatedAt: new Date().toISOString(),
       source: "manual",
     };
-    const savedId = saveBike(payload); // returns id
+    const savedId = saveBike(payload);
     onSaved?.(savedId);
   };
 
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) onClose?.();
-  };
-
-  // IMPORTANT: Use inline styles for the overlay so no Tailwind dependency
-  const overlayStyle = {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(0,0,0,0.7)",
-    zIndex: 2147483647, // max-ish
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "12px",
-  };
-
-  const panelStyle = {
-    width: "100%",
-    maxWidth: "40rem", // ~640px
-    borderRadius: "1rem",
-    background: "#fff",
-    boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
-    overflow: "hidden",
-  };
-
-  const headerStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottom: "1px solid #e5e7eb",
-    padding: "16px 20px",
-  };
-
-  const bodyStyle = { padding: "16px 20px" };
-
   return (
-    <div style={overlayStyle} onClick={handleBackdropClick} role="dialog" aria-modal="true">
-      <div style={panelStyle}>
-        <div style={headerStyle}>
-          <h2 className="text-lg font-semibold">Add New Bike</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-600 hover:bg-gray-100 rounded-lg px-3 py-1 text-sm"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} style={bodyStyle}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Make" name="make" value={form.make} onChange={handleChange} required />
-            <Field label="Model" name="model" value={form.model} onChange={handleChange} required />
-            <Field label="Year" name="year" value={form.year} onChange={handleChange} required />
-            <Field label="Mileage" name="mileage" type="number" min="0" step="1" value={form.mileage} onChange={handleChange} />
-            <Select
-              label="Condition"
-              name="condition"
-              value={form.condition}
-              onChange={handleChange}
-              options={["New", "Used", "Ex-Demo"]}
-            />
-            <Field label="Price (£)" name="price" type="number" min="0" step="1" value={form.price} onChange={handleChange} />
-            <Field label="Colour" name="colour" value={form.colour} onChange={handleChange} />
-            <Field label="Registration" name="registration" value={form.registration} onChange={handleChange} />
-            <Field label="VIN" name="vin" value={form.vin} onChange={handleChange} />
-          </div>
-
-          <div className="mt-6 flex items-center justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-            >
-              Save Bike
-            </button>
-          </div>
-        </form>
+    <form onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Field label="Make" name="make" value={form.make} onChange={handleChange} required />
+        <Field label="Model" name="model" value={form.model} onChange={handleChange} required />
+        <Field label="Year" name="year" value={form.year} onChange={handleChange} required />
+        <Field label="Mileage" name="mileage" type="number" min="0" step="1" value={form.mileage} onChange={handleChange} />
+        <Select
+          label="Condition"
+          name="condition"
+          value={form.condition}
+          onChange={handleChange}
+          options={["New", "Used", "Ex-Demo"]}
+        />
+        <Field label="Price (£)" name="price" type="number" min="0" step="1" value={form.price} onChange={handleChange} />
+        <Field label="Colour" name="colour" value={form.colour} onChange={handleChange} />
+        <Field label="Registration" name="registration" value={form.registration} onChange={handleChange} />
+        <Field label="VIN" name="vin" value={form.vin} onChange={handleChange} />
       </div>
-    </div>
+
+      <div className="mt-6 flex items-center justify-end gap-2">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+        >
+          Save Bike
+        </button>
+      </div>
+    </form>
   );
 }
 
 /* -------------------------- Form Input Components -------------------------- */
-
 function Field({ label, name, value, onChange, type = "text", ...rest }) {
   return (
     <label className="block">
