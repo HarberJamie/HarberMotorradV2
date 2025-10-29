@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+// src/pages/Bikes/BikesPage.jsx
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Modal from "@/components/Modal.jsx"; // if @ alias isn't set, use: ../../components/Modal.jsx
 import SearchBar from "./SearchBar.jsx";
 import ResultsList from "./ResultsList.jsx";
 import SelectedBike from "./SelectedBike.jsx";
@@ -55,7 +56,7 @@ export default function BikesPage() {
 
   const closeViewModal = () => {
     setShowViewModal(false);
-    // keep selection in URL if you prefer; otherwise clear it:
+    // If you want to clear the URL param on close, uncomment:
     // updateParams({ bikeId: "" });
   };
 
@@ -89,18 +90,18 @@ export default function BikesPage() {
         <EmptyState />
       </div>
 
-      {/* View Bike Overlay */}
-      <OverlayModal
+      {/* View Bike Modal */}
+      <Modal
         open={!!bikeId && showViewModal}
         onClose={closeViewModal}
         title="Bike Details"
         widthClass="w-[min(980px,95vw)]"
       >
         {bikeId ? <SelectedBike bikeId={bikeId} /> : <p>No bike selected</p>}
-      </OverlayModal>
+      </Modal>
 
-      {/* Add Bike Overlay */}
-      <OverlayModal
+      {/* Add Bike Modal */}
+      <Modal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
         title="Add New Bike"
@@ -113,7 +114,7 @@ export default function BikesPage() {
             updateParams({ bikeId: id }); // auto-open the newly added bike
           }}
         />
-      </OverlayModal>
+      </Modal>
     </div>
   );
 }
@@ -123,87 +124,6 @@ function EmptyState() {
     <div className="text-sm text-gray-600 bg-white rounded-2xl shadow p-6">
       Select a bike to view details in a pop-up.
     </div>
-  );
-}
-
-/* ---------------------------- Reusable Overlay ---------------------------- */
-/** Lightweight modal overlay with portal, backdrop, ESC/Click-outside close,
- *  and basic fade/scale animation using Tailwind utilities.
- */
-function OverlayModal({ open, onClose, title, children, widthClass = "w-[min(900px,92vw)]" }) {
-  const panelRef = useRef(null);
-  const [state, setState] = useState("enter"); // enter -> entered (for simple animation)
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    // Animate in on next frame
-    const raf = requestAnimationFrame(() => setState("entered"));
-
-    // Close on ESC
-    const onKeyDown = (e) => e.key === "Escape" && onClose?.();
-    window.addEventListener("keydown", onKeyDown);
-
-    // focus
-    panelRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKeyDown);
-      cancelAnimationFrame(raf);
-      setState("enter");
-    };
-  }, [open, onClose]);
-
-  if (!open) return null;
-
-  const onBackdropMouseDown = (e) => {
-    if (e.target === e.currentTarget) onClose?.();
-  };
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-      onMouseDown={onBackdropMouseDown}
-    >
-      {/* Backdrop */}
-      <div
-        className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${
-          state === "entered" ? "opacity-100" : "opacity-0"
-        }`}
-      />
-
-      {/* Panel */}
-      <div
-        ref={panelRef}
-        tabIndex={-1}
-        className={[
-          "relative z-[1001] max-h-[90vh] overflow-auto rounded-2xl bg-white shadow-2xl outline-none p-5 sm:p-6",
-          widthClass,
-          "transition-all duration-200",
-          state === "entered"
-            ? "opacity-100 translate-y-0 scale-100"
-            : "opacity-0 translate-y-2 scale-[0.98]",
-        ].join(" ")}
-      >
-        <div className="flex items-start justify-between gap-4 mb-3">
-          {title ? <h2 className="text-xl font-semibold leading-6">{title}</h2> : <span />}
-          <button
-            onClick={onClose}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-        {children}
-      </div>
-    </div>,
-    document.body
   );
 }
 
