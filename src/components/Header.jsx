@@ -1,139 +1,84 @@
 // src/components/Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/img/halliwell-jones-logo.png"; // correct path
+import logo from "../assets/img/halliwell-jones-logo.png"; // keep this path if it exists
 
 export default function Header() {
   const links = [
-    { path: "/", label: "Home" },
-    { path: "/bikes", label: "Bikes" },
-    { path: "/part-exchange", label: "Part Exchange" },
-    { path: "/deals", label: "Deals" },
-    { path: "/to-do", label: "To Do" },
-    { path: "/add-new-deal", label: "Add New Deal", primary: true }, // CTA
+    { to: "/", label: "Home" },
+    { to: "/bikes", label: "Bikes" },
+    { to: "/part-exchange", label: "Part Exchange" },
+    { to: "/deals", label: "Deals" },
+    { to: "/to-do", label: "To Do" },
+    { to: "/add-new-deal", label: "Add New Deal", primary: true }, // CTA
   ];
 
   return (
-    <header
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        backgroundColor: "#0f1221",
-        color: "#fff",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.4)",
-        zIndex: 1000,
-      }}
-    >
-      {/* --- Top line: logo + title --- */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "12px",
-          padding: "12px 0",
-          borderBottom: "1px solid #1c2143",
-        }}
-      >
-        <img src={logo} alt="Halliwell Jones Logo" style={{ height: "40px" }} />
-        <h1 style={{ fontSize: "1.25rem", fontWeight: 600 }}>
-          Halliwell Jones Motorrad
-        </h1>
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#0f1221] text-white shadow-[0_2px_10px_rgba(0,0,0,0.4)]">
+      {/* Top line: logo + title */}
+      <div className="flex items-center justify-center gap-3 py-3 border-b border-[#1c2143]">
+        <img src={logo} alt="Halliwell Jones Logo" className="h-10 w-auto" />
+        <h1 className="text-xl font-semibold">Halliwell Jones Motorrad</h1>
       </div>
 
-      {/* --- Navigation tabs --- */}
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "28px",
-          padding: "10px 0",
-          background: "#1b2143",
-          borderTop: "1px solid #141936",
-          borderBottom: "1px solid #0e1230",
-        }}
-      >
-        {links.map(({ path, label, primary }) => (
-          <NavTab key={label} to={path} label={label} primary={primary} />
+      {/* Navigation tabs */}
+      <nav className="flex justify-center gap-7 py-2.5 bg-[#1b2143] border-y border-[#141936] border-b-[#0e1230]">
+        {links.map(({ to, label, primary }) => (
+          <NavItem key={label} to={to} label={label} primary={primary} />
         ))}
       </nav>
     </header>
   );
 }
 
-function NavTab({ to, label, primary = false }) {
-  const ACCENT = "#7aa2ff";
-  const ACCENT_HOVER = "#5b7cff";
-  const TEXT_DEFAULT = "#e8eaf5";
+function NavItem({ to, label, primary = false }) {
+  const ACCENT = "text-[#7aa2ff]";
+  const ACCENT_BG = "bg-[#7aa2ff]";
+  const ACCENT_BG_HOVER = "hover:bg-[#5b7cff]";
+  const TEXT_DEFAULT = "text-[#e8eaf5]";
 
-  const baseStyle = {
-    textDecoration: "none",
-    fontWeight: 600,
-    fontSize: "0.95rem",
-    position: "relative",
-    transition: "all 0.2s ease",
-    padding: primary ? "8px 14px" : "6px 0",
-    color: primary ? "#0b1027" : TEXT_DEFAULT,
-    outline: "none",
-  };
+  if (primary) {
+    // Pill CTA button
+    return (
+      <NavLink
+        to={to}
+        end={to === "/"}
+        aria-label={`${label} (primary action)`}
+        className={({ isActive }) =>
+          [
+            "inline-flex items-center font-semibold text-[0.95rem] px-3.5 py-2 rounded-full",
+            ACCENT_BG,
+            "text-[#0b1027]",
+            "border border-white/10",
+            "shadow-[0_4px_12px_rgba(0,0,0,0.25)]",
+            "transition-all duration-150",
+            ACCENT_BG_HOVER,
+            isActive ? "translate-y-[1px] shadow-[0_6px_16px_rgba(0,0,0,0.30)]" : "hover:-translate-y-px",
+            "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7aa2ff] focus:ring-offset-[#1b2143]",
+          ].join(" ")
+        }
+      >
+        {label}
+      </NavLink>
+    );
+  }
 
-  const primaryStyle = {
-    background: ACCENT,
-    borderRadius: "999px",
-    boxShadow:
-      "0 4px 12px rgba(0,0,0,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)",
-    transform: "translateY(0)",
-    border: "1px solid rgba(255,255,255,0.08)",
-  };
-
-  const primaryActiveStyle = {
-    background: ACCENT_HOVER,
-    boxShadow:
-      "0 6px 16px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2)",
-  };
-
-  const textTabActiveStyle = {
-    color: ACCENT,
-    borderBottom: `2px solid ${ACCENT}`,
-    paddingBottom: "4px",
-  };
-
+  // Text tab with active underline (no inline styles, no paddingBottom)
   return (
     <NavLink
       to={to}
       end={to === "/"}
-      className={`nav-link ${primary ? "nav-link--primary" : "nav-link--text"}`}
-      style={({ isActive }) => {
-        let s = { ...baseStyle };
-        if (primary) {
-          s = { ...s, ...primaryStyle };
-          if (isActive) s = { ...s, ...primaryActiveStyle };
-        } else {
-          s.color = isActive ? ACCENT : TEXT_DEFAULT;
-          if (isActive) s = { ...s, ...textTabActiveStyle };
-        }
-        return s;
-      }}
-      onMouseEnter={(e) => {
-        if (primary) {
-          e.currentTarget.style.background = ACCENT_HOVER;
-          e.currentTarget.style.transform = "translateY(-1px)";
-        } else {
-          e.currentTarget.style.color = ACCENT;
-          e.currentTarget.style.transform = "translateY(-2px)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        if (primary) {
-          e.currentTarget.style.background = ACCENT;
-        } else if (!e.currentTarget.matches('[aria-current="page"]')) {
-          e.currentTarget.style.color = TEXT_DEFAULT;
-        }
-      }}
-      aria-label={primary ? `${label} (primary action)` : label}
+      className={({ isActive }) =>
+        [
+          "relative inline-flex items-center font-semibold text-[0.95rem] px-0 py-1 transition-all duration-150",
+          TEXT_DEFAULT,
+          "hover:text-[#7aa2ff] hover:-translate-y-[2px]",
+          // active underline via border (no paddingBottom)
+          "border-b-2",
+          isActive ? `border-[#7aa2ff] ${ACCENT}` : "border-transparent",
+          "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7aa2ff] focus:ring-offset-[#1b2143]",
+        ].join(" ")
+      }
     >
       {label}
     </NavLink>
