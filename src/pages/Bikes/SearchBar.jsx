@@ -1,11 +1,13 @@
+// src/pages/Bikes/SearchBar.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 /**
  * Props:
  *  - onChange: (nextParams: Record<string, string|null>) => void
+ *  - className?: string  // optional extra classes (e.g., margins) applied alongside inline styles
  */
-export default function SearchBar({ onChange = () => {} }) {
+export default function SearchBar({ onChange = () => {}, className = "" }) {
   const [params] = useSearchParams();
 
   // Primary search fields (only these two show in the top bar)
@@ -84,8 +86,17 @@ export default function SearchBar({ onChange = () => {} }) {
     }
   };
 
+  // Match ResultsList's wrapper exactly (inline styles)
+  const cardStyle = {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 18,
+    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+  };
+
   return (
-    <div className="bg-white rounded-2xl shadow p-4">
+    <div className={className} style={cardStyle}>
       {/* Primary search row */}
       <div className="grid grid-cols-12 gap-3 items-end">
         <div className="col-span-12 md:col-span-4">
@@ -136,7 +147,11 @@ export default function SearchBar({ onChange = () => {} }) {
 
       {/* Filters panel */}
       {filtersOpen && (
-        <div id="bike-filters-panel" className="mt-4 border-t pt-4">
+        <div
+          id="bike-filters-panel"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+          className="mt-4 pt-4"
+        >
           <div className="grid grid-cols-12 gap-3">
             <div className="col-span-12 sm:col-span-3">
               <Label>Make</Label>
