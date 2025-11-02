@@ -97,7 +97,8 @@ function NavTab({ to, label, primary = false }) {
   const textTabActiveStyle = {
     color: ACCENT,
     borderBottom: `2px solid ${ACCENT}`,
-    paddingBottom: "4px",
+    // Use margin instead of padding to avoid shorthand/longhand conflict
+    marginBottom: "-2px", // tweak to -1px / -3px if you prefer
   };
 
   return (
