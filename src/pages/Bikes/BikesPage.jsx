@@ -83,13 +83,21 @@ export default function BikesPage() {
         </button>
       </div>
 
-      {/* Filters / Search */}
+      {/* Filters / Search (styled to match cards) */}
       <div className="col-span-12">
-        <SearchBar onChange={updateParams} />
+        <SearchBar
+          onChange={updateParams}
+          className="bg-white rounded-2xl shadow ring-1 ring-black/5 p-6"
+        />
       </div>
 
-      {/* List left */}
-      <div className="col-span-12 md:col-span-5 lg:col-span-4">
+      {/* Instruction card spanning full width */}
+      <div className="col-span-12">
+        <EmptyState />
+      </div>
+
+      {/* List now full width to match the instruction card */}
+      <div className="col-span-12">
         <ResultsList
           selectedId={selectedBikeId}
           onSelect={(id) => {
@@ -99,10 +107,8 @@ export default function BikesPage() {
         />
       </div>
 
-      {/* Right column placeholder on wide screens */}
-      <div className="hidden md:block md:col-span-7 lg:col-span-8">
-        <EmptyState />
-      </div>
+      {/* Right column placeholder on wide screens (kept as-is, but empty) */}
+      <div className="hidden md:block md:col-span-7 lg:col-span-8"></div>
 
       {/* View Bike Modal */}
       <Modal
@@ -142,7 +148,7 @@ export default function BikesPage() {
 
 function EmptyState() {
   return (
-    <div className="text-sm text-gray-600 bg-white rounded-2xl shadow p-6">
+    <div className="text-sm text-gray-600 bg-white rounded-2xl shadow ring-1 ring-black/5 p-6 text-center">
       Select a bike from the list to view details in a pop-up.
     </div>
   );
