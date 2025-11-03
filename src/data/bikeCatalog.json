@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "BMW": {
+    "R1300GS": {
+      "years": [2024, 2025],
+      "specs": [
+        { "id": "engine_cc", "label": "Engine (cc)", "type": "number" },
+        { "id": "suspension", "label": "Suspension", "type": "enum", "options": ["Standard", "Dynamic ESA"] }
+      ],
+      "features": [
+        { "id": "active_height_control", "label": "Active Height Control", "type": "boolean" },
+        { "id": "keyless_ride", "label": "Keyless Ride", "type": "boolean" },
+        { "id": "ride_modes_pro", "label": "Ride Modes Pro", "type": "boolean" }
+      ]
+    },
+    "F900R": {
+      "years": [2020, 2025],
+      "specs": [
+        { "id": "engine_cc", "label": "Engine (cc)", "type": "number" }
+      ],
+      "features": [
+        { "id": "keyless_ride", "label": "Keyless Ride", "type": "boolean" }
+      ]
+    }
+  },
+  "Honda": {
+    "CRF1100L Africa Twin": {
+      "years": [2020, 2025],
+      "specs": [
+        { "id": "transmission", "label": "Transmission", "type": "enum", "options": ["Manual", "DCT"] }
+      ],
+      "features": [
+        { "id": "tubeless_tyres", "label": "Tubeless Tyres", "type": "boolean" }
+      ]
+    }
+  }
+}

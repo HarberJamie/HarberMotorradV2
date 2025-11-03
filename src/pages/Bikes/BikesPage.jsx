@@ -1,14 +1,13 @@
 // src/pages/Bikes/BikesPage.jsx
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Modal from "../../components/Modal.jsx"; // <-- correct relative path
 import SearchBar from "./SearchBar.jsx";
 import ResultsList from "./ResultsList.jsx";
 import SelectedBike from "./SelectedBike.jsx";
+import Modal from "@/components/Modal.jsx";
 
 const BIKES_STORAGE_KEY = "harbermotorrad:bikes";
 
-/* --------------------------------- Storage -------------------------------- */
 function getBikes() {
   try {
     return JSON.parse(localStorage.getItem(BIKES_STORAGE_KEY)) || [];
@@ -17,252 +16,318 @@ function getBikes() {
   }
 }
 
-// Return the new id and emit bikes:updated with detail
-function saveBike(bike) {
-  const bikes = getBikes();
-  bikes.push(bike);
-  localStorage.setItem(BIKES_STORAGE_KEY, JSON.stringify(bikes));
-
-  const id = bike.id;
-  window.dispatchEvent(new CustomEvent("bikes:updated", { detail: { id } }));
-  return id;
+function setBikes(next) {
+  localStorage.setItem(BIKES_STORAGE_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent("bikes:updated", { detail: next }));
 }
 
-/* ---------------------------------- Page ---------------------------------- */
 export default function BikesPage() {
   const [params, setParams] = useSearchParams();
-  const bikeId = params.get("bikeId") || null;
 
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
-
-  // Merge helper: writes only non-empty values; deletes null/"" keys
-  const updateParams = (next) => {
-    const current = Object.fromEntries(params.entries());
-    const merged = { ...current };
-    for (const [k, v] of Object.entries(next || {})) {
-      if (v == null || v === "") delete merged[k];
-      else merged[k] = v;
-    }
-    // use replace so browser back doesn't spam old filters
-    setParams(merged, { replace: true });
-  };
-
-  // If a bikeId appears in the URL (via list click or deep link), open the overlay
+  // data
+  const [bikes, setBikesState] = useState(getBikes());
   useEffect(() => {
-    if (bikeId) {
-      setShowAddModal(false); // never show both
-      setShowViewModal(true);
-    } else {
-      setShowViewModal(false);
-    }
-  }, [bikeId]);
+    const onUpdate = (e) => setBikesState(e.detail);
+    window.addEventListener("bikes:updated", onUpdate);
+    return () => window.removeEventListener("bikes:updated", onUpdate);
+  }, []);
 
-  const closeViewModal = () => {
-    setShowViewModal(false);
-    // Clear selection from URL so reopening always works
-    updateParams({ bikeId: "" });
+  // selection
+  const [selectedId, setSelectedId] = useState(null);
+
+  // modals
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+
+  // search handlers
+  const handleSearchChange = (next) => {
+    const merged = new URLSearchParams(params);
+    Object.entries(next).forEach(([k, v]) => {
+      if (v == null || v === "") merged.delete(k);
+      else merged.set(k, v);
+    });
+    setParams(merged);
   };
 
-  // (Optional) if you keep bikes in memory, you can memo the selected here
-  const selectedBikeId = useMemo(() => bikeId, [bikeId]);
+  const filtered = useMemo(() => {
+    const reg = (params.get("registration") || "").trim().toLowerCase();
+    const vin = (params.get("vin") || "").trim().toLowerCase();
+    return bikes.filter((b) => {
+      const okReg = !reg || (b.registration || "").toLowerCase().includes(reg);
+      const okVin = !vin || (b.vin || "").toLowerCase().includes(vin);
+      return okReg && okVin;
+    });
+  }, [bikes, params]);
+
+  // list click
+  const openDetails = (id) => {
+    setSelectedId(id);
+    setIsDetailsOpen(true);
+  };
+
+  // add bike draft
+  const [draft, setDraft] = useState({
+    make: "",
+    model: "",
+    year: "",
+    registration: "",
+    vin: "",
+    mileage: "",
+    colour: "",
+    notes: "",
+  });
+
+  const updateDraft = (key, val) => setDraft((d) => ({ ...d, [key]: val }));
+
+  const resetDraft = () =>
+    setDraft({
+      make: "",
+      model: "",
+      year: "",
+      registration: "",
+      vin: "",
+      mileage: "",
+      colour: "",
+      notes: "",
+    });
+
+  const saveNewBike = () => {
+    const id = crypto.randomUUID();
+    const next = [...bikes, { id, ...draft, createdAt: Date.now() }];
+    setBikes(next);
+    setBikesState(next);
+    resetDraft();
+    setIsAddOpen(false);
+  };
+
+  // shared inline “card” look to match Deals.jsx / ResultsList.jsx
+  const boxStyle = {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 18,
+    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+  };
+  const thTdPad = { padding: 8 };
+  const headerRowStyle = { textAlign: "left", background: "#1b2143" };
+  const rowBorder = { borderTop: "1px solid rgba(255,255,255,0.08)" };
+
+  // NOTE: SelectedBike currently styles for a LIGHT panel.
+  // When SelectedBike supports a dark theme, change the line below to: const detailsVariant = "dark";
+  const detailsVariant = "light";
 
   return (
-    <div className="p-4 grid grid-cols-12 gap-4">
-      {/* Top bar with Add button + title */}
-      <div className="col-span-12 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Bikes</h1>
+    <div className="p-4 space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold">Bike Catalog</h1>
         <button
-          onClick={() => {
-            setShowViewModal(false);
-            setShowAddModal(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="rounded-2xl px-4 py-2 border shadow-sm hover:shadow transition"
+          onClick={() => setIsAddOpen(true)}
         >
           + Add Bike
         </button>
       </div>
 
-      {/* Filters / Search (styled to match cards) */}
-      <div className="col-span-12">
-        <SearchBar
-          onChange={updateParams}
-          className="bg-white rounded-2xl shadow ring-1 ring-black/5 p-6"
-        />
-      </div>
+      <SearchBar onChange={handleSearchChange} />
 
-      {/* Instruction card spanning full width */}
-      <div className="col-span-12">
-        <EmptyState />
-      </div>
-
-      {/* List now full width to match the instruction card */}
-      <div className="col-span-12">
+      <div className="grid md:grid-cols-[540px,1fr] gap-4">
         <ResultsList
-          selectedId={selectedBikeId}
-          onSelect={(id) => {
-            // set the id into the URL; modal opens via the effect above
-            updateParams({ bikeId: id });
-          }}
+          selectedId={selectedId}
+          onSelect={openDetails}
+          bikes={filtered}
         />
+        <div className="hidden md:block" style={boxStyle}>
+          <h2 style={{ margin: 0, marginBottom: 12 }}>Details</h2>
+          <p style={{ opacity: 0.8 }}>Select a bike to view details.</p>
+        </div>
       </div>
 
-      {/* Right column placeholder on wide screens (kept as-is, but empty) */}
-      <div className="hidden md:block md:col-span-7 lg:col-span-8"></div>
-
-      {/* View Bike Modal */}
+      {/* Bike Details Modal */}
       <Modal
-        open={!!selectedBikeId && showViewModal}
-        onClose={closeViewModal}
-        title="Bike Details"
-        widthClass="w-[min(980px,95vw)]"
-        initialFocusSelector="" // falls back to panel
+        open={isDetailsOpen}
+        onClose={() => setIsDetailsOpen(false)}
+        title="Bike details"
+        variant={detailsVariant}
       >
-        {selectedBikeId ? (
-          // key forces remount when switching bikes so scroll/inputs reset cleanly
-          <SelectedBike key={selectedBikeId} bikeId={selectedBikeId} />
+        {selectedId ? (
+          <SelectedBike
+            id={selectedId}
+            onClose={() => setIsDetailsOpen(false)}
+          />
         ) : (
           <p>No bike selected</p>
         )}
       </Modal>
 
-      {/* Add Bike Modal */}
+      {/* Add Bike Modal — styled like Deals/Results/Selected */}
       <Modal
-        open={showAddModal}
-        onClose={() => setShowAddModal(false)}
-        title="Add New Bike"
-        widthClass="w-[min(680px,95vw)]"
+        open={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        title="Add a bike"
+        initialFocusSelector="#make"
+        variant="light"
       >
-        <AddBikeForm
-          onCancel={() => setShowAddModal(false)}
-          onSaved={(id) => {
-            setShowAddModal(false);
-            // Put new bike into URL; the effect opens the view modal
-            updateParams({ bikeId: id });
-          }}
-        />
+        <div style={boxStyle}>
+          <h2 style={{ margin: 0, marginBottom: 12 }}>Add Bike</h2>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveNewBike();
+            }}
+          >
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={headerRowStyle}>
+                    <th style={thTdPad}>Field</th>
+                    <th style={thTdPad}>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Make</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="make"
+                        value={draft.make}
+                        onChange={(e) => updateDraft("make", e.target.value)}
+                        required
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Model</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="model"
+                        value={draft.model}
+                        onChange={(e) => updateDraft("model", e.target.value)}
+                        required
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Year</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="year"
+                        placeholder="2021"
+                        value={draft.year}
+                        onChange={(e) => updateDraft("year", e.target.value)}
+                        inputMode="numeric"
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Registration</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="registration"
+                        value={draft.registration}
+                        onChange={(e) => updateDraft("registration", e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>VIN</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="vin"
+                        value={draft.vin}
+                        onChange={(e) => updateDraft("vin", e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Mileage</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="mileage"
+                        value={draft.mileage}
+                        onChange={(e) => updateDraft("mileage", e.target.value)}
+                        inputMode="numeric"
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Colour</td>
+                    <td style={thTdPad}>
+                      <Input
+                        id="colour"
+                        value={draft.colour}
+                        onChange={(e) => updateDraft("colour", e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                  <tr style={rowBorder}>
+                    <td style={thTdPad}>Notes</td>
+                    <td style={thTdPad}>
+                      <textarea
+                        id="notes"
+                        rows={4}
+                        value={draft.notes}
+                        onChange={(e) => updateDraft("notes", e.target.value)}
+                        style={{
+                          width: "100%",
+                          borderRadius: 12,
+                          border: "1px solid rgba(255,255,255,0.2)",
+                          padding: 8,
+                          background: "transparent",
+                          color: "inherit",
+                          resize: "vertical",
+                          minHeight: 80,
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 14 }}>
+              <button
+                type="button"
+                onClick={() => setIsAddOpen(false)}
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: 12,
+                  border: "1px solid rgba(255,255,255,0.2)",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: 12,
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                }}
+              >
+                Save Bike
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     </div>
   );
 }
 
-function EmptyState() {
+function Input(props) {
   return (
-    <div className="text-sm text-gray-600 bg-white rounded-2xl shadow ring-1 ring-black/5 p-6 text-center">
-      Select a bike from the list to view details in a pop-up.
-    </div>
-  );
-}
-
-/* ----------------------------- Add Bike Form ------------------------------ */
-function AddBikeForm({ onCancel, onSaved }) {
-  const [form, setForm] = useState({
-    make: "",
-    model: "",
-    year: "",
-    mileage: "",
-    condition: "Used",
-    price: "",
-    colour: "",
-    registration: "",
-    vin: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const id = `${Date.now()}`;
-    const now = new Date().toISOString();
-    const payload = {
-      id,
-      ...form,
-      year: String(form.year || "").trim(),
-      mileage: Number(form.mileage || 0),
-      price: Number(form.price || 0),
-      createdAt: now,
-      updatedAt: now,
-      source: "manual",
-    };
-    const savedId = saveBike(payload);
-    onSaved?.(savedId);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Field label="Make" name="make" value={form.make} onChange={handleChange} required />
-        <Field label="Model" name="model" value={form.model} onChange={handleChange} required />
-        <Field label="Year" name="year" value={form.year} onChange={handleChange} required />
-        <Field label="Mileage" name="mileage" type="number" min="0" step="1" value={form.mileage} onChange={handleChange} />
-        <Select
-          label="Condition"
-          name="condition"
-          value={form.condition}
-          onChange={handleChange}
-          options={["New", "Used", "Ex-Demo"]}
-        />
-        <Field label="Price (£)" name="price" type="number" min="0" step="1" value={form.price} onChange={handleChange} />
-        <Field label="Colour" name="colour" value={form.colour} onChange={handleChange} />
-        <Field label="Registration" name="registration" value={form.registration} onChange={handleChange} />
-        <Field label="VIN" name="vin" value={form.vin} onChange={handleChange} />
-      </div>
-
-      <div className="pt-2 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-        >
-          Save Bike
-        </button>
-      </div>
-    </form>
-  );
-}
-
-/* -------------------------- Form Input Components -------------------------- */
-function Field({ label, name, value, onChange, type = "text", ...rest }) {
-  return (
-    <label className="block">
-      <span className="text-sm font-medium text-gray-800">{label}</span>
-      <input
-        className="mt-1 w-full rounded-xl border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-blue-500"
-        name={name}
-        value={value}
-        onChange={onChange}
-        type={type}
-        {...rest}
-      />
-    </label>
-  );
-}
-
-function Select({ label, name, value, onChange, options = [] }) {
-  return (
-    <label className="block">
-      <span className="text-sm font-medium text-gray-800">{label}</span>
-      <select
-        className="mt-1 w-full rounded-xl border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-blue-500"
-        name={name}
-        value={value}
-        onChange={onChange}
-      >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </label>
+    <input
+      {...props}
+      style={{
+        width: "100%",
+        borderRadius: 12,
+        border: "1px solid rgba(255,255,255,0.2)",
+        padding: 8,
+        background: "transparent",
+        color: "inherit",
+      }}
+    />
   );
 }

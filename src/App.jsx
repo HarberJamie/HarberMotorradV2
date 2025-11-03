@@ -7,7 +7,7 @@ import Deals from "./pages/Deals.jsx";
 import NewDeal from "./pages/NewDeal.jsx"; // ✅ Add this import
 import PartEx from "./pages/PartEx/PartExchange.jsx"; // exact case
 import BikesPage from "./pages/Bikes/BikesPage.jsx";
-import AddBike from "./pages/AddBike.jsx";
+import AddBike from "./pages/Bikes/AddBike.jsx";
 
 // --- Placeholder pages (can be replaced with real components later) ---
 function Home() {
