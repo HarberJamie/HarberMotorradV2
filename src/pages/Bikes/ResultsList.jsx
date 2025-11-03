@@ -1,202 +1,77 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+// src/pages/Bikes/ResultsList.jsx
+import React, { useMemo } from "react";
 
-const STORAGE_KEY = "harbermotorrad:bikes";
+export default function ResultsList({ bikes = [], selectedId, onSelect }) {
+  const rows = useMemo(() => {
+    // Newest first like Deals.jsx
+    return [...bikes].sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
+  }, [bikes]);
 
-// Exported so SelectedBike can reuse when localStorage is empty
-export const PREVIEW_BIKES = [
-  {
-    id: "b-001",
-    registration: "YK70 ABC",
-    vin: "WB10A123456789000",
-    make: "BMW",
-    model: "R1250GS",
-    mileage: 12450,
-    serviceHistory: "full",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-  },
-  {
-    id: "b-002",
-    registration: "DA21 XYZ",
-    vin: "WB10B987654321000",
-    make: "BMW",
-    model: "S1000R",
-    mileage: 7350,
-    serviceHistory: "partial",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 6).toISOString(),
-  },
-  {
-    id: "b-003",
-    registration: "PJ19 LMN",
-    vin: "JH2SD012345678900",
-    make: "Honda",
-    model: "CRF1100L Africa Twin",
-    mileage: 18200,
-    serviceHistory: "none",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
-  },
-];
-
-export default function ResultsList({ selectedId, onSelect }) {
-  const [params] = useSearchParams();
-  const [bikes, setBikes] = useState([]);
-
-  // Helper to read + sort from storage, with preview fallback
-  const read = () => {
-    try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      if (Array.isArray(data) && data.length > 0) {
-        return data
-          .slice()
-          .sort(
-            (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-          );
-      }
-      return PREVIEW_BIKES;
-    } catch {
-      return PREVIEW_BIKES;
-    }
+  const boxStyle = {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: 18,
+    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
   };
 
-  // Load once, then listen for bikes:updated + cross-tab storage changes
-  useEffect(() => {
-    setBikes(read());
-
-    const handleUpdated = () => setBikes(read());
-    const handleStorage = (e) => {
-      if (e.key === STORAGE_KEY) setBikes(read());
-    };
-
-    window.addEventListener("bikes:updated", handleUpdated);
-    window.addEventListener("storage", handleStorage);
-
-    return () => {
-      window.removeEventListener("bikes:updated", handleUpdated);
-      window.removeEventListener("storage", handleStorage);
-    };
-  }, []);
-
-  // Read filters from URL params (synced by SearchBar)
-  const filters = {
-    registration: (params.get("registration") || "").trim().toUpperCase(),
-    vin: (params.get("vin") || "").trim().toUpperCase(),
-    make: (params.get("make") || "").trim().toLowerCase(),
-    model: (params.get("model") || "").trim().toLowerCase(),
-    mileageMin: params.get("mileageMin")
-      ? Number(params.get("mileageMin"))
-      : null,
-    mileageMax: params.get("mileageMax")
-      ? Number(params.get("mileageMax"))
-      : null,
-    serviceHistory: (params.get("serviceHistory") || "").trim().toLowerCase(), // "", "full", "partial", "none", "unknown"
-  };
-
-  const filtered = useMemo(() => {
-    return bikes.filter((b) => {
-      const reg = (b.registration || "").toUpperCase();
-      const vin = (b.vin || "").toUpperCase();
-      const make = (b.make || "").toLowerCase();
-      const model = (b.model || "").toLowerCase();
-      const mileage = Number(b.mileage ?? NaN);
-      const svc = (b.serviceHistory || "").toLowerCase();
-
-      if (filters.registration && !reg.includes(filters.registration))
-        return false;
-      if (filters.vin && !vin.includes(filters.vin)) return false;
-      if (filters.make && !make.includes(filters.make)) return false;
-      if (filters.model && !model.includes(filters.model)) return false;
-      if (
-        filters.mileageMin != null &&
-        !Number.isNaN(mileage) &&
-        mileage < filters.mileageMin
-      )
-        return false;
-      if (
-        filters.mileageMax != null &&
-        !Number.isNaN(mileage) &&
-        mileage > filters.mileageMax
-      )
-        return false;
-      if (filters.serviceHistory && svc !== filters.serviceHistory) return false;
-
-      return true;
-    });
-  }, [bikes, filters]);
+  const thTdPad = { padding: 8 };
+  const headerRowStyle = { textAlign: "left", background: "#1b2143" };
+  const rowBorder = { borderTop: "1px solid rgba(255,255,255,0.08)" };
 
   return (
-    <div
-      style={{
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: 12,
-        padding: 18,
-        boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-        height: "100%",
-      }}
-    >
+    <div style={boxStyle}>
       <h2 style={{ marginBottom: 12 }}>Bikes</h2>
 
-      {filtered.length === 0 ? (
-        <p>No bikes found.</p>
+      {rows.length === 0 ? (
+        <p>No bikes yet. Add one via “+ Add Bike”.</p>
       ) : (
         <div style={{ overflowX: "auto" }}>
-          <table
-            style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}
-          >
+          <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ textAlign: "left", background: "#1b2143" }}>
-                <th style={{ padding: 8 }}>Reg</th>
-                <th style={{ padding: 8 }}>VIN</th>
-                <th style={{ padding: 8 }}>Make</th>
-                <th style={{ padding: 8 }}>Model</th>
-                <th style={{ padding: 8, textAlign: "right" }}>Mileage</th>
-                <th style={{ padding: 8 }}>Service History</th>
-                <th style={{ padding: 8 }}>Created</th>
+              <tr style={headerRowStyle}>
+                <th style={thTdPad}>ID</th>
+                <th style={thTdPad}>Created</th>
+                <th style={thTdPad}>Make / Model</th>
+                <th style={thTdPad}>Registration</th>
+                <th style={thTdPad}>VIN</th>
+                <th style={thTdPad}>Mileage</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((b) => {
+              {rows.map((b) => {
                 const isActive = selectedId === b.id;
+                const vinTail = b.vin ? `…${String(b.vin).slice(-6).toUpperCase()}` : "-";
+                const reg = b.registration ? String(b.registration).toUpperCase() : "-";
+                const title = [b.make, b.model].filter(Boolean).join(" ") || "Untitled";
+                const created = b.createdAt ? new Date(b.createdAt).toLocaleString() : "-";
+                const mileage =
+                  b.mileage !== undefined && b.mileage !== null && b.mileage !== ""
+                    ? `${Number(b.mileage).toLocaleString()} mi`
+                    : "-";
+
                 return (
                   <tr
                     key={b.id}
-                    onClick={() => onSelect && onSelect(b.id)}
                     style={{
+                      ...rowBorder,
+                      background: isActive ? "rgba(255,255,255,0.06)" : undefined,
                       cursor: "pointer",
-                      borderTop: "1px solid rgba(255,255,255,0.08)",
-                      background: isActive
-                        ? "rgba(255,255,255,0.06)"
-                        : "transparent",
+                      // kill any default outlines from user agents
+                      outline: "none",
+                      boxShadow: "none",
                     }}
-                    aria-selected={isActive}
+                    onClick={() => onSelect?.(b.id)}
+                    aria-current={isActive ? "true" : undefined}
                   >
-                    <td
-                      style={{
-                        padding: 8,
-                        fontFamily:
-                          "ui-monospace, SFMono-Regular, Menlo, monospace",
-                      }}
-                    >
-                      {b.registration || "-"}
+                    <td style={{ ...thTdPad, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
+                      {b.id ? `${String(b.id).slice(0, 8)}…` : "-"}
                     </td>
-                    <td style={{ padding: 8 }}>
-                      {b.vin ? `${b.vin.slice(0, 8)}…` : "-"}
-                    </td>
-                    <td style={{ padding: 8 }}>{b.make || "-"}</td>
-                    <td style={{ padding: 8 }}>{b.model || "-"}</td>
-                    <td style={{ padding: 8, textAlign: "right" }}>
-                      {Number.isFinite(Number(b.mileage))
-                        ? Number(b.mileage).toLocaleString()
-                        : "-"}
-                    </td>
-                    <td style={{ padding: 8 }}>
-                      {prettyService(b.serviceHistory)}
-                    </td>
-                    <td style={{ padding: 8 }}>
-                      {b.createdAt
-                        ? new Date(b.createdAt).toLocaleString()
-                        : "-"}
-                    </td>
+                    <td style={thTdPad}>{created}</td>
+                    <td style={thTdPad}>{title}</td>
+                    <td style={thTdPad}>{reg}</td>
+                    <td style={thTdPad}>{vinTail}</td>
+                    <td style={thTdPad}>{mileage}</td>
                   </tr>
                 );
               })}
@@ -206,14 +81,4 @@ export default function ResultsList({ selectedId, onSelect }) {
       )}
     </div>
   );
-}
-
-function prettyService(value) {
-  const v = (value || "").toLowerCase();
-  if (!v) return "-";
-  if (v === "full") return "Full";
-  if (v === "partial") return "Partial";
-  if (v === "none") return "None";
-  if (v === "unknown") return "Unknown";
-  return value;
 }
