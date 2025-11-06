@@ -1,209 +1,135 @@
-// src/pages/Bikes/SelectedBike.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import TabsHeader from "@/pages/TabsHeader.jsx";
+import { normalizeKey } from "@/lib/normalizeKey.js";
 
-const BIKES_STORAGE_KEY = "harbermotorrad:bikes";
+// Display order from your spreadsheet
+const DETAILS_FIELDS = [
+  "Registration","Make","Model","Trim","Vin","Status (Event)","Model Type","Reg Date",
+  "Previous Owners","Site","Stock Number","In stock","Days in Stock","Total Miles","Price",
+  "Preperation Costs","VAT Qualifying","AUB Expiry","MOT Expiry","HPI Date",
+  "Fuel Level (Miles Remaining)","Progress Code","Specification","Notes",
+];
 
-function getBikes() {
-  try {
-    return JSON.parse(localStorage.getItem(BIKES_STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
+const HISTORY_FIELDS = [
+  "Registration","Make","Model","Trim","Vin","Status (Event)","Model Type","Reg Date",
+  "Total Miles","Preperation Costs","Event Type","Event Date","Specification","Notes",
+  "Valuation Date","Valuation Price","Sale Date","Sale Price","Events","Average Sale","Average Prep Costs",
+];
+
+// Fix any normalized label that differs from your stored key
+const KEY_OVERRIDES = {
+  preperationCosts: "preparationCosts",
+  fuelLevelMilesRemaining: "fuelMilesRemaining",
+};
+
+function getValueByLabel(obj, label) {
+  const k = normalizeKey(label);
+  const dataKey = KEY_OVERRIDES[k] || k;
+  return obj?.[dataKey];
 }
 
-export default function SelectedBike({ id, onClose }) {
-  const [bikes, setBikes] = useState(getBikes());
+function formatValue(v) {
+  if (v === null || v === undefined || v === "") return "–";
+  if (typeof v === "boolean") return v ? "Yes" : "No";
+  return String(v);
+}
 
-  useEffect(() => {
-    const onUpdate = (e) => setBikes(e.detail);
-    window.addEventListener("bikes:updated", onUpdate);
-    return () => window.removeEventListener("bikes:updated", onUpdate);
-  }, []);
-
-  const bike = useMemo(() => bikes.find((b) => b.id === id), [bikes, id]);
-
-  // Readable colors on a WHITE modal panel
-  const textColor = "#111827"; // slate-900
-  const subText = "#374151";   // slate-700
-  const borderLight = "rgba(0,0,0,0.08)";
-  const headerBg = "#1b2143";
-  const headerFg = "#ffffff";
-
-  const boxStyle = {
-    background: "transparent",
-    border: `1px solid ${borderLight}`,
-    borderRadius: 12,
-    padding: 18,
-    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-    color: textColor,
+function FieldGrid({ fields, data }) {
+  const grid = {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 14,
   };
-  const thTdPad = { padding: 8, color: textColor };
-  const headerRowStyle = { textAlign: "left", background: headerBg, color: headerFg };
-  const rowBorder = { borderTop: `1px solid ${borderLight}` };
 
-  if (!id) {
-    return (
-      <div style={boxStyle}>
-        <h2 style={{ marginBottom: 12, color: textColor }}>Bike details</h2>
-        <p style={{ color: subText }}>No bike selected.</p>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: `1px solid ${borderLight}`,
-              color: textColor,
-              background: "transparent",
-            }}
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const card = {
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    padding: "10px 12px",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+    minHeight: 56,
+  };
 
-  if (!bike) {
-    return (
-      <div style={boxStyle}>
-        <h2 style={{ marginBottom: 12, color: textColor }}>Bike details</h2>
-        <p style={{ color: subText }}>We couldn’t find that bike.</p>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: `1px solid ${borderLight}`,
-              color: textColor,
-              background: "transparent",
-            }}
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const label = {
+    fontSize: 11,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "rgba(255,255,255,0.7)",
+    marginBottom: 4,
+  };
 
-  const {
-    make,
-    model,
-    year,
-    registration,
-    vin,
-    mileage,
-    colour,
-    notes,
-    createdAt,
-  } = bike;
+  const value = {
+    fontSize: 14,
+    color: "rgba(255,255,255,0.98)",
+    wordBreak: "break-word",
+    whiteSpace: "normal",
+    lineHeight: 1.4,
+  };
 
-  const title = [make, model].filter(Boolean).join(" ") || "Untitled";
-  const created = createdAt ? new Date(createdAt).toLocaleString() : "-";
-  const reg = registration ? String(registration).toUpperCase() : "-";
-  const vinTail = vin ? `…${String(vin).slice(-6).toUpperCase()}` : "-";
-  const mileageStr =
-    mileage !== undefined && mileage !== null && String(mileage) !== ""
-      ? `${Number(mileage).toLocaleString()} mi`
-      : "-";
+  const responsive = (
+    <style>{`
+      @media (max-width: 900px) {
+        .selected-bike__grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    `}</style>
+  );
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      {/* Overview card */}
-      <div style={boxStyle}>
-        <h2 style={{ margin: 0, marginBottom: 12, color: textColor }}>Bike details</h2>
+    <>
+      {responsive}
+      <div className="selected-bike__grid" style={grid}>
+        {fields.map((labelText) => (
+          <div key={labelText} style={card}>
+            <div style={label}>{labelText}</div>
+            <div style={value}>{formatValue(getValueByLabel(data, labelText))}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
 
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={headerRowStyle}>
-                <th style={{ ...thTdPad, color: headerFg }}>Created</th>
-                <th style={{ ...thTdPad, color: headerFg }}>Make / Model</th>
-                <th style={{ ...thTdPad, color: headerFg }}>Registration</th>
-                <th style={{ ...thTdPad, color: headerFg }}>VIN</th>
-                <th style={{ ...thTdPad, color: headerFg }}>Mileage</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={rowBorder}>
-                <td style={thTdPad}>{created}</td>
-                <td style={thTdPad}>{title}</td>
-                <td style={thTdPad}>{reg}</td>
-                <td style={thTdPad}>{vinTail}</td>
-                <td style={thTdPad}>{mileageStr}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+export default function SelectedBike({ bike }) {
+  const [active, setActive] = useState("details");
+  if (!bike) return <div>No bike selected</div>;
+
+  // Header now shows only registration
+  const registration = useMemo(() => bike.registration || "–", [bike]);
+
+  const tabs = [
+    { id: "details", label: "Details" },
+    { id: "history", label: "History" },
+  ];
+
+  const header = { marginBottom: 8 };
+  const titleStyle = { fontSize: 22, fontWeight: 700, margin: 0, color: "#0b1228" };
+
+  const darkPanel = {
+    marginTop: 12,
+    background: "linear-gradient(180deg, #0e1330 0%, #0b1028 100%)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 14,
+    padding: 16,
+    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+  };
+
+  return (
+    <div className="selected-bike" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="selected-bike-header" style={header}>
+        <h2 style={titleStyle}>{registration}</h2>
       </div>
 
-      {/* Details card */}
-      <div style={boxStyle}>
-        <h3 style={{ margin: "0 0 12px 0", fontSize: 16, color: textColor }}>Details</h3>
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={headerRowStyle}>
-                <th style={{ ...thTdPad, color: headerFg }}>Field</th>
-                <th style={{ ...thTdPad, color: headerFg }}>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={rowBorder}>
-                <td style={{ ...thTdPad, color: subText }}>Year</td>
-                <td style={thTdPad}>{year || "—"}</td>
-              </tr>
-              <tr style={rowBorder}>
-                <td style={{ ...thTdPad, color: subText }}>Colour</td>
-                <td style={thTdPad}>{colour || "—"}</td>
-              </tr>
-              <tr style={rowBorder}>
-                <td style={{ ...thTdPad, color: subText }}>Full VIN</td>
-                <td style={thTdPad}>{vin || "—"}</td>
-              </tr>
-              <tr style={rowBorder}>
-                <td style={{ ...thTdPad, color: subText }}>Registration</td>
-                <td style={thTdPad}>{reg}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <TabsHeader tabs={tabs} active={active} onChange={setActive} />
 
-      {/* Notes card */}
-      <div style={boxStyle}>
-        <h3 style={{ margin: "0 0 8px 0", fontSize: 16, color: textColor }}>Notes</h3>
-        <div
-          style={{
-            border: `1px solid ${borderLight}`,
-            borderRadius: 12,
-            padding: 12,
-            minHeight: 60,
-            whiteSpace: "pre-wrap",
-            fontSize: 14,
-            color: textColor,
-          }}
-        >
-          {notes || "—"}
+      <div style={darkPanel}>
+        <div id="panel-details" hidden={active !== "details"}>
+          <FieldGrid fields={DETAILS_FIELDS} data={bike} />
         </div>
 
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 14 }}>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: `1px solid ${borderLight}`,
-              color: textColor,
-              background: "transparent",
-            }}
-          >
-            Close
-          </button>
+        <div id="panel-history" hidden={active !== "history"}>
+          <FieldGrid fields={HISTORY_FIELDS} data={bike} />
         </div>
       </div>
     </div>

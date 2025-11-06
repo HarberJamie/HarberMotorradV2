@@ -1,333 +1,191 @@
 // src/pages/Bikes/BikesPage.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useBikes } from "@/lib/bikesStore.js";
 import SearchBar from "./SearchBar.jsx";
 import ResultsList from "./ResultsList.jsx";
 import SelectedBike from "./SelectedBike.jsx";
 import Modal from "@/components/Modal.jsx";
-
-const BIKES_STORAGE_KEY = "harbermotorrad:bikes";
-
-function getBikes() {
-  try {
-    return JSON.parse(localStorage.getItem(BIKES_STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function setBikes(next) {
-  localStorage.setItem(BIKES_STORAGE_KEY, JSON.stringify(next));
-  window.dispatchEvent(new CustomEvent("bikes:updated", { detail: next }));
-}
+import BikeDetailsForm from "./BikeDetailsForm.jsx";
 
 export default function BikesPage() {
+  const { bikes } = useBikes();
   const [params, setParams] = useSearchParams();
 
-  // data
-  const [bikes, setBikesState] = useState(getBikes());
-  useEffect(() => {
-    const onUpdate = (e) => setBikesState(e.detail);
-    window.addEventListener("bikes:updated", onUpdate);
-    return () => window.removeEventListener("bikes:updated", onUpdate);
+  // Selected bike (by id in URL)
+  const [selectedId, setSelectedId] = useState(() => params.get("id") || null);
+
+  // Add Bike modal + prefill support
+  const [addOpen, setAddOpen] = useState(false);
+  const [prefillData, setPrefillData] = useState(null);
+
+  // Helper to open Add Bike with optional defaults (e.g., from PX/reg lookup)
+  const openAddBike = useCallback((data = null) => {
+    setPrefillData(data);
+    setAddOpen(true);
   }, []);
 
-  // selection
-  const [selectedId, setSelectedId] = useState(null);
+  // Keep selection valid when bikes list changes
+  useEffect(() => {
+    if (!Array.isArray(bikes) || bikes.length === 0) {
+      if (selectedId) setSelectedId(null);
+      return;
+    }
+    if (selectedId && !bikes.some((b) => b.id === selectedId)) {
+      clearSelection();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bikes]);
 
-  // modals
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  const selectedBike = useMemo(
+    () => (Array.isArray(bikes) ? bikes.find((b) => b.id === selectedId) : null),
+    [bikes, selectedId]
+  );
 
-  // search handlers
-  const handleSearchChange = (next) => {
-    const merged = new URLSearchParams(params);
-    Object.entries(next).forEach(([k, v]) => {
-      if (v == null || v === "") merged.delete(k);
-      else merged.set(k, v);
-    });
-    setParams(merged);
-  };
+  const isSelectedBikeModalOpen = !!selectedBike;
 
-  const filtered = useMemo(() => {
-    const reg = (params.get("registration") || "").trim().toLowerCase();
-    const vin = (params.get("vin") || "").trim().toLowerCase();
-    return bikes.filter((b) => {
-      const okReg = !reg || (b.registration || "").toLowerCase().includes(reg);
-      const okVin = !vin || (b.vin || "").toLowerCase().includes(vin);
-      return okReg && okVin;
-    });
-  }, [bikes, params]);
+  const setSelection = useCallback(
+    (id) => {
+      setSelectedId(id);
+      setParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          if (id) next.set("id", id);
+          else next.delete("id");
+          return next;
+        },
+        { replace: true }
+      );
+    },
+    [setParams]
+  );
 
-  // list click
-  const openDetails = (id) => {
-    setSelectedId(id);
-    setIsDetailsOpen(true);
-  };
+  const clearSelection = useCallback(() => {
+    setSelectedId(null);
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("id");
+        return next;
+      },
+      { replace: true }
+    );
+  }, [setParams]);
 
-  // add bike draft
-  const [draft, setDraft] = useState({
-    make: "",
-    model: "",
-    year: "",
-    registration: "",
-    vin: "",
-    mileage: "",
-    colour: "",
-    notes: "",
-  });
+  const handleSelect = useCallback((id) => setSelection(id), [setSelection]);
 
-  const updateDraft = (key, val) => setDraft((d) => ({ ...d, [key]: val }));
+  // ⛔️ Critical guard: while the Add Bike modal is open, ignore search param changes.
+  // This prevents URL writes (and parent re-renders) while you're typing in the modal.
+  const handleSearchChange = useCallback(
+    (nextParamsObj) => {
+      if (addOpen) return; // <- freeze search while modal is open
 
-  const resetDraft = () =>
-    setDraft({
-      make: "",
-      model: "",
-      year: "",
-      registration: "",
-      vin: "",
-      mileage: "",
-      colour: "",
-      notes: "",
-    });
+      const next = new URLSearchParams(params);
+      Object.entries(nextParamsObj).forEach(([k, v]) => {
+        if (v === null || v === "" || typeof v === "undefined") next.delete(k);
+        else next.set(k, String(v));
+      });
+      setParams(next, { replace: true });
+    },
+    [params, setParams, addOpen]
+  );
 
-  const saveNewBike = () => {
-    const id = crypto.randomUUID();
-    const next = [...bikes, { id, ...draft, createdAt: Date.now() }];
-    setBikes(next);
-    setBikesState(next);
-    resetDraft();
-    setIsAddOpen(false);
-  };
-
-  // shared inline “card” look to match Deals.jsx / ResultsList.jsx
-  const boxStyle = {
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 12,
-    padding: 18,
-    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-  };
-  const thTdPad = { padding: 8 };
-  const headerRowStyle = { textAlign: "left", background: "#1b2143" };
-  const rowBorder = { borderTop: "1px solid rgba(255,255,255,0.08)" };
-
-  // NOTE: SelectedBike currently styles for a LIGHT panel.
-  // When SelectedBike supports a dark theme, change the line below to: const detailsVariant = "dark";
-  const detailsVariant = "light";
+  const modalTitle = selectedBike
+    ? (selectedBike.registration
+        ? `${selectedBike.registration} — ${selectedBike.make || ""} ${selectedBike.model || ""}`.trim()
+        : `${selectedBike.make || ""} ${selectedBike.model || ""}`.trim())
+    : "";
 
   return (
-    <div className="p-4 space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Bike Catalog</h1>
-        <button
-          className="rounded-2xl px-4 py-2 border shadow-sm hover:shadow transition"
-          onClick={() => setIsAddOpen(true)}
+    <div
+      className="bikes-page"
+      style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%" }}
+    >
+      {/* Search bar */}
+      <div className="bikes-page__search" style={{ width: "100%" }}>
+        <SearchBar onChange={handleSearchChange} />
+      </div>
+
+      {/* Info message bar (full width, shown only when nothing selected) */}
+      {!selectedBike && (
+        <div
+          className="bikes-page__info"
+          style={{
+            width: "100%",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 12,
+            padding: "12px 16px",
+            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+            color: "#cfd3ff",
+          }}
         >
-          + Add Bike
-        </button>
-      </div>
-
-      <SearchBar onChange={handleSearchChange} />
-
-      <div className="grid md:grid-cols-[540px,1fr] gap-4">
-        <ResultsList
-          selectedId={selectedId}
-          onSelect={openDetails}
-          bikes={filtered}
-        />
-        <div className="hidden md:block" style={boxStyle}>
-          <h2 style={{ margin: 0, marginBottom: 12 }}>Details</h2>
-          <p style={{ opacity: 0.8 }}>Select a bike to view details.</p>
+          <span>Select a bike from the list — or </span>
+          <button
+            type="button"
+            onClick={() => openAddBike()}
+            className="underline"
+            style={{
+              color: "#6aa9ff",
+              textUnderlineOffset: "3px",
+              background: "transparent",
+              border: 0,
+              cursor: "pointer",
+              fontWeight: 600,
+            }}
+            aria-label="Add Bike"
+            title="Add a new bike"
+          >
+            Add Bike
+          </button>
+          .
         </div>
+      )}
+
+      {/* Full-width ResultsList */}
+      <div className="bikes-page__results" style={{ width: "100%" }}>
+        <ResultsList selectedId={selectedId} onSelect={handleSelect} />
       </div>
 
-      {/* Bike Details Modal */}
+      {/* Selected Bike modal */}
       <Modal
-        open={isDetailsOpen}
-        onClose={() => setIsDetailsOpen(false)}
-        title="Bike details"
-        variant={detailsVariant}
+        open={isSelectedBikeModalOpen}
+        onClose={clearSelection}
+        title={modalTitle}
+        widthClass="w-[min(1100px,96vw)]"
+        closeOnBackdrop={true}
+        closeOnEsc={true}
       >
-        {selectedId ? (
-          <SelectedBike
-            id={selectedId}
-            onClose={() => setIsDetailsOpen(false)}
-          />
-        ) : (
-          <p>No bike selected</p>
-        )}
+        {selectedBike && <SelectedBike bike={selectedBike} />}
       </Modal>
 
-      {/* Add Bike Modal — styled like Deals/Results/Selected */}
+      {/* Add Bike modal showing the full "Details" form */}
       <Modal
-        open={isAddOpen}
-        onClose={() => setIsAddOpen(false)}
-        title="Add a bike"
-        initialFocusSelector="#make"
-        variant="light"
+        open={addOpen}
+        onClose={() => {
+          setAddOpen(false);
+          setPrefillData(null);
+        }}
+        title="Add a New Bike"
+        widthClass="w-[min(900px,92vw)]"
+        closeOnBackdrop={true}
+        closeOnEsc={true}
+        // keep focus management off to avoid any chance of stealing focus
       >
-        <div style={boxStyle}>
-          <h2 style={{ margin: 0, marginBottom: 12 }}>Add Bike</h2>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              saveNewBike();
-            }}
-          >
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
-                <thead>
-                  <tr style={headerRowStyle}>
-                    <th style={thTdPad}>Field</th>
-                    <th style={thTdPad}>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Make</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="make"
-                        value={draft.make}
-                        onChange={(e) => updateDraft("make", e.target.value)}
-                        required
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Model</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="model"
-                        value={draft.model}
-                        onChange={(e) => updateDraft("model", e.target.value)}
-                        required
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Year</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="year"
-                        placeholder="2021"
-                        value={draft.year}
-                        onChange={(e) => updateDraft("year", e.target.value)}
-                        inputMode="numeric"
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Registration</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="registration"
-                        value={draft.registration}
-                        onChange={(e) => updateDraft("registration", e.target.value)}
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>VIN</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="vin"
-                        value={draft.vin}
-                        onChange={(e) => updateDraft("vin", e.target.value)}
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Mileage</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="mileage"
-                        value={draft.mileage}
-                        onChange={(e) => updateDraft("mileage", e.target.value)}
-                        inputMode="numeric"
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Colour</td>
-                    <td style={thTdPad}>
-                      <Input
-                        id="colour"
-                        value={draft.colour}
-                        onChange={(e) => updateDraft("colour", e.target.value)}
-                      />
-                    </td>
-                  </tr>
-                  <tr style={rowBorder}>
-                    <td style={thTdPad}>Notes</td>
-                    <td style={thTdPad}>
-                      <textarea
-                        id="notes"
-                        rows={4}
-                        value={draft.notes}
-                        onChange={(e) => updateDraft("notes", e.target.value)}
-                        style={{
-                          width: "100%",
-                          borderRadius: 12,
-                          border: "1px solid rgba(255,255,255,0.2)",
-                          padding: 8,
-                          background: "transparent",
-                          color: "inherit",
-                          resize: "vertical",
-                          minHeight: 80,
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 14 }}>
-              <button
-                type="button"
-                onClick={() => setIsAddOpen(false)}
-                style={{
-                  padding: "8px 12px",
-                  borderRadius: 12,
-                  border: "1px solid rgba(255,255,255,0.2)",
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                style={{
-                  padding: "8px 12px",
-                  borderRadius: 12,
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
-                }}
-              >
-                Save Bike
-              </button>
-            </div>
-          </form>
-        </div>
+        <BikeDetailsForm
+          initial={prefillData || {}}
+          onCancel={() => {
+            setAddOpen(false);
+            setPrefillData(null);
+          }}
+          onSaved={(bike) => {
+            setAddOpen(false);
+            setPrefillData(null);
+            // Immediately select the newly-added bike to open the SelectedBike modal:
+            setSelection(bike.id);
+          }}
+        />
       </Modal>
     </div>
-  );
-}
-
-function Input(props) {
-  return (
-    <input
-      {...props}
-      style={{
-        width: "100%",
-        borderRadius: 12,
-        border: "1px solid rgba(255,255,255,0.2)",
-        padding: 8,
-        background: "transparent",
-        color: "inherit",
-      }}
-    />
   );
 }

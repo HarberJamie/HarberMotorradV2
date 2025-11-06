@@ -1,77 +1,97 @@
-// src/pages/Bikes/ResultsList.jsx
-import React, { useMemo } from "react";
+import React from "react";
+import { useBikes } from "@/lib/bikesStore.js";
+import { normalizeKey } from "@/lib/normalizeKey.js";
 
-export default function ResultsList({ bikes = [], selectedId, onSelect }) {
-  const rows = useMemo(() => {
-    // Newest first like Deals.jsx
-    return [...bikes].sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
-  }, [bikes]);
+const COLS = [
+  { label: "Registration" },
+  { label: "Make" },
+  { label: "Model" },
+  { label: "Trim" },
+  { label: "Vin" },
+  { label: "Status (Event)" },
+  { label: "Total Miles", fmt: (v) => (isFinite(Number(v)) ? Number(v).toLocaleString() : "–") },
+  {
+    label: "Price",
+    fmt: (v) =>
+      v === null || v === undefined || v === "" || isNaN(Number(v))
+        ? "–"
+        : `£${Number(v).toLocaleString()}`,
+  },
+  { label: "VAT Qualifying", fmt: (v) => (typeof v === "boolean" ? (v ? "Yes" : "No") : v ?? "–") },
+];
 
-  const boxStyle = {
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 12,
-    padding: 18,
-    boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-  };
+// Override map if any normalized labels differ from stored keys
+const KEY_OVERRIDES = {
+  preperationCosts: "preparationCosts",
+};
 
-  const thTdPad = { padding: 8 };
-  const headerRowStyle = { textAlign: "left", background: "#1b2143" };
-  const rowBorder = { borderTop: "1px solid rgba(255,255,255,0.08)" };
+function getByLabel(row, label) {
+  const k = normalizeKey(label);
+  const key = KEY_OVERRIDES[k] || k;
+  return row?.[key];
+}
+
+function fmt(raw, col) {
+  const v = raw ?? (raw === 0 ? 0 : null);
+  if (v === null || v === "") return "–";
+  if (col?.fmt) return col.fmt(v);
+  if (typeof v === "boolean") return v ? "Yes" : "No";
+  return String(v);
+}
+
+export default function ResultsList({ selectedId, onSelect }) {
+  const { bikes } = useBikes();
 
   return (
-    <div style={boxStyle}>
+    <div
+      style={{
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 12,
+        padding: 18,
+        boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+        width: "100%",
+      }}
+    >
       <h2 style={{ marginBottom: 12 }}>Bikes</h2>
 
-      {rows.length === 0 ? (
-        <p>No bikes yet. Add one via “+ Add Bike”.</p>
+      {(!Array.isArray(bikes) || bikes.length === 0) ? (
+        <p>No bikes found.</p>
       ) : (
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
             <thead>
-              <tr style={headerRowStyle}>
-                <th style={thTdPad}>ID</th>
-                <th style={thTdPad}>Created</th>
-                <th style={thTdPad}>Make / Model</th>
-                <th style={thTdPad}>Registration</th>
-                <th style={thTdPad}>VIN</th>
-                <th style={thTdPad}>Mileage</th>
+              <tr style={{ textAlign: "left", background: "#1b2143" }}>
+                {COLS.map((c) => (
+                  <th key={c.label} style={{ padding: 8 }}>{c.label}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {rows.map((b) => {
-                const isActive = selectedId === b.id;
-                const vinTail = b.vin ? `…${String(b.vin).slice(-6).toUpperCase()}` : "-";
-                const reg = b.registration ? String(b.registration).toUpperCase() : "-";
-                const title = [b.make, b.model].filter(Boolean).join(" ") || "Untitled";
-                const created = b.createdAt ? new Date(b.createdAt).toLocaleString() : "-";
-                const mileage =
-                  b.mileage !== undefined && b.mileage !== null && b.mileage !== ""
-                    ? `${Number(b.mileage).toLocaleString()} mi`
-                    : "-";
-
+              {bikes.map((b) => {
+                const isActive = b.id === selectedId;
                 return (
                   <tr
                     key={b.id}
-                    style={{
-                      ...rowBorder,
-                      background: isActive ? "rgba(255,255,255,0.06)" : undefined,
-                      cursor: "pointer",
-                      // kill any default outlines from user agents
-                      outline: "none",
-                      boxShadow: "none",
-                    }}
                     onClick={() => onSelect?.(b.id)}
-                    aria-current={isActive ? "true" : undefined}
+                    style={{
+                      borderTop: "1px solid rgba(255,255,255,0.08)",
+                      background: isActive ? "rgba(59,130,246,0.15)" : "transparent",
+                      cursor: "pointer",
+                    }}
                   >
-                    <td style={{ ...thTdPad, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>
-                      {b.id ? `${String(b.id).slice(0, 8)}…` : "-"}
-                    </td>
-                    <td style={thTdPad}>{created}</td>
-                    <td style={thTdPad}>{title}</td>
-                    <td style={thTdPad}>{reg}</td>
-                    <td style={thTdPad}>{vinTail}</td>
-                    <td style={thTdPad}>{mileage}</td>
+                    {COLS.map((c) => (
+                      <td
+                        key={c.label}
+                        style={{
+                          padding: 8,
+                          fontFamily: "ui-sans-serif, system-ui, sans-serif",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {fmt(getByLabel(b, c.label), c)}
+                      </td>
+                    ))}
                   </tr>
                 );
               })}
