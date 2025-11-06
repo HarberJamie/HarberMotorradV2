@@ -1,37 +1,58 @@
+// src/components/Modal.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+/**
+ * Minimal, stable modal:
+ * - No auto-focus by default (avoid focus stealing)
+ * - No focus trap by default (can enable if needed)
+ * - Backdrop + ESC close
+ * - Scroll lock + scrollbar compensation
+ *
+ * Props:
+ *  - open: boolean
+ *  - onClose: () => void
+ *  - title?: string | ReactNode
+ *  - widthClass?: string (Tailwind width, e.g. "w-[min(900px,92vw)]")
+ *  - variant?: "light" | "dark" (just colors)
+ *  - closeOnBackdrop?: boolean (default true)
+ *  - closeOnEsc?: boolean (default true)
+ *  - manageFocus?: boolean (default false)  // opt-in initial focus
+ *  - initialFocusSelector?: string          // used only if manageFocus=true
+ *  - trapFocus?: boolean (default false)    // opt-in focus trap
+ */
 export default function Modal({
   open,
   onClose,
   title,
   children,
   widthClass = "w-[min(900px,92vw)]",
-  initialFocusSelector,
+  variant = "light",
   closeOnBackdrop = true,
   closeOnEsc = true,
-  variant = "light", // "light" | "dark"
+  manageFocus = false,
+  initialFocusSelector,
+  trapFocus = false,
 }) {
   const [mounted, setMounted] = useState(false);
-  const panelRef = useRef(null);
-  const backdropRef = useRef(null);
-  const previouslyFocused = useRef(null);
+
+  const containerRef = useRef(null);     // backdrop container
+  const panelRef = useRef(null);         // dialog panel
+  const prevFocusedRef = useRef(null);   // element focused before open
 
   const isDark = variant === "dark";
 
-  // Mount/unmount
+  // Mount/unmount based on `open`
   useEffect(() => {
-    if (!open) return setMounted(false);
-    setMounted(true);
+    setMounted(!!open);
   }, [open]);
 
-  // Lock scroll
+  // Scroll lock while open
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
     const prevPaddingRight = document.body.style.paddingRight;
-    const scrollBarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
     if (scrollBarWidth > 0) {
       document.body.style.paddingRight = `${scrollBarWidth}px`;
@@ -42,24 +63,62 @@ export default function Modal({
     };
   }, [open]);
 
-  // Focus handling
+  // Optional: initial focus (OFF by default)
   useEffect(() => {
-    if (!open) return;
-    previouslyFocused.current = document.activeElement;
-    const focusTarget =
-      (initialFocusSelector &&
-        document.querySelector(initialFocusSelector)) ||
-      panelRef.current?.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-    if (focusTarget) requestAnimationFrame(() => focusTarget.focus());
-    else panelRef.current?.focus();
+    if (!open || !manageFocus) return;
+
+    prevFocusedRef.current = document.activeElement;
+
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    // Try focusing the requested element inside the panel
+    let el = null;
+    if (initialFocusSelector) {
+      try { el = panel.querySelector(initialFocusSelector); } catch { /* ignore */ }
+    }
+    if (!el) {
+      el = panel.querySelector('input, select, textarea, button, [tabindex]:not([tabindex="-1"])');
+    }
+
+    if (el && typeof el.focus === "function") el.focus();
+    else if (typeof panel.focus === "function") panel.focus();
+
     return () => {
-      if (previouslyFocused.current && previouslyFocused.current.focus) {
-        previouslyFocused.current.focus();
+      const prev = prevFocusedRef.current;
+      if (prev && typeof prev.focus === "function") prev.focus();
+    };
+  }, [open, manageFocus, initialFocusSelector]);
+
+  // Optional: focus trap (OFF by default)
+  useEffect(() => {
+    if (!open || !trapFocus) return;
+    const node = panelRef.current;
+    if (!node) return;
+
+    const onKeyDown = (e) => {
+      if (e.key !== "Tab") return;
+      const focusables = node.querySelectorAll(
+        'a[href], area[href], input, select, textarea, button, iframe, [tabindex]:not([tabindex="-1"])'
+      );
+      const els = Array.from(focusables).filter(
+        (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden")
+      );
+      if (els.length === 0) { e.preventDefault(); return; }
+
+      const first = els[0];
+      const last = els[els.length - 1];
+      const active = document.activeElement;
+
+      if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && (active === first || !node.contains(active))) {
+        e.preventDefault(); last.focus();
       }
     };
-  }, [open, initialFocusSelector]);
+
+    node.addEventListener("keydown", onKeyDown);
+    return () => node.removeEventListener("keydown", onKeyDown);
+  }, [open, trapFocus]);
 
   // ESC to close
   useEffect(() => {
@@ -82,12 +141,13 @@ export default function Modal({
 
   return createPortal(
     <div
-      ref={backdropRef}
+      ref={containerRef}
       role="presentation"
       className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
       onMouseDown={(e) => {
         if (!closeOnBackdrop) return;
-        if (e.target === backdropRef.current) onClose?.();
+        // close only when clicking the backdrop, not the panel
+        if (e.target === e.currentTarget) onClose?.();
       }}
     >
       {/* Backdrop */}
@@ -100,7 +160,7 @@ export default function Modal({
         aria-labelledby="modal-title"
         tabIndex={-1}
         ref={panelRef}
-        className={`relative max-h-[90vh] overflow-auto rounded-2xl shadow-xl ${widthClass}`}
+        className={`relative max-h-[90vh] overflow-auto rounded-2xl shadow-xl ${widthClass} focus:outline-none`}
         style={{
           background: panelBg,
           color: panelColor,
@@ -109,19 +169,13 @@ export default function Modal({
         }}
       >
         <div className="flex items-start justify-between gap-4 mb-3">
-          <h2 id="modal-title" className="text-lg font-semibold">
-            {title}
-          </h2>
+          <h2 id="modal-title" className="text-lg font-semibold">{title}</h2>
           <button
             type="button"
             onClick={() => onClose?.()}
             aria-label="Close"
             className="rounded-xl px-2 py-1 border hover:shadow transition"
-            style={{
-              borderColor,
-              color: panelColor,
-              background: "transparent",
-            }}
+            style={{ borderColor, color: panelColor, background: "transparent" }}
           >
             ✕
           </button>
