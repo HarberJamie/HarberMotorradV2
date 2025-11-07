@@ -15,6 +15,12 @@ export default function BikesPage() {
   // Selected bike (by id in URL)
   const [selectedId, setSelectedId] = useState(() => params.get("id") || null);
 
+  // Keep selectedId in sync if the URL param changes elsewhere (e.g., back/forward nav)
+  useEffect(() => {
+    const urlId = params.get("id");
+    setSelectedId(urlId || null);
+  }, [params]);
+
   // Add Bike modal + prefill support
   const [addOpen, setAddOpen] = useState(false);
   const [prefillData, setPrefillData] = useState(null);
@@ -74,11 +80,10 @@ export default function BikesPage() {
 
   const handleSelect = useCallback((id) => setSelection(id), [setSelection]);
 
-  // ⛔️ Critical guard: while the Add Bike modal is open, ignore search param changes.
-  // This prevents URL writes (and parent re-renders) while you're typing in the modal.
+  // ⛔️ While the Add Bike modal is open, ignore search param changes
   const handleSearchChange = useCallback(
     (nextParamsObj) => {
-      if (addOpen) return; // <- freeze search while modal is open
+      if (addOpen) return;
 
       const next = new URLSearchParams(params);
       Object.entries(nextParamsObj).forEach(([k, v]) => {
@@ -89,6 +94,29 @@ export default function BikesPage() {
     },
     [params, setParams, addOpen]
   );
+
+  // Build filters object from the URL params for ResultsList
+  const filters = useMemo(() => {
+    const get = (k) => {
+      const v = params.get(k);
+      return v === null || v === "" ? null : v;
+    };
+
+    return {
+      registration: get("registration"),
+      vin: get("vin"),
+      make: get("make"),
+      model: get("model"),
+      mileageMin: get("mileageMin"),
+      mileageMax: get("mileageMax"),
+      status: get("status"),
+      modelYear: get("modelYear"),
+      priceMin: get("priceMin"),
+      priceMax: get("priceMax"),
+      vatQualifying: get("vatQualifying"),
+      // serviceHistory: get("serviceHistory"), // intentionally not used right now
+    };
+  }, [params]);
 
   const modalTitle = selectedBike
     ? (selectedBike.registration
@@ -144,7 +172,11 @@ export default function BikesPage() {
 
       {/* Full-width ResultsList */}
       <div className="bikes-page__results" style={{ width: "100%" }}>
-        <ResultsList selectedId={selectedId} onSelect={handleSelect} />
+        <ResultsList
+          selectedId={selectedId}
+          onSelect={handleSelect}
+          filters={filters} // ← now wired: ResultsList can filter based on URL params
+        />
       </div>
 
       {/* Selected Bike modal */}
@@ -170,7 +202,6 @@ export default function BikesPage() {
         widthClass="w-[min(900px,92vw)]"
         closeOnBackdrop={true}
         closeOnEsc={true}
-        // keep focus management off to avoid any chance of stealing focus
       >
         <BikeDetailsForm
           initial={prefillData || {}}
