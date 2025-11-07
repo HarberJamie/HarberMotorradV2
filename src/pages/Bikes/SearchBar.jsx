@@ -5,24 +5,36 @@ import { useSearchParams } from "react-router-dom";
 /**
  * Props:
  *  - onChange: (nextParams: Record<string, string|null>) => void
- *  - className?: string  // optional extra classes (e.g., margins) applied alongside inline styles
+ *  - className?: string
  */
 export default function SearchBar({ onChange = () => {}, className = "" }) {
   const [params] = useSearchParams();
 
-  // Primary search fields (only these two show in the top bar)
+  // ---------------- Primary (always visible) ----------------
   const [registration, setRegistration] = useState(params.get("registration") || "");
   const [vin, setVin] = useState(params.get("vin") || "");
 
-  // Filters (in a collapsible panel)
+  // ---------------- Advanced (collapsible) ------------------
   const [filtersOpen, setFiltersOpen] = useState(false);
+
   const [make, setMake] = useState(params.get("make") || "");
   const [model, setModel] = useState(params.get("model") || "");
   const [mileageMin, setMileageMin] = useState(params.get("mileageMin") || "");
   const [mileageMax, setMileageMax] = useState(params.get("mileageMax") || "");
-  const [serviceHistory, setServiceHistory] = useState(params.get("serviceHistory") || "");
 
-  // Debounce helper so we don't spam URL updates while typing
+  // New filters
+  // Default status to "Available" if none present in URL
+  const initialStatus = params.get("status") || "Available";
+  const [status, setStatus] = useState(initialStatus);
+  const [modelYear, setModelYear] = useState(params.get("modelYear") || "");
+  const [priceMin, setPriceMin] = useState(params.get("priceMin") || "");
+  const [priceMax, setPriceMax] = useState(params.get("priceMax") || "");
+  const [vatQualifying, setVatQualifying] = useState(params.get("vatQualifying") || "");
+
+  // Service History — intentionally hidden for now (kept for future use)
+  // const [serviceHistory, setServiceHistory] = useState(params.get("serviceHistory") || "");
+
+  // Debounce helper so we don't spam updates while typing
   const useDebounced = (value, delay = 300) => {
     const [debounced, setDebounced] = useState(value);
     useEffect(() => {
@@ -35,35 +47,60 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
   const debouncedRegistration = useDebounced(registration);
   const debouncedVin = useDebounced(vin);
 
-  // Push primary search to URL params as you type (debounced)
+  // On mount: if there is no status in URL, explicitly emit Status="Available"
   useEffect(() => {
-    if (typeof onChange === "function") {
-      onChange({
-        registration: debouncedRegistration || null,
-        vin: debouncedVin || null,
-      });
+    const urlStatus = params.get("status");
+    if (!urlStatus) {
+      onChange({ status: "Available" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Push primary search to consumer (debounced)
+  useEffect(() => {
+    onChange({
+      registration: debouncedRegistration || null,
+      vin: debouncedVin || null,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedRegistration, debouncedVin]);
 
-  // Helpers
+  // Any active filter? (don’t count the default “Available” as active)
   const hasAnyFilter = useMemo(
-    () => !!(make || model || mileageMin || mileageMax || serviceHistory),
-    [make, model, mileageMin, mileageMax, serviceHistory]
+    () =>
+      !!(
+        make ||
+        model ||
+        mileageMin ||
+        mileageMax ||
+        modelYear ||
+        priceMin ||
+        priceMax ||
+        vatQualifying ||
+        (status && status !== "Available")
+        // || serviceHistory
+      ),
+    [make, model, mileageMin, mileageMax, modelYear, priceMin, priceMax, vatQualifying, status]
   );
 
+  // Apply advanced filters (primary fields are handled by the debounced effect)
   const applyFilters = () => {
-    if (typeof onChange === "function") {
-      onChange({
-        make: make || null,
-        model: model || null,
-        mileageMin: mileageMin || null,
-        mileageMax: mileageMax || null,
-        serviceHistory: serviceHistory || null,
-      });
-    }
+    onChange({
+      make: make || null,
+      model: model || null,
+      mileageMin: mileageMin || null,
+      mileageMax: mileageMax || null,
+      status: status || "Available", // force default if somehow empty
+      modelYear: modelYear || null,
+      priceMin: priceMin || null,
+      priceMax: priceMax || null,
+      vatQualifying:
+        vatQualifying === "yes" ? "true" : vatQualifying === "no" ? "false" : null,
+      // serviceHistory: serviceHistory || null,
+    });
   };
 
+  // Clear everything but keep Status at default "Available"
   const clearAll = () => {
     setRegistration("");
     setVin("");
@@ -71,19 +108,28 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
     setModel("");
     setMileageMin("");
     setMileageMax("");
-    setServiceHistory("");
-    if (typeof onChange === "function") {
-      onChange({
-        registration: null,
-        vin: null,
-        make: null,
-        model: null,
-        mileageMin: null,
-        mileageMax: null,
-        serviceHistory: null,
-        bikeId: null, // also clear selection to avoid stale detail view
-      });
-    }
+    setStatus("Available");
+    setModelYear("");
+    setPriceMin("");
+    setPriceMax("");
+    setVatQualifying("");
+    // setServiceHistory("");
+
+    onChange({
+      registration: null,
+      vin: null,
+      make: null,
+      model: null,
+      mileageMin: null,
+      mileageMax: null,
+      status: "Available", // ← default persists
+      modelYear: null,
+      priceMin: null,
+      priceMax: null,
+      vatQualifying: null,
+      // serviceHistory: null,
+      bikeId: null, // clear selection
+    });
   };
 
   // Match ResultsList's wrapper exactly (inline styles)
@@ -117,7 +163,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
           <input
             type="text"
             inputMode="text"
-            placeholder="Last 6 or full VIN"
+            placeholder="Last 7 or full VIN"
             value={vin}
             onChange={(e) => setVin(e.target.value.toUpperCase())}
             className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -168,7 +214,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
               <Label>Model</Label>
               <input
                 type="text"
-                placeholder="e.g. R1250GS"
+                placeholder="e.g. R1300 GS"
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
                 className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -183,7 +229,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
                 step="1"
                 placeholder="0"
                 value={mileageMin}
-                onChange={(e) => setMileageMin(e.target.value)}
+                onChange={(e) => setMileageMin(e.target.value.replace(/[^\d]/g, ""))}
                 className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
             </div>
@@ -196,11 +242,79 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
                 step="1"
                 placeholder="—"
                 value={mileageMax}
-                onChange={(e) => setMileageMax(e.target.value)}
+                onChange={(e) => setMileageMax(e.target.value.replace(/[^\d]/g, ""))}
                 className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
             </div>
 
+            <div className="col-span-12 sm:col-span-3">
+              <Label>Status</Label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400"
+              >
+                {/* Default is "Available"; user must select to change */}
+                <option value="Available">Available</option>
+                <option value="Any">Any</option>
+                <option value="Sold">Sold</option>
+                <option value="Valuation">Valuation</option>
+              </select>
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <Label>Model Year</Label>
+              <input
+                type="number"
+                min="1980"
+                step="1"
+                placeholder="e.g. 2024"
+                value={modelYear}
+                onChange={(e) => setModelYear(e.target.value.replace(/[^\d]/g, ""))}
+                className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              />
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <Label>Min Price (£)</Label>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                placeholder="e.g. 7999"
+                value={priceMin}
+                onChange={(e) => setPriceMin(e.target.value.replace(/[^\d]/g, ""))}
+                className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              />
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <Label>Max Price (£)</Label>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                placeholder="e.g. 18999"
+                value={priceMax}
+                onChange={(e) => setPriceMax(e.target.value.replace(/[^\d]/g, ""))}
+                className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              />
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <Label>VAT Qualifying</Label>
+              <select
+                value={vatQualifying}
+                onChange={(e) => setVatQualifying(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400"
+              >
+                <option value="">Any</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+
+            {/* Service History — keep for later re-enable
             <div className="col-span-12 sm:col-span-3">
               <Label>Service History</Label>
               <select
@@ -215,7 +329,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
                 <option value="unknown">Unknown</option>
               </select>
             </div>
-
+            */}
             <div className="col-span-12 sm:col-span-9 flex items-end justify-end gap-2">
               <button
                 type="button"

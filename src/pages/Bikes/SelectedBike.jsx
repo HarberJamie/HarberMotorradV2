@@ -1,39 +1,113 @@
+// src/pages/Bikes/SelectedBike.jsx
 import React, { useMemo, useState } from "react";
 import TabsHeader from "@/pages/TabsHeader.jsx";
 import { normalizeKey } from "@/lib/normalizeKey.js";
+import { STATUS_TYPES, EVENT_TYPES, toLabel as labelFrom } from "@/lib/enums.js";
 
-// Display order from your spreadsheet
+/** ---------------------- Field Lists (Display Order) ---------------------- **/
 const DETAILS_FIELDS = [
-  "Registration","Make","Model","Trim","Vin","Status (Event)","Model Type","Reg Date",
-  "Previous Owners","Site","Stock Number","In stock","Days in Stock","Total Miles","Price",
-  "Preperation Costs","VAT Qualifying","AUB Expiry","MOT Expiry","HPI Date",
-  "Fuel Level (Miles Remaining)","Progress Code","Specification","Notes",
+  "Registration",
+  "Make",
+  "Model",
+  "Trim",
+  "Vin",
+
+  // New split fields
+  "Status",
+  "Latest Event",
+
+  "Model Type",
+  "Reg Date",
+  "Previous Owners",
+  "Site",
+  "Stock Number",
+  "In stock",
+  "Days in Stock",
+  "Total Miles",
+  "Price",
+  "Preparation Costs",
+  "VAT Qualifying",
+  "AUB Expiry",
+  "MOT Expiry",
+  "HPI Date",
+  "Fuel Level (Miles Remaining)",
+  "Progress Code",
+  "Specification",
+  "Notes",
 ];
 
 const HISTORY_FIELDS = [
-  "Registration","Make","Model","Trim","Vin","Status (Event)","Model Type","Reg Date",
-  "Total Miles","Preperation Costs","Event Type","Event Date","Specification","Notes",
-  "Valuation Date","Valuation Price","Sale Date","Sale Price","Events","Average Sale","Average Prep Costs",
+  "Registration",
+  "Make",
+  "Model",
+  "Trim",
+  "Vin",
+
+  // New split fields
+  "Status",
+  "Latest Event",
+
+  "Model Type",
+  "Reg Date",
+  "Total Miles",
+  "Preparation Costs",
+
+  // The History tab will eventually render an event timeline/table.
+  // These remain here only for transitional display of any existing flat fields.
+  "Event Type",
+  "Event Date",
+
+  "Specification",
+  "Notes",
+  "Valuation Date",
+  "Valuation Price",
+  "Sale Date",
+  "Sale Price",
+  "Events",
+  "Average Sale",
+  "Average Prep Costs",
 ];
 
-// Fix any normalized label that differs from your stored key
+/** ---------------------------- Key Normalization --------------------------- **/
 const KEY_OVERRIDES = {
-  preperationCosts: "preparationCosts",
+  preperationCosts: "preparationCosts", // fix historical typo
   fuelLevelMilesRemaining: "fuelMilesRemaining",
+  statusEvent: "status", // legacy fallback if any old records used "Status (Event)"
 };
 
-function getValueByLabel(obj, label) {
+function getRaw(obj, label) {
+  // Special computed labels first
+  if (label === "Status") {
+    return labelFrom(STATUS_TYPES, obj?.status_id) || "–";
+  }
+  if (label === "Latest Event") {
+    return labelFrom(EVENT_TYPES, obj?.latest_event_id) || "–";
+  }
+
   const k = normalizeKey(label);
   const dataKey = KEY_OVERRIDES[k] || k;
   return obj?.[dataKey];
 }
 
-function formatValue(v) {
+function formatValue(label, v) {
   if (v === null || v === undefined || v === "") return "–";
   if (typeof v === "boolean") return v ? "Yes" : "No";
+
+  // Friendly formats for common numeric fields
+  const asNum = Number(v);
+  const isNum = !Number.isNaN(asNum);
+
+  if (label === "Total Miles" && isNum) return asNum.toLocaleString();
+  if (label === "Price" && isNum) return `£${asNum.toLocaleString()}`;
+  if (label === "Valuation Price" && isNum) return `£${asNum.toLocaleString()}`;
+  if (label === "Sale Price" && isNum) return `£${asNum.toLocaleString()}`;
+  if (label === "Preparation Costs" && isNum) return `£${asNum.toLocaleString()}`;
+  if (label === "Days in Stock" && isNum) return asNum.toLocaleString();
+
   return String(v);
 }
 
+/** ----------------------------- Grid Presenter ---------------------------- **/
 function FieldGrid({ fields, data }) {
   const grid = {
     display: "grid",
@@ -83,7 +157,7 @@ function FieldGrid({ fields, data }) {
         {fields.map((labelText) => (
           <div key={labelText} style={card}>
             <div style={label}>{labelText}</div>
-            <div style={value}>{formatValue(getValueByLabel(data, labelText))}</div>
+            <div style={value}>{formatValue(labelText, getRaw(data, labelText))}</div>
           </div>
         ))}
       </div>
@@ -91,11 +165,12 @@ function FieldGrid({ fields, data }) {
   );
 }
 
+/** --------------------------------- Main ---------------------------------- **/
 export default function SelectedBike({ bike }) {
   const [active, setActive] = useState("details");
   if (!bike) return <div>No bike selected</div>;
 
-  // Header now shows only registration
+  // Header shows only registration (per your request)
   const registration = useMemo(() => bike.registration || "–", [bike]);
 
   const tabs = [
