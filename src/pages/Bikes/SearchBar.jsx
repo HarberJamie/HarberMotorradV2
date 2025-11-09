@@ -13,6 +13,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
   // ---------------- Primary (always visible) ----------------
   const [registration, setRegistration] = useState(params.get("registration") || "");
   const [vin, setVin] = useState(params.get("vin") || "");
+  const [keyword, setKeyword] = useState(params.get("keyword") || "");
 
   // ---------------- Advanced (collapsible) ------------------
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -46,6 +47,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
 
   const debouncedRegistration = useDebounced(registration);
   const debouncedVin = useDebounced(vin);
+  const debouncedKeyword = useDebounced(keyword);
 
   // On mount: if there is no status in URL, explicitly emit Status="Available"
   useEffect(() => {
@@ -61,9 +63,10 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
     onChange({
       registration: debouncedRegistration || null,
       vin: debouncedVin || null,
+      keyword: debouncedKeyword || null, // <- include keyword
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedRegistration, debouncedVin]);
+  }, [debouncedRegistration, debouncedVin, debouncedKeyword]);
 
   // Any active filter? (don’t count the default “Available” as active)
   const hasAnyFilter = useMemo(
@@ -86,6 +89,9 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
   // Apply advanced filters (primary fields are handled by the debounced effect)
   const applyFilters = () => {
     onChange({
+      // primary fields stay controlled by the debounced effect,
+      // but we include keyword here so parents that *replace* state don't lose it
+      keyword: keyword || null,
       make: make || null,
       model: model || null,
       mileageMin: mileageMin || null,
@@ -104,6 +110,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
   const clearAll = () => {
     setRegistration("");
     setVin("");
+    setKeyword("");
     setMake("");
     setModel("");
     setMileageMin("");
@@ -118,6 +125,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
     onChange({
       registration: null,
       vin: null,
+      keyword: null,
       make: null,
       model: null,
       mileageMin: null,
@@ -145,7 +153,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
     <div className={className} style={cardStyle}>
       {/* Primary search row */}
       <div className="grid grid-cols-12 gap-3 items-end">
-        <div className="col-span-12 md:col-span-4">
+        <div className="col-span-12 md:col-span-3">
           <Label>Registration</Label>
           <input
             type="text"
@@ -158,7 +166,7 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
           />
         </div>
 
-        <div className="col-span-12 md:col-span-4">
+        <div className="col-span-12 md:col-span-3">
           <Label>VIN</Label>
           <input
             type="text"
@@ -171,7 +179,20 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
           />
         </div>
 
-        <div className="col-span-12 md:col-span-4 flex gap-2 justify-start md:justify-end">
+        <div className="col-span-12 md:col-span-3">
+          <Label>Keyword</Label>
+          <input
+            type="text"
+            inputMode="text"
+            placeholder="Features, specs, colour…"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            aria-label="Search by keyword"
+          />
+        </div>
+
+        <div className="col-span-12 md:col-span-3 flex gap-2 justify-start md:justify-end">
           <button
             type="button"
             onClick={() => setFiltersOpen((v) => !v)}
@@ -314,22 +335,6 @@ export default function SearchBar({ onChange = () => {}, className = "" }) {
               </select>
             </div>
 
-            {/* Service History — keep for later re-enable
-            <div className="col-span-12 sm:col-span-3">
-              <Label>Service History</Label>
-              <select
-                value={serviceHistory}
-                onChange={(e) => setServiceHistory(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400"
-              >
-                <option value="">Any</option>
-                <option value="full">Full</option>
-                <option value="partial">Partial</option>
-                <option value="none">None</option>
-                <option value="unknown">Unknown</option>
-              </select>
-            </div>
-            */}
             <div className="col-span-12 sm:col-span-9 flex items-end justify-end gap-2">
               <button
                 type="button"

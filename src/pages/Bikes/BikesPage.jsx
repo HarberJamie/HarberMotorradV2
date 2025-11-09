@@ -105,6 +105,7 @@ export default function BikesPage() {
     return {
       registration: get("registration"),
       vin: get("vin"),
+      keyword: get("keyword"),        // 👈 NEW: wire keyword through
       make: get("make"),
       model: get("model"),
       mileageMin: get("mileageMin"),
@@ -175,7 +176,7 @@ export default function BikesPage() {
         <ResultsList
           selectedId={selectedId}
           onSelect={handleSelect}
-          filters={filters} // ← now wired: ResultsList can filter based on URL params
+          filters={filters}
         />
       </div>
 
