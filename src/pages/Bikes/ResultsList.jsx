@@ -1,7 +1,9 @@
+// src/pages/Bikes/ResultsList.jsx
 import React, { useMemo } from "react";
 import { useBikes } from "@/lib/bikesStore.js";
 import { normalizeKey } from "@/lib/normalizeKey.js";
 import { STATUS_TYPES, EVENT_TYPES, toLabel as labelFrom } from "@/lib/enums.js";
+import { getFeatureFields } from "@/lib/catalog";
 
 const COLS = [
   { label: "Registration" },
@@ -35,11 +37,14 @@ const KEY_OVERRIDES = {
 
 // ---------- helpers ----------
 const norm = (v) => (typeof v === "string" ? v.trim().toLowerCase() : v);
+const lc = (v) => String(v ?? "").toLowerCase();
+
 const toNum = (v) => {
   if (v === null || v === undefined || v === "") return null;
   const n = Number(String(v).replace(/[^\d.-]/g, ""));
   return Number.isFinite(n) ? n : null;
 };
+
 const truthyStringToBool = (v) => {
   if (v === true || v === false) return v;
   if (typeof v !== "string") return null;
@@ -86,6 +91,66 @@ function getCell(row, col) {
   }
 }
 
+/* ---------------------- Feature / Spec keyword match ---------------------- */
+
+function getFeatureLabelsForBike(bike) {
+  const ids = Array.isArray(bike.features) ? bike.features : [];
+  if (!ids.length) return [];
+
+  const options = getFeatureFields(bike.make, bike.model); // [{id,label}]
+  const map = new Map(options.map((o) => [o.id, o.label]));
+  return ids.map((id) => lc(map.get(id) || id));
+}
+
+function getSpecTokensForBike(bike) {
+  const out = [];
+  const specs = bike?.specs && typeof bike.specs === "object" ? bike.specs : {};
+
+  for (const [key, value] of Object.entries(specs)) {
+    if (value === null || value === undefined || value === "") continue;
+
+    const keyPretty = String(key)
+      .replace(/[_-]+/g, " ")
+      .replace(/([a-z\d])([A-Z])/g, "$1 $2")
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .trim();
+
+    out.push(lc(keyPretty));
+    out.push(lc(String(value)));
+  }
+
+  return out;
+}
+
+function matchesKeyword(bike, keywordQ) {
+  if (!keywordQ) return true; // nothing typed
+  const q = lc(keywordQ);
+  if (!q) return true;
+
+  const core = [
+    bike.registration,
+    bike.vin,
+    bike.VIN,
+    bike.make,
+    bike.model,
+    bike.trim,
+    bike.colour,
+    bike.color,
+    bike.status,
+  ].map(lc);
+
+  if (core.some((t) => t.includes(q))) return true;
+
+  const featureLabels = getFeatureLabelsForBike(bike);
+  if (featureLabels.some((t) => t.includes(q))) return true;
+
+  const specTokens = getSpecTokensForBike(bike);
+  if (specTokens.some((t) => t.includes(q))) return true;
+
+  return false;
+}
+
 /**
  * Props:
  *  - selectedId?: string
@@ -95,7 +160,8 @@ function getCell(row, col) {
  *      mileageMin, mileageMax,
  *      status, modelYear,
  *      priceMin, priceMax,
- *      vatQualifying
+ *      vatQualifying,
+ *      keyword
  *    }
  */
 export default function ResultsList({ selectedId, onSelect, filters = {} }) {
@@ -110,6 +176,10 @@ export default function ResultsList({ selectedId, onSelect, filters = {} }) {
     const vinQ = norm(f.vin);
     const makeQ = norm(f.make);
     const modelQ = norm(f.model);
+    const keywordQ =
+      typeof f.keyword === "string" && f.keyword.trim().length > 0
+        ? f.keyword.trim()
+        : "";
 
     const mileageMin = toNum(f.mileageMin);
     const mileageMax = toNum(f.mileageMax);
@@ -145,6 +215,9 @@ export default function ResultsList({ selectedId, onSelect, filters = {} }) {
           : typeof b.vat === "boolean"
           ? b.vat
           : null;
+
+      // Keyword match (includes features & specs)
+      if (!matchesKeyword(b, keywordQ)) return false;
 
       // Registration / VIN contains
       if (regQ && !bReg?.includes(regQ)) return false;

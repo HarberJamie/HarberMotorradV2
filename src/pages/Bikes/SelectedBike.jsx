@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import TabsHeader from "@/pages/TabsHeader.jsx";
 import { normalizeKey } from "@/lib/normalizeKey.js";
 import { STATUS_TYPES, EVENT_TYPES, toLabel as labelFrom } from "@/lib/enums.js";
+import { getFeatureFields } from "@/lib/catalog";
 
 /** ---------------------- Field Lists (Display Order) ---------------------- **/
 const DETAILS_FIELDS = [
@@ -52,8 +53,7 @@ const HISTORY_FIELDS = [
   "Total Miles",
   "Preparation Costs",
 
-  // The History tab will eventually render an event timeline/table.
-  // These remain here only for transitional display of any existing flat fields.
+  // Transitional flat fields (timeline will replace later)
   "Event Type",
   "Event Date",
 
@@ -75,14 +75,32 @@ const KEY_OVERRIDES = {
   statusEvent: "status", // legacy fallback if any old records used "Status (Event)"
 };
 
+// Safely pick a displayable label for Status/Latest Event
+function statusLabel(obj) {
+  // prefer enums mapping if an id is present
+  const fromId = labelFrom(STATUS_TYPES, obj?.status_id);
+  if (fromId) return fromId;
+
+  // fallback to raw "status" string if stored (e.g., "inbound", "live")
+  if (obj?.status) {
+    const s = String(obj.status);
+    return s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, " ");
+  }
+  return "–";
+}
+function latestEventLabel(obj) {
+  const fromId = labelFrom(EVENT_TYPES, obj?.latest_event_id);
+  if (fromId) return fromId;
+
+  // common fallbacks if you store latest event object or string
+  if (obj?.latest_event_label) return obj.latest_event_label;
+  if (obj?.latest_event?.type) return String(obj.latest_event.type).replace(/_/g, " ");
+  return "–";
+}
+
 function getRaw(obj, label) {
-  // Special computed labels first
-  if (label === "Status") {
-    return labelFrom(STATUS_TYPES, obj?.status_id) || "–";
-  }
-  if (label === "Latest Event") {
-    return labelFrom(EVENT_TYPES, obj?.latest_event_id) || "–";
-  }
+  if (label === "Status") return statusLabel(obj);
+  if (label === "Latest Event") return latestEventLabel(obj);
 
   const k = normalizeKey(label);
   const dataKey = KEY_OVERRIDES[k] || k;
@@ -93,7 +111,6 @@ function formatValue(label, v) {
   if (v === null || v === undefined || v === "") return "–";
   if (typeof v === "boolean") return v ? "Yes" : "No";
 
-  // Friendly formats for common numeric fields
   const asNum = Number(v);
   const isNum = !Number.isNaN(asNum);
 
@@ -165,13 +182,71 @@ function FieldGrid({ fields, data }) {
   );
 }
 
+/** ---------------------------- Chips Presenter ---------------------------- **/
+function Chips({ items, emptyText = "None recorded." }) {
+  const wrap = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+  };
+  const chip = {
+    display: "inline-flex",
+    alignItems: "center",
+    borderRadius: 999,
+    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.06)",
+    padding: "6px 10px",
+    fontSize: 12,
+    color: "rgba(255,255,255,0.95)",
+  };
+  if (!items || items.length === 0) {
+    return <div className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>{emptyText}</div>;
+  }
+  return (
+    <div style={wrap}>
+      {items.map((it) => (
+        <span key={it.key || it.id || it.label} style={chip} title={it.title || it.id || it.label}>
+          {it.label}
+          {it.sublabel ? <span style={{ opacity: 0.75, marginLeft: 6 }}>· {it.sublabel}</span> : null}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /** --------------------------------- Main ---------------------------------- **/
 export default function SelectedBike({ bike }) {
   const [active, setActive] = useState("details");
   if (!bike) return <div>No bike selected</div>;
 
-  // Header shows only registration (per your request)
   const registration = useMemo(() => bike.registration || "–", [bike]);
+
+  // Resolve feature labels from the dynamic catalog for THIS bike's make/model
+  const featureOptions = useMemo(
+    () => getFeatureFields(bike.make, bike.model), // [{id,label}]
+    [bike.make, bike.model]
+  );
+  const featureMap = useMemo(() => {
+    const m = new Map();
+    featureOptions.forEach((o) => m.set(o.id, o.label));
+    return m;
+  }, [featureOptions]);
+
+  const featureChips = useMemo(() => {
+    const ids = Array.isArray(bike.features) ? bike.features : [];
+    return ids.map((id) => ({ id, label: featureMap.get(id) || id }));
+  }, [bike.features, featureMap]);
+
+  // Turn specs object into chips like "Ride Modes · Pro"
+  const specChips = useMemo(() => {
+    const s = bike?.specs && typeof bike.specs === "object" ? bike.specs : {};
+    return Object.entries(s).map(([k, v]) => ({
+      key: k,
+      label: prettyLabel(k),
+      sublabel: String(v),
+      title: `${k}: ${v}`,
+    }));
+  }, [bike?.specs]);
 
   const tabs = [
     { id: "details", label: "Details" },
@@ -190,6 +265,14 @@ export default function SelectedBike({ bike }) {
     boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
   };
 
+  const sectionTitle = {
+    fontSize: 12,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "rgba(255,255,255,0.7)",
+    marginBottom: 10,
+  };
+
   return (
     <div className="selected-bike" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <div className="selected-bike-header" style={header}>
@@ -200,6 +283,20 @@ export default function SelectedBike({ bike }) {
 
       <div style={darkPanel}>
         <div id="panel-details" hidden={active !== "details"}>
+          {/* Features */}
+          <div style={{ marginBottom: 16 }}>
+            <div style={sectionTitle}>Features</div>
+            <Chips items={featureChips} emptyText="No features recorded." />
+          </div>
+
+          {/* Specs */}
+          {specChips.length > 0 && (
+            <div style={{ marginBottom: 16 }}>
+              <div style={sectionTitle}>Specifications</div>
+              <Chips items={specChips} />
+            </div>
+          )}
+
           <FieldGrid fields={DETAILS_FIELDS} data={bike} />
         </div>
 
@@ -209,4 +306,19 @@ export default function SelectedBike({ bike }) {
       </div>
     </div>
   );
+}
+
+/** ------------------------------- helpers --------------------------------- **/
+function prettyLabel(key) {
+  // convert snake/camel/kebab to "Title Case"
+  const s = String(key || "")
+    .replace(/[_-]+/g, " ")
+    .replace(/([a-z\d])([A-Z])/g, "$1 $2")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+  return s
+    .split(" ")
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
 }

@@ -9,11 +9,15 @@ import {
 } from "@/lib/catalog";
 
 const STORAGE_KEY = "harbermotorrad:bikes";
-const EVENTS_KEY  = "harbermotorrad:bike_events";
+const EVENTS_KEY = "harbermotorrad:bike_events";
 
 /* ----------------------- storage helpers (local only) ---------------------- */
 function getBikes() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
 }
 function saveBike(bike) {
   const all = getBikes();
@@ -23,38 +27,40 @@ function saveBike(bike) {
   return bike.id;
 }
 function getEvents() {
-  try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; } catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem(EVENTS_KEY)) || [];
+  } catch {
+    return [];
+  }
 }
 
 /* ------------------- analytics: avg prep for make+model ------------------- */
 /** Average of PREP_TASK_DONE.payload.cost for the same make+model */
 function estimateAvgPrep(make, model) {
   if (!make || !model) return 0;
+
   const bikes = getBikes();
   const idsForSameModel = new Set(
-    bikes.filter(b => b.make === make && b.model === model).map(b => b.id)
+    bikes.filter((b) => b.make === make && b.model === model).map((b) => b.id)
   );
   if (!idsForSameModel.size) return 0;
 
-  const events = getEvents();
-  const costs = events
-    .filter(e => idsForSameModel.has(e.bike_id) && e.event_type === "PREP_TASK_DONE")
-    .map(e => Number(e.payload?.cost) || 0);
+  const events = getEvents().filter(
+    (e) => idsForSameModel.has(e.bike_id) && e.event_type === "PREP_TASK_DONE"
+  );
+  if (!events.length) return 0;
 
-  if (!costs.length) return 0;
-
-  // Sum per bike (prep_total) so repeated tasks on a bike are one total
   const perBike = {};
-  events
-    .filter(e => idsForSameModel.has(e.bike_id) && e.event_type === "PREP_TASK_DONE")
-    .forEach(e => {
-      const c = Number(e.payload?.cost) || 0;
-      perBike[e.bike_id] = (perBike[e.bike_id] || 0) + c;
-    });
+  for (const e of events) {
+    const c = Number(e.payload?.cost) || 0;
+    perBike[e.bike_id] = (perBike[e.bike_id] || 0) + c;
+  }
 
   const totals = Object.values(perBike);
+  if (!totals.length) return 0;
+
   const avg = totals.reduce((a, b) => a + b, 0) / totals.length;
-  return Math.round(avg); // nearest pound
+  return Math.round(avg);
 }
 
 /* ----------------------------- trello helpers ----------------------------- */
@@ -63,7 +69,7 @@ function parseTrelloCardId(urlOrId) {
   // Accept raw ID or URL like https://trello.com/c/<id>/<slug>
   const m = String(urlOrId).match(/trello\.com\/c\/([a-zA-Z0-9]+)/);
   if (m) return m[1];
-  // If it looks like a 8+ char alnum, treat as ID
+  // If it looks like an 8+ char alnum, treat as ID
   if (/^[a-zA-Z0-9]{8,}$/.test(urlOrId)) return urlOrId;
   return "";
 }
@@ -108,7 +114,7 @@ export default function AddBike({ onClose, onSaved }) {
   const [trelloUrl, setTrelloUrl] = useState("");
 
   // Dynamic per-model
-  const [specValues, setSpecValues] = useState({});       // {specId: value}
+  const [specValues, setSpecValues] = useState({}); // {specId: value}
   const [featureValues, setFeatureValues] = useState({}); // {featureId: boolean}
 
   // Validation
@@ -151,7 +157,6 @@ export default function AddBike({ onClose, onSaved }) {
     if (!make) next.make = "Required";
     if (!model) next.model = "Required";
     if (!retailPrice || Number(retailPrice) <= 0) next.retailPrice = "Enter a retail price";
-    // Optional: enforce VIN/registration format later
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -164,7 +169,10 @@ export default function AddBike({ onClose, onSaved }) {
     const nowIso = new Date().toISOString();
     const toNumberOrNull = (v) => (v === "" || v === null || v === undefined ? null : Number(v));
 
-    const featuresArr = Object.entries(featureValues).filter(([, v]) => !!v).map(([k]) => k);
+    const featuresArr = Object.entries(featureValues)
+      .filter(([, v]) => !!v)
+      .map(([k]) => k);
+
     const trelloId = parseTrelloCardId(trelloUrl);
 
     const payload = {
@@ -173,7 +181,7 @@ export default function AddBike({ onClose, onSaved }) {
       updatedAt: nowIso,
       source: "manual",
 
-      // Results-list essentials
+      // Essentials (surface in list)
       status,
       registration: registration.trim(),
       make,
@@ -188,7 +196,7 @@ export default function AddBike({ onClose, onSaved }) {
       // Dynamic attributes
       catalog_make_id: make || null,
       catalog_model_id: model || null,
-      features: featuresArr,
+      features: featuresArr, // array of feature IDs
       specs: specValues || {},
 
       // Provenance
@@ -209,7 +217,7 @@ export default function AddBike({ onClose, onSaved }) {
       acquisition_channel: acqChannel,
       acquisition_price_buy_in: toNumberOrNull(buyIn),
       transport_cost: toNumberOrNull(transportCost) ?? 0,
-      prep_estimate: avgPrep || 0, // seed with the learned average for this model
+      prep_estimate: avgPrep || 0, // seed with learned average for this model
       target_margin: toNumberOrNull(targetMargin) ?? 0,
       vat_scheme: vatScheme,
       admin_fee: toNumberOrNull(adminFee) ?? 0,
@@ -244,7 +252,7 @@ export default function AddBike({ onClose, onSaved }) {
       owner_sales_exec_id: "",
       notes_internal: "",
 
-      // KPIs (blank; computed later)
+      // KPIs (computed later)
       kpis: {
         time_on_market_days: null,
         days_to_sell: null,
@@ -260,7 +268,6 @@ export default function AddBike({ onClose, onSaved }) {
 
       schemaVersion: 1,
       audit_log: [],
-      // keep your previous concept
       condition,
     };
 
@@ -276,22 +283,32 @@ export default function AddBike({ onClose, onSaved }) {
   // auto-clear errors when user fixes fields
   useEffect(() => {
     if (make && errors.make) setErrors((e) => ({ ...e, make: undefined }));
-  }, [make]);
+  }, [make, errors.make]);
   useEffect(() => {
     if (model && errors.model) setErrors((e) => ({ ...e, model: undefined }));
-  }, [model]);
+  }, [model, errors.model]);
   useEffect(() => {
     if (retailPrice && Number(retailPrice) > 0 && errors.retailPrice) {
       setErrors((e) => ({ ...e, retailPrice: undefined }));
     }
-  }, [retailPrice]);
+  }, [retailPrice, errors.retailPrice]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={handleBackdropClick}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      onClick={handleBackdropClick}
+    >
       <div className="w-full max-w-3xl rounded-2xl bg-white shadow-xl overflow-hidden">
         <div className="flex justify-between items-center border-b px-5 py-4">
           <h2 className="text-lg font-semibold">Add New Bike</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 rounded-lg px-2 py-1">✕</button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 rounded-lg px-2 py-1"
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-6">
@@ -302,7 +319,15 @@ export default function AddBike({ onClose, onSaved }) {
                 label="Make"
                 name="make"
                 value={make}
-                onChange={(e) => { setMake(e.target.value); resetModelDependent(); }}
+                onChange={(e) => {
+                  setMake(e.target.value);
+                  // Reset everything that depends on Make/Model
+                  setModel("");
+                  setYear("");
+                  setTrim("");
+                  setSpecValues({});
+                  setFeatureValues({});
+                }}
                 options={["", ...makes]}
                 required
                 error={errors.make}
@@ -311,7 +336,12 @@ export default function AddBike({ onClose, onSaved }) {
                 label="Model"
                 name="model"
                 value={model}
-                onChange={(e) => { setModel(e.target.value); setYear(""); setSpecValues({}); setFeatureValues({}); }}
+                onChange={(e) => {
+                  setModel(e.target.value);
+                  setYear("");
+                  setSpecValues({});
+                  setFeatureValues({});
+                }}
                 options={["", ...models]}
                 disabled={!make}
                 required
@@ -325,18 +355,50 @@ export default function AddBike({ onClose, onSaved }) {
                 options={["", ...years]}
                 disabled={!model}
               />
-              <Field label="Trim" name="trim" value={trim} onChange={(e) => setTrim(e.target.value)} />
+              <Field
+                label="Trim"
+                name="trim"
+                value={trim}
+                onChange={(e) => setTrim(e.target.value)}
+              />
             </div>
           </Section>
 
           {/* Basics */}
           <Section title="Basics">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field label="Registration" name="registration" value={registration} onChange={(e) => setRegistration(e.target.value)} />
-              <Field label="VIN" name="vin" value={vin} onChange={(e) => setVin(e.target.value)} />
-              <Field label="Mileage" type="number" name="mileage" value={mileage} onChange={(e) => setMileage(e.target.value)} />
-              <Field label="Colour" name="colour" value={colour} onChange={(e) => setColour(e.target.value)} />
-              <Select label="Condition" name="condition" value={condition} onChange={(e) => setCondition(e.target.value)} options={["New", "Used", "Ex-Demo"]} />
+              <Field
+                label="Registration"
+                name="registration"
+                value={registration}
+                onChange={(e) => setRegistration(e.target.value)}
+              />
+              <Field
+                label="VIN"
+                name="vin"
+                value={vin}
+                onChange={(e) => setVin(e.target.value)}
+              />
+              <Field
+                label="Mileage"
+                type="number"
+                name="mileage"
+                value={mileage}
+                onChange={(e) => setMileage(e.target.value)}
+              />
+              <Field
+                label="Colour"
+                name="colour"
+                value={colour}
+                onChange={(e) => setColour(e.target.value)}
+              />
+              <Select
+                label="Condition"
+                name="condition"
+                value={condition}
+                onChange={(e) => setCondition(e.target.value)}
+                options={["New", "Used", "Ex-Demo"]}
+              />
               <Field
                 label="Retail Price (£)"
                 type="number"
@@ -352,7 +414,13 @@ export default function AddBike({ onClose, onSaved }) {
           {/* Provenance */}
           <Section title="Provenance">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Field label="Owners (count)" type="number" name="owners" value={ownersCount} onChange={(e) => setOwnersCount(e.target.value)} />
+              <Field
+                label="Owners (count)"
+                type="number"
+                name="owners"
+                value={ownersCount}
+                onChange={(e) => setOwnersCount(e.target.value)}
+              />
               <Select
                 label="Service History"
                 name="service_history"
@@ -360,7 +428,13 @@ export default function AddBike({ onClose, onSaved }) {
                 onChange={(e) => setServiceHistoryType(e.target.value)}
                 options={["FBMWSH", "FSH", "Partial", "None", "Unknown"]}
               />
-              <Field label="MOT Expiry" name="mot" type="date" value={motExpiry} onChange={(e) => setMotExpiry(e.target.value)} />
+              <Field
+                label="MOT Expiry"
+                name="mot"
+                type="date"
+                value={motExpiry}
+                onChange={(e) => setMotExpiry(e.target.value)}
+              />
             </div>
           </Section>
 
@@ -372,7 +446,16 @@ export default function AddBike({ onClose, onSaved }) {
                 name="status"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                options={["inbound", "in_prep", "live", "reserved", "sold", "returned", "wholesaled", "scrapped"]}
+                options={[
+                  "inbound",
+                  "in_prep",
+                  "live",
+                  "reserved",
+                  "sold",
+                  "returned",
+                  "wholesaled",
+                  "scrapped",
+                ]}
               />
               <Select
                 label="Acquisition Source"
@@ -389,12 +472,42 @@ export default function AddBike({ onClose, onSaved }) {
                 options={["walk_in", "online", "phone", "email"]}
               />
 
-              <Field label="Buy-in Price (£)" type="number" name="buyin" value={buyIn} onChange={(e) => setBuyIn(e.target.value)} />
-              <Field label="Transport Cost (£)" type="number" name="transport" value={transportCost} onChange={(e) => setTransportCost(e.target.value)} />
-              <Select label="VAT Scheme" name="vat" value={vatScheme} onChange={(e) => setVatScheme(e.target.value)} options={["standard", "margin_scheme"]} />
+              <Field
+                label="Buy-in Price (£)"
+                type="number"
+                name="buyin"
+                value={buyIn}
+                onChange={(e) => setBuyIn(e.target.value)}
+              />
+              <Field
+                label="Transport Cost (£)"
+                type="number"
+                name="transport"
+                value={transportCost}
+                onChange={(e) => setTransportCost(e.target.value)}
+              />
+              <Select
+                label="VAT Scheme"
+                name="vat"
+                value={vatScheme}
+                onChange={(e) => setVatScheme(e.target.value)}
+                options={["standard", "margin_scheme"]}
+              />
 
-              <Field label="Target Margin (£)" type="number" name="target_margin" value={targetMargin} onChange={(e) => setTargetMargin(e.target.value)} />
-              <Field label="Admin Fee (£)" type="number" name="admin_fee" value={adminFee} onChange={(e) => setAdminFee(e.target.value)} />
+              <Field
+                label="Target Margin (£)"
+                type="number"
+                name="target_margin"
+                value={targetMargin}
+                onChange={(e) => setTargetMargin(e.target.value)}
+              />
+              <Field
+                label="Admin Fee (£)"
+                type="number"
+                name="admin_fee"
+                value={adminFee}
+                onChange={(e) => setAdminFee(e.target.value)}
+              />
 
               {/* Suggestion widget */}
               <div className="md:col-span-3 rounded-xl border p-3 bg-gray-50">
@@ -402,8 +515,13 @@ export default function AddBike({ onClose, onSaved }) {
                   <div className="text-sm">
                     <div className="font-semibold">Suggested Buy-in</div>
                     <div className="text-gray-600">
-                      £{suggestedBuyIn.toLocaleString()} &nbsp;
-                      <span className="text-xs">(Retail £{Number(retailPrice || 0).toLocaleString()} − Margin £{Number(targetMargin || 0).toLocaleString()} − Avg Prep £{(avgPrep || 0).toLocaleString()} − Admin £{Number(adminFee || 0).toLocaleString()})</span>
+                      £{suggestedBuyIn.toLocaleString()}{" "}
+                      <span className="text-xs">
+                        (Retail £{Number(retailPrice || 0).toLocaleString()} − Margin £
+                        {Number(targetMargin || 0).toLocaleString()} − Avg Prep £
+                        {(avgPrep || 0).toLocaleString()} − Admin £
+                        {Number(adminFee || 0).toLocaleString()})
+                      </span>
                     </div>
                   </div>
                   <button
@@ -431,7 +549,8 @@ export default function AddBike({ onClose, onSaved }) {
               />
               {!!parseTrelloCardId(trelloUrl) && (
                 <div className="text-xs text-green-700">
-                  Parsed Trello Card ID: <span className="font-mono">{parseTrelloCardId(trelloUrl)}</span>
+                  Parsed Trello Card ID:{" "}
+                  <span className="font-mono">{parseTrelloCardId(trelloUrl)}</span>
                 </div>
               )}
             </div>
@@ -478,6 +597,7 @@ export default function AddBike({ onClose, onSaved }) {
                   <label key={f.id} className="inline-flex items-center gap-2 text-sm">
                     <input
                       type="checkbox"
+                      className="h-4 w-4"
                       checked={!!featureValues[f.id]}
                       onChange={(e) => onToggleFeature(f.id, e.target.checked)}
                     />
@@ -490,10 +610,17 @@ export default function AddBike({ onClose, onSaved }) {
 
           {/* Actions */}
           <div className="flex justify-end gap-2 pt-2 border-t">
-            <button type="button" onClick={onClose} className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
+            >
               Cancel
             </button>
-            <button type="submit" className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700">
+            <button
+              type="submit"
+              className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+            >
               Save Bike
             </button>
           </div>
@@ -513,7 +640,16 @@ function Section({ title, children }) {
   );
 }
 
-function Field({ label, name, value, onChange, type = "text", required = false, error, placeholder }) {
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  required = false,
+  error,
+  placeholder,
+}) {
   return (
     <label className="block text-sm">
       <span className="font-medium text-gray-700">{label}</span>
@@ -531,7 +667,16 @@ function Field({ label, name, value, onChange, type = "text", required = false, 
   );
 }
 
-function Select({ label, name, value, onChange, options = [], required = false, disabled = false, error }) {
+function Select({
+  label,
+  name,
+  value,
+  onChange,
+  options = [],
+  required = false,
+  disabled = false,
+  error,
+}) {
   return (
     <label className="block text-sm">
       <span className="font-medium text-gray-700">{label}</span>
