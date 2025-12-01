@@ -1,9 +1,10 @@
 // src/lib/catalog.js
-// Clean, safe, and validated version (no syntax errors)
+// Central catalog for makes, models, years, features & common issues.
 
 /* -------------------------------------------------------------------------- */
 /* Utilities                                                                  */
 /* -------------------------------------------------------------------------- */
+
 function nk(s) {
   // normalizeKey: lower-case, alnum-and-dash only, collapse spaces/punctuation
   return String(s || "")
@@ -12,6 +13,7 @@ function nk(s) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
 function keyFor(make, model) {
   return `${make}|${model}`;
 }
@@ -19,6 +21,7 @@ function keyFor(make, model) {
 /* -------------------------------------------------------------------------- */
 /* Makes                                                                      */
 /* -------------------------------------------------------------------------- */
+
 const MAKES = [
   "Aprilia",
   "Benelli",
@@ -63,6 +66,7 @@ const MAKES = [
 /* -------------------------------------------------------------------------- */
 /* Models by Make                                                             */
 /* -------------------------------------------------------------------------- */
+
 const MODELS_BY_MAKE = {
   Aprilia: ["RS 660", "RSV4", "Tuareg 660", "Tuono 660", "Tuono V4"],
   BMW: [
@@ -144,7 +148,15 @@ const MODELS_BY_MAKE = {
     "Meteor 350",
     "Super Meteor 650",
   ],
-  Suzuki: ["GSX-8R", "GSX-8S", "GSX-S1000", "GSX-S1000GT", "Hayabusa", "V-Strom 650", "V-Strom 800DE"],
+  Suzuki: [
+    "GSX-8R",
+    "GSX-8S",
+    "GSX-S1000",
+    "GSX-S1000GT",
+    "Hayabusa",
+    "V-Strom 650",
+    "V-Strom 800DE",
+  ],
   Triumph: [
     "Bonneville T120",
     "Scrambler 1200",
@@ -156,13 +168,25 @@ const MODELS_BY_MAKE = {
     "Trident 660",
   ],
   Vespa: ["GTS 125", "GTS 300"],
-  Yamaha: ["MT-07", "MT-09", "MT-10", "NMAX 125", "R7", "Tracer 7", "Tracer 9 GT", "Ténéré 700", "XSR700", "XSR900"],
+  Yamaha: [
+    "MT-07",
+    "MT-09",
+    "MT-10",
+    "NMAX 125",
+    "R7",
+    "Tracer 7",
+    "Tracer 9 GT",
+    "Ténéré 700",
+    "XSR700",
+    "XSR900",
+  ],
   Zero: ["S", "SR/F"],
 };
 
 /* -------------------------------------------------------------------------- */
 /* Year Ranges (optional)                                                     */
 /* -------------------------------------------------------------------------- */
+
 const YEAR_RANGES = {
   "BMW|R 1300 GS": [2024, 2026],
   "BMW|R 1250 GS": [2019, 2024],
@@ -179,20 +203,49 @@ const YEAR_RANGES = {
 
 /* -------------------------------------------------------------------------- */
 /* Spec & (Legacy) Feature Field Maps                                         */
-/* - You can keep adding per-model explicit specs here.                       */
-/* - Legacy feature entries are merged with the dynamic catalog below.        */
 /* -------------------------------------------------------------------------- */
+
 const FIELD_MAPS = {
   specs: {
     "BMW|R 1300 GS": [
-      { id: "package", label: "Package", type: "enum", options: ["Base", "TE", "TE with SOS"] },
-      { id: "ride_modes", label: "Ride Modes", type: "enum", options: ["Rain/Road", "Pro"] },
-      { id: "suspension", label: "Suspension", type: "enum", options: ["Standard", "Dynamic ESA"] },
-      { id: "wheel_type", label: "Wheel Type", type: "enum", options: ["Cast", "Wire/Spoked"] },
+      {
+        id: "package",
+        label: "Package",
+        type: "enum",
+        options: ["Base", "TE", "TE with SOS"],
+      },
+      {
+        id: "ride_modes",
+        label: "Ride Modes",
+        type: "enum",
+        options: ["Rain/Road", "Pro"],
+      },
+      {
+        id: "suspension",
+        label: "Suspension",
+        type: "enum",
+        options: ["Standard", "Dynamic ESA"],
+      },
+      {
+        id: "wheel_type",
+        label: "Wheel Type",
+        type: "enum",
+        options: ["Cast", "Wire/Spoked"],
+      },
     ],
     "Honda|CRF1100L Africa Twin": [
-      { id: "variant", label: "Variant", type: "enum", options: ["Std", "Adventure Sports"] },
-      { id: "gearbox", label: "Gearbox", type: "enum", options: ["Manual", "DCT"] },
+      {
+        id: "variant",
+        label: "Variant",
+        type: "enum",
+        options: ["Std", "Adventure Sports"],
+      },
+      {
+        id: "gearbox",
+        label: "Gearbox",
+        type: "enum",
+        options: ["Manual", "DCT"],
+      },
     ],
   },
   features: {
@@ -220,6 +273,7 @@ const FIELD_MAPS = {
 /* -------------------------------------------------------------------------- */
 /* Dynamic Feature Catalog (groups + per-model rules)                         */
 /* -------------------------------------------------------------------------- */
+
 const FEATURE_GROUPS = {
   Packs: [
     ["comfort-pack", "Comfort Pack"],
@@ -262,7 +316,7 @@ const FEATURE_GROUPS = {
     ['tft-65"', 'TFT 6.5"'],
     ["nav-prep", "Navigation Prep"],
     ["keyless-ride", "Keyless Ride"],
-    ["tpc", "Tyre Pressure Control (TPC)"],
+    ["rdc", "Tyre Pressure Control (RDC)"],
     ["usb-c", "USB-C"],
     ["alarm", "Alarm"],
   ],
@@ -273,8 +327,7 @@ const BASE_FEATURES_BY_MAKE = {
   bmw: Object.entries(FEATURE_GROUPS).flatMap(([group, pairs]) =>
     pairs.map(([id, label]) => ({ id, label, group }))
   ),
-  // Add other makes here later if you want dynamic features beyond BMW:
-  // honda: [...], triumph: [...], etc.
+  // Other makes can be added here later (honda, triumph, etc.)
 };
 
 // Per-model include/exclude rules (normalized keys: `${make}:${model}`)
@@ -308,7 +361,7 @@ const MODEL_RULES = {
       'tft-65"',
       "nav-prep",
       "keyless-ride",
-      "tpc",
+      "rdc",
       "usb-c",
       "alarm",
     ],
@@ -330,7 +383,7 @@ const MODEL_RULES = {
       'tft-65"',
       "nav-prep",
       "keyless-ride",
-      "tpc",
+      "rdc",
       "usb-c",
       "alarm",
       "top-box",
@@ -370,19 +423,34 @@ const MODEL_RULES = {
       'tft-65"',
       "nav-prep",
       "keyless-ride",
-      "tpc",
+      "rdc",
       "usb-c",
       "alarm",
       "top-box",
       "tank-bag",
       "cast-wheels",
     ],
-    exclude: ["adaptive-height", "riding-assistant", "acc", "spoked-wheels", "aluminium-panniers", "enduro-pro"],
+    exclude: [
+      "adaptive-height",
+      "riding-assistant",
+      "acc",
+      "spoked-wheels",
+      "aluminium-panniers",
+      "enduro-pro",
+    ],
   },
 
   // BMW R 18 (cruiser)
   "bmw:r-18": {
-    include: ["heated-grips", "heated-seat", "led-headlight", "aux-leds", "alarm", "top-box", "tank-bag"],
+    include: [
+      "heated-grips",
+      "heated-seat",
+      "led-headlight",
+      "aux-leds",
+      "alarm",
+      "top-box",
+      "tank-bag",
+    ],
     exclude: [
       "dynamic-esa",
       "adaptive-height",
@@ -396,7 +464,7 @@ const MODEL_RULES = {
       "aluminium-panniers",
       'tft-65"',
       "nav-prep",
-      "tpc",
+      "rdc",
       "keyless-ride",
       "m-sport-pack",
       "dynamic-pack",
@@ -408,8 +476,85 @@ const MODEL_RULES = {
 };
 
 /* -------------------------------------------------------------------------- */
+/* Common Issues (model-specific known checks)                                */
+/* -------------------------------------------------------------------------- */
+/**
+ * These are static, curated “known issues” / checks for each model.
+ * They feed into:
+ *  - PX Condition & History → Common Issues
+ *  - Customer Valuation Report
+ *
+ * Keyed by "Make|Model".
+ */
+const COMMON_ISSUES_BY_MODEL = {
+  // Core demo cases you mentioned
+  "BMW|R 1250 GS": [
+    {
+      id: "r1250gs-rear-suspension",
+      label:
+        "Rear suspension unit – check ESA operation, leaks and play (known issue on R 1250 GS).",
+      fromYear: 2019,
+    },
+  ],
+  "BMW|R 1250 GS Adventure": [
+    {
+      id: "r1250gsa-rear-suspension",
+      label:
+        "Rear suspension unit – check ESA operation, leaks and play (known issue on R 1250 GS Adventure).",
+      fromYear: 2019,
+    },
+  ],
+
+  // K 1600 range – reverse gear
+  "BMW|K 1600 GT": [
+    {
+      id: "k1600gt-reverse-gear",
+      label:
+        "Reverse gear – confirm engages smoothly with no errors or judder, and test operation on an incline.",
+    },
+  ],
+  "BMW|K 1600 GTL": [
+    {
+      id: "k1600gtl-reverse-gear",
+      label:
+        "Reverse gear – confirm engages smoothly with no errors or judder, and test operation on an incline.",
+    },
+  ],
+  "BMW|K 1600 B": [
+    {
+      id: "k1600b-reverse-gear",
+      label:
+        "Reverse gear – confirm engages smoothly with no errors or judder, and test operation on an incline.",
+    },
+  ],
+
+  // A couple of extra demo-friendly ones for your stock
+  "BMW|S 1000 XR": [
+    {
+      id: "s1000xr-switchgear",
+      label:
+        "Handlebar switchgear – check all buttons operate correctly (mode, heated grips, cruise, indicator cancel).",
+    },
+  ],
+  "BMW|R 18": [
+    {
+      id: "r18-corrosion",
+      label:
+        "Chrome & exposed metal – inspect for pitting/corrosion on exhausts, shaft housing, wheel rims and bars.",
+    },
+  ],
+  "BMW|R nineT": [
+    {
+      id: "rninet-fork-seals",
+      label: "Fork seals – check for misting or leaks on fork stanchions.",
+    },
+  ],
+};
+
+/* -------------------------------------------------------------------------- */
 /* Public API                                                                 */
 /* -------------------------------------------------------------------------- */
+
 export function getMakes() {
   return MAKES.slice();
 }
@@ -523,4 +668,24 @@ export function getFeatureGroups(make, model) {
       group,
       options: byGroup[group].sort((a, b) => a.label.localeCompare(b.label)),
     }));
+}
+
+/**
+ * getCommonIssues: returns an array of known issues for the given make/model/year.
+ * Shape: [{ id, label, fromYear?, toYear? }, ...]
+ */
+export function getCommonIssues(make, model, year) {
+  if (!make || !model) return [];
+  const list = COMMON_ISSUES_BY_MODEL[keyFor(make, model)] || [];
+
+  if (!year) return list;
+
+  const y = Number(year);
+  if (!Number.isFinite(y)) return list;
+
+  return list.filter((issue) => {
+    if (issue.fromYear && y < issue.fromYear) return false;
+    if (issue.toYear && y > issue.toYear) return false;
+    return true;
+  });
 }

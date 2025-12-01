@@ -1,0 +1,15 @@
+{
+  "name": "harbermotorrad-fake-backend",
+  "version": "1.0.0",
+  "description": "Fake backend API for Harber Motorrad using a JSON file as storage",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "seed": "node seed.mjs"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.0",
+    "nanoid": "^5.0.7"
+  }
+}
