@@ -3,9 +3,8 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import Deals from "./pages/Deals.jsx";
-// --- Import your real pages ---
-import NewDeal from "./pages/NewDeal.jsx"; // ✅ Add this import
-import PartEx from "./pages/PartEx/PartExchange.jsx"; // exact case
+import NewDeal from "./pages/NewDeal.jsx";
+import PartEx from "./pages/PartEx/PartEx.jsx";
 import BikesPage from "./pages/Bikes/BikesPage.jsx";
 import AddBike from "./pages/Bikes/AddBike.jsx";
 
@@ -15,15 +14,6 @@ function Home() {
     <div style={styles.page}>
       <h2>Home</h2>
       <p>Welcome to Halliwell Jones Motorrad.</p>
-    </div>
-  );
-}
-
-function PartExchange() {
-  return (
-    <div style={styles.page}>
-      <h2>Part Exchange</h2>
-      <p>Evaluate and record part exchange details here.</p>
     </div>
   );
 }
@@ -59,10 +49,14 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/bikes" element={<BikesPage />} />
           <Route path="/add-bike" element={<AddBike />} />
-          <Route path="/part-exchange" element={<PartExchange />} />
+
+          {/* 🔧 Use the real PX page here */}
+          <Route path="/part-exchange" element={<PartEx />} />
+
           <Route path="/deals" element={<Deals />} />
           <Route path="/to-do" element={<ToDo />} />
           <Route path="/add-new-deal" element={<NewDeal />} />
+
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
@@ -84,7 +78,7 @@ const styles = {
   main: {
     maxWidth: "1100px",
     margin: "0 auto",
-    padding: "160px 16px 48px", // ✅ keeps space for the fixed header
+    padding: "160px 16px 48px", // keeps space for the fixed header
   },
   page: {
     background: "rgba(255,255,255,0.04)",

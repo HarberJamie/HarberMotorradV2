@@ -1,0 +1,5300 @@
+{
+  "bikes": [
+    {
+      "id": "r2rkX5GD19-QLqxl1lWVS",
+      "registration": "JU28 SGT",
+      "vin": "WBRYPKUUZ3DW9YGL2",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 395,
+      "price": 8056,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-04-29T20:49:44.765Z",
+      "updatedAt": "2025-11-15T20:49:44.767Z",
+      "events": [
+        {
+          "id": "XUXBTrF1P17LGXn__QQIm",
+          "type": "Valuation",
+          "amount": 11141,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-07-31T20:49:44.767Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "HQwMFlRaNdnz7xusPvDpU",
+          "type": "Listing",
+          "amount": 12324,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-03-25T20:49:44.767Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6445,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "iYyaYpqkMwQKOpk0G9s0K",
+      "registration": "PV70 MFR",
+      "vin": "Z3DH5KF06E375ZZYC",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Rallye TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 8687,
+      "price": 13031,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-07T20:49:44.767Z",
+      "updatedAt": "2025-11-24T20:49:44.767Z",
+      "events": [
+        {
+          "id": "xFkcEI4MyjnI0fEnPl90v",
+          "type": "Valuation",
+          "amount": 12068,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-04-16T20:49:44.767Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "Ez8pU6mqNFqGNFuV881wL",
+          "type": "Listing",
+          "amount": 13604,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-03-17T20:49:44.767Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10425,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "wZbls2w-xYvHxlCdSN4p7",
+      "registration": "GN59 ZWF",
+      "vin": "2EKNK854MGPGXXGN4",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 662,
+      "price": 12816,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Cruise Control": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-10T20:49:44.767Z",
+      "updatedAt": "2025-11-04T20:49:44.767Z",
+      "events": [
+        {
+          "id": "hOia9BPUBU1xIAnbL1L8U",
+          "type": "Valuation",
+          "amount": 17935,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2024-11-29T20:49:44.767Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "mOAOCsivD0yRjHnD4ejUU",
+          "type": "Listing",
+          "amount": 18873,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-08-09T20:49:44.767Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10253,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "q7vibj9KKu4gjWh9nDmiU",
+      "registration": "MG45 EKT",
+      "vin": "W156RCNUMU5RUHEJR",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2023,
+      "status": "Available",
+      "mileage": 9070,
+      "price": 18065,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-11-09T20:49:44.767Z",
+      "updatedAt": "2025-11-26T21:44:02.336Z",
+      "events": [
+        {
+          "id": "EbJeb-82N6dZuXOQvwJRm",
+          "type": "Price Change",
+          "amount": 8604,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-10-21T20:49:44.767Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "OzrGlCR_8WMoQPxjR0-wr",
+          "type": "Valuation",
+          "amount": 8279,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-07-12T20:49:44.767Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "fMMALiSIHJYUXPbWW9GrT",
+          "type": "Listing",
+          "amount": 9311,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-03-20T20:49:44.767Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": "16000",
+        "source": "retail_part_exchange"
+      },
+      "daysInStock": 251,
+      "latestEventLabel": "Price Change"
+    },
+    {
+      "id": "9aKsQGbPEaLRUyJOieALL",
+      "registration": "FJ24 KDX",
+      "vin": "4PYTFPR3411NPZK2Z",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Available",
+      "mileage": 4257,
+      "price": 14050,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-30T20:49:44.767Z",
+      "updatedAt": "2025-11-04T20:49:44.767Z",
+      "events": [
+        {
+          "id": "bW7DSAyWLInZTaI_43sp-",
+          "type": "Valuation",
+          "amount": 8811,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-05-05T20:49:44.767Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "owFkgDuK3Gd7Mjr68KcJ5",
+          "type": "Listing",
+          "amount": 10678,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-02-06T20:49:44.767Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "_m6oJ5V6R0JBZ0HKhyk6G",
+          "type": "Price Change",
+          "amount": 9920,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-07-10T20:49:44.767Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11240,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "QKIQ_HBJs4-OVmIy_NkuY",
+      "registration": "GY10 JPN",
+      "vin": "END21W8Y77BUKH0Y6",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Available",
+      "mileage": 8433,
+      "price": 10360,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-06-07T20:49:44.767Z",
+      "createdAt": "2025-01-17T20:49:44.767Z",
+      "updatedAt": "2025-11-25T20:49:44.767Z",
+      "events": [
+        {
+          "id": "noWkkJCPhQdSIwcHZw9fF",
+          "type": "Valuation",
+          "amount": 9342,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-05-15T20:49:44.767Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "b4EEtYb8RNh7oJqsq1mse",
+          "type": "Listing",
+          "amount": 10547,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-06-08T20:49:44.767Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "DOZ-Fy5sDlGkv0S-H4mFv",
+          "type": "Price Change",
+          "amount": 9660,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-10-08T20:49:44.767Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8288,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "2ef4mbEDf1sHpD58YKTiD",
+      "registration": "YM85 XDK",
+      "vin": "C6V6F3H2YAN0H9PCS",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Available",
+      "mileage": 2970,
+      "price": 9859,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-01-24T20:49:44.767Z",
+      "updatedAt": "2025-11-10T20:49:44.767Z",
+      "events": [
+        {
+          "id": "quHxVnVw71qsDNZXgbSh9",
+          "type": "Valuation",
+          "amount": 16342,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-06-17T20:49:44.767Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "8qkHl2a2DNZeiRdKIYqD8",
+          "type": "Listing",
+          "amount": 18309,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-06-19T20:49:44.767Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7887,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "UYH_4jLZqCCR5Xe6hxYpB",
+      "registration": "YH55 ZJU",
+      "vin": "YEY6UTPXXH5JVKNZK",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Rallye TE",
+      "modelYear": 2025,
+      "status": "Available",
+      "mileage": 10261,
+      "price": 13074,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-02T20:49:44.767Z",
+      "updatedAt": "2025-11-18T20:49:44.767Z",
+      "events": [
+        {
+          "id": "cHIIsW6W6bLkeL3Zq9j73",
+          "type": "Valuation",
+          "amount": 18711,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-12T20:49:44.767Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "PnpN6IGKyGQH-O-g1LBXm",
+          "type": "Listing",
+          "amount": 20159,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-03-07T20:49:44.767Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "fmVA2JPYpWOj0ghmzq70b",
+          "type": "Price Change",
+          "amount": 19720,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-06-25T20:49:44.767Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10459,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "-c2lMnxZ5b3NRykz5o7Fv",
+      "registration": "OL83 YZY",
+      "vin": "496X30NLJ53JDTKX1",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2025,
+      "status": "Available",
+      "mileage": 5576,
+      "price": 11576,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-06T20:49:44.767Z",
+      "updatedAt": "2025-11-21T20:49:44.767Z",
+      "events": [
+        {
+          "id": "4CTpJKmlcbEIVKKhtW2ye",
+          "type": "Valuation",
+          "amount": 10988,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-11-01T20:49:44.767Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "k5bAU783laAMYirv2CHSC",
+          "type": "Listing",
+          "amount": 12137,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-05-15T20:49:44.767Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "BBILHVJw4tWq0KZNBUiuK",
+          "type": "Price Change",
+          "amount": 11890,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-05-30T20:49:44.767Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9261,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "8kshJkCgpSCiVVgoXrMe3",
+      "registration": "GM58 YPU",
+      "vin": "WWY7U8YV858BCHD9W",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2025,
+      "status": "Available",
+      "mileage": 8997,
+      "price": 13275,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-28T20:49:44.767Z",
+      "updatedAt": "2025-10-30T20:49:44.767Z",
+      "events": [
+        {
+          "id": "42nwbU8715D_ixWNIBjPU",
+          "type": "Valuation",
+          "amount": 12310,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-10-16T20:49:44.768Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "PE0IBrMnCfhXViaSkTrVx",
+          "type": "Listing",
+          "amount": 13567,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-06-02T20:49:44.768Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10620,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "fjDe1rurtufHflxL7m71J",
+      "registration": "OK24 YES",
+      "vin": "RMTR7M86CKC49Z98Z",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 1057,
+      "price": 10835,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-04-19T20:49:44.768Z",
+      "createdAt": "2025-06-05T20:49:44.768Z",
+      "updatedAt": "2025-11-11T20:49:44.768Z",
+      "events": [
+        {
+          "id": "096y9BEct247De1ibEDFS",
+          "type": "Valuation",
+          "amount": 11407,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-01-08T20:49:44.768Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "oXazY09IRYCY-AUrO98iy",
+          "type": "Listing",
+          "amount": 12338,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-03-28T20:49:44.768Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8668,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "-5UcMQ-ZL54Qn5OT65IP0",
+      "registration": "PG86 KYL",
+      "vin": "92NAK3UCHSNYWEVDD",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 3645,
+      "price": 16568,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-09-16T20:49:44.768Z",
+      "updatedAt": "2025-11-09T20:49:44.768Z",
+      "events": [
+        {
+          "id": "K_gNN9tU-U5oqngGUk9XI",
+          "type": "Valuation",
+          "amount": 7204,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2024-12-02T20:49:44.768Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "rMSGbGJORpV_92rYQQxqP",
+          "type": "Listing",
+          "amount": 7909,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-09-16T20:49:44.768Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "CqwF5vGtHDI8Tb0IKPzOL",
+          "type": "Price Change",
+          "amount": 7429,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-08-03T20:49:44.768Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13254,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "5l7CKgfNc4RaR1oXEDfAp",
+      "registration": "BZ86 BPJ",
+      "vin": "Z8HC9JPHGP0H89LH3",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "TE",
+      "modelYear": 2025,
+      "status": "Available",
+      "mileage": 5755,
+      "price": 10920,
+      "vatQualifying": true,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-09-05T20:49:44.768Z",
+      "updatedAt": "2025-11-08T20:49:44.768Z",
+      "events": [
+        {
+          "id": "9Kvq2JXkQq2iQSMKaqZe3",
+          "type": "Valuation",
+          "amount": 15888,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-06-14T20:49:44.768Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "lA_U9aOd4YISh84jxSgKu",
+          "type": "Listing",
+          "amount": 16505,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-10-19T20:49:44.768Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8736,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "EhWPr1m4SzEiV25mXXe6Q",
+      "registration": "WN95 JPR",
+      "vin": "NUKB3A5BM6H278MS1",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 4394,
+      "price": 11370,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-14T20:49:44.768Z",
+      "updatedAt": "2025-10-27T20:49:44.768Z",
+      "events": [
+        {
+          "id": "zF23q4nKLRrKw5vAVd3Q1",
+          "type": "Valuation",
+          "amount": 18094,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-08-10T20:49:44.768Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "BCGvXavlqAHyMQFJz6PKo",
+          "type": "Listing",
+          "amount": 20027,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-05-21T20:49:44.768Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "kT3TLEnYLJgl9MZzrwfBG",
+          "type": "Price Change",
+          "amount": 19094,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-05-20T20:49:44.768Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9096,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "C4GkVD2PTrPjxADGgAVlh",
+      "registration": "CD22 EGA",
+      "vin": "U2RMS5T5WK7SXHUM3",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 7716,
+      "price": 11951,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-05-17T20:49:44.768Z",
+      "createdAt": "2024-12-08T20:49:44.768Z",
+      "updatedAt": "2025-11-06T20:49:44.768Z",
+      "events": [
+        {
+          "id": "N4k8xt-pTfabxPuIMPlqQ",
+          "type": "Valuation",
+          "amount": 10070,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-05-17T20:49:44.768Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "7qR2x-2AfUbc2wp01E7Zl",
+          "type": "Listing",
+          "amount": 11053,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-02-08T20:49:44.768Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "f1VV4RjXdiGhRMaz0kx2i",
+          "type": "Price Change",
+          "amount": 11047,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-11-14T20:49:44.768Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9561,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "s8fv72v6uBwfwGMo01RfP",
+      "registration": "WO97 YPJ",
+      "vin": "TYGP4P0Y14JMEVG20",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 871,
+      "price": 12842,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-07-22T20:49:44.768Z",
+      "createdAt": "2025-06-06T20:49:44.768Z",
+      "updatedAt": "2025-10-30T20:49:44.768Z",
+      "events": [
+        {
+          "id": "4ByKiz9tvRdJCJlYTaRnM",
+          "type": "Valuation",
+          "amount": 12615,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-09-24T20:49:44.768Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "JjAaG3vlQfV_H0VyhPZoC",
+          "type": "Listing",
+          "amount": 14136,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-11-15T20:49:44.768Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "-Rj2BVEX96MigxZjCUJGd",
+          "type": "Price Change",
+          "amount": 13325,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-06-20T20:49:44.768Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10274,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "I9YZQ6J8KgBgd1iXMwJJz",
+      "registration": "XX19 PFF",
+      "vin": "GUEW9DM9LTU6V962D",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Rallye TE",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 8553,
+      "price": 17670,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-10-26T20:49:44.768Z",
+      "updatedAt": "2025-11-14T20:49:44.768Z",
+      "events": [
+        {
+          "id": "xksDyIh-nfuLVUeQH7KkR",
+          "type": "Valuation",
+          "amount": 16299,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-07-19T20:49:44.768Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "wHOcKFBFTXC_3bjaHgn4l",
+          "type": "Listing",
+          "amount": 17172,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-09-04T20:49:44.768Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14136,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "uNUJYVh-7GWyEwC-y9ul-",
+      "registration": "WY52 DCS",
+      "vin": "5KG7T5R9HF83SGH5J",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Available",
+      "mileage": 9364,
+      "price": 16476,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-12T20:49:44.768Z",
+      "updatedAt": "2025-10-29T20:49:44.768Z",
+      "events": [
+        {
+          "id": "FzMzPcrk6GbOhQHcT4xKQ",
+          "type": "Valuation",
+          "amount": 11261,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-01-18T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "4x_A-6lI_AJJbcjT1RvvO",
+          "type": "Listing",
+          "amount": 12177,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-05-15T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13181,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "XfA7c6fd4aDEbql-JgWB4",
+      "registration": "MM54 ZUZ",
+      "vin": "A9YBYTEZL1MCZYFUX",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 1662,
+      "price": 12604,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2024-12-16T20:49:44.769Z",
+      "createdAt": "2025-07-31T20:49:44.769Z",
+      "updatedAt": "2025-11-24T20:49:44.769Z",
+      "events": [
+        {
+          "id": "3q2LlEGowt5_bJHCCLDdc",
+          "type": "Valuation",
+          "amount": 7317,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-08-27T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "S_-HtzFYQyYwS4DSwlwc7",
+          "type": "Listing",
+          "amount": 7843,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-05-10T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10083,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "zY_Q6wYwVV4htgTZd4-4J",
+      "registration": "NM99 KBW",
+      "vin": "A4VE6XC9SUHBX0CBR",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 4315,
+      "price": 15079,
+      "vatQualifying": false,
+      "features": {
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2024-12-01T20:49:44.769Z",
+      "createdAt": "2025-06-22T20:49:44.769Z",
+      "updatedAt": "2025-10-27T20:49:44.769Z",
+      "events": [
+        {
+          "id": "9LHrUj-DFBeCjRe93aHg5",
+          "type": "Valuation",
+          "amount": 8759,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-05-05T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "d3ULXl5G0TtZ3QwRB56jy",
+          "type": "Listing",
+          "amount": 10012,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-02-03T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "XTe_NZdDhOIxPSgQra6LQ",
+          "type": "Price Change",
+          "amount": 9583,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-08-14T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 12063,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "B-FdDBsu7aW3HV66CUj4V",
+      "registration": "LJ55 HBV",
+      "vin": "T50ABZ1LV54AM1KY7",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "SE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 4349,
+      "price": 11292,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-09-28T20:49:44.769Z",
+      "createdAt": "2025-08-04T20:49:44.769Z",
+      "updatedAt": "2025-11-09T20:49:44.769Z",
+      "events": [
+        {
+          "id": "p3tNZ0AmKDrxbPhKwj8RH",
+          "type": "Valuation",
+          "amount": 17598,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-01-03T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "Rt7UY24gx_Ce8VVo86fGc",
+          "type": "Listing",
+          "amount": 18939,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-11-10T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "3WeyK5uNrG-2TO5c_vo9K",
+          "type": "Price Change",
+          "amount": 18246,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-10-10T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9034,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "HvePlwVWk3DzTXzY0pu8r",
+      "registration": "GK95 RDZ",
+      "vin": "9C3VGJG76UUEVN6NF",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 826,
+      "price": 17367,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-16T20:49:44.769Z",
+      "updatedAt": "2025-11-19T20:49:44.769Z",
+      "events": [
+        {
+          "id": "yR9i1D6cQ34HO53eM46_j",
+          "type": "Valuation",
+          "amount": 13324,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-20T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "SSZ2nKaVOBVC-ju9cbcSA",
+          "type": "Listing",
+          "amount": 14985,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-02-23T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "NHEDuqWttzZLDVupuzGnq",
+          "type": "Price Change",
+          "amount": 13544,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-10-10T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13894,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "lxtut63NllJXsjgXTIitz",
+      "registration": "OS48 FVG",
+      "vin": "0MYSRJ3635PLZHEMM",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "TE",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 5750,
+      "price": 10222,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-09-09T20:49:44.769Z",
+      "updatedAt": "2025-11-05T20:49:44.769Z",
+      "events": [
+        {
+          "id": "gZp9sqfGz4OB_PzWrar3F",
+          "type": "Valuation",
+          "amount": 9106,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-06T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "4fUPEpDuGYyiQVTTPaEqN",
+          "type": "Listing",
+          "amount": 9615,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-07-29T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "mDATvM-Vi5dkrMso13Eq-",
+          "type": "Price Change",
+          "amount": 9393,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-10-12T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8178,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "wrHPv0JeKE3yEX6Z_m7kl",
+      "registration": "PC25 GYB",
+      "vin": "8F889AD1WPR0VKVP0",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 9015,
+      "price": 11939,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-11-30T20:49:44.769Z",
+      "updatedAt": "2025-10-30T20:49:44.769Z",
+      "events": [
+        {
+          "id": "9kqD97RTGA0BcVWT_4Eds",
+          "type": "Valuation",
+          "amount": 17038,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-02-06T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "ecTeYFr9d9AXMZZsmKeAH",
+          "type": "Listing",
+          "amount": 18467,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-06-17T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "_YrSeXODgFpwXcxO1n0Pn",
+          "type": "Price Change",
+          "amount": 17824,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-10-07T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9551,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "COvz6wdWVJYqT-vwUmKkS",
+      "registration": "ZF28 YRK",
+      "vin": "GDUHWXJD92JSL3PG7",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 10646,
+      "price": 13405,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true,
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-21T20:49:44.769Z",
+      "updatedAt": "2025-11-02T20:49:44.769Z",
+      "events": [
+        {
+          "id": "8z-5DocWKErdG5I5nbfFX",
+          "type": "Valuation",
+          "amount": 13364,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-31T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "TXrMbh1KCRSZ82jxDe6iG",
+          "type": "Listing",
+          "amount": 14557,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-03-10T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10724,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "e5Z_5StQXERlt54Gocmfp",
+      "registration": "EZ43 GVU",
+      "vin": "K6SK7YGFFKFY7C2S6",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 737,
+      "price": 18098,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "Cruise Control": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": "2025-07-06T20:49:44.769Z",
+      "createdAt": "2025-02-06T20:49:44.769Z",
+      "updatedAt": "2025-11-18T20:49:44.769Z",
+      "events": [
+        {
+          "id": "jyLO0NdLYf3dEo5fPzit8",
+          "type": "Valuation",
+          "amount": 17789,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-05-30T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "uFRddIB7pKxPJIaGhNs-C",
+          "type": "Listing",
+          "amount": 18704,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-05-02T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "ilK_IxM06662t2aVIq_x1",
+          "type": "Price Change",
+          "amount": 18141,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-08-26T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14478,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "XbzIGQqk1UYYirQ6ox9mH",
+      "registration": "TL43 ANS",
+      "vin": "PNAW3KXFX8G6KH4G3",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "M Sport",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 798,
+      "price": 11523,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-10-05T20:49:44.769Z",
+      "createdAt": "2024-11-29T20:49:44.769Z",
+      "updatedAt": "2025-11-16T20:49:44.769Z",
+      "events": [
+        {
+          "id": "9H7UTkcLpLHxXp4kQVkK9",
+          "type": "Valuation",
+          "amount": 14885,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-03-09T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "tHnXD79cifztRKiqDxXhj",
+          "type": "Listing",
+          "amount": 16325,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-06-26T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9218,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "XyZw5DRx-voiDgoih4H15",
+      "registration": "UN51 ZZZ",
+      "vin": "GDAULV9A1VDXGUJPF",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 4920,
+      "price": 10914,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-17T20:49:44.769Z",
+      "updatedAt": "2025-11-15T20:49:44.769Z",
+      "events": [
+        {
+          "id": "UoilbepcWhOucHLQrhY-s",
+          "type": "Valuation",
+          "amount": 9425,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-11-11T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "YafgvlqXO4LQudHceUdTv",
+          "type": "Listing",
+          "amount": 10422,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-10-11T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8731,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "4g0WynR3W8zat-a9WqTUg",
+      "registration": "XA19 XXJ",
+      "vin": "HE2EH70UBAT98HNH2",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "First Edition",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 8297,
+      "price": 11895,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-10-14T20:49:44.769Z",
+      "updatedAt": "2025-11-08T20:49:44.769Z",
+      "events": [
+        {
+          "id": "mASzPitQR-UJnNwGZD2QZ",
+          "type": "Valuation",
+          "amount": 13354,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-08-06T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "gOqREojzLrV0tlbvnoP5J",
+          "type": "Listing",
+          "amount": 14822,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-10-22T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "MP-8qepOZDjKdQCxcmlK5",
+          "type": "Price Change",
+          "amount": 14015,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-10-18T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9516,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "3XO13iMcLRubk2MOg-naL",
+      "registration": "SV54 BPS",
+      "vin": "AUST1Z5NMK3GBUXEW",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2021,
+      "status": "Available",
+      "mileage": 9550,
+      "price": 10205,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-05-15T20:49:44.769Z",
+      "createdAt": "2025-04-07T20:49:44.769Z",
+      "updatedAt": "2025-10-27T20:49:44.769Z",
+      "events": [
+        {
+          "id": "dxvpOGtoMNA0BTgFMq3iv",
+          "type": "Valuation",
+          "amount": 10597,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-03-09T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "2gbCQ1SYbZq2FDmlFvTHV",
+          "type": "Listing",
+          "amount": 12389,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-06-24T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8164,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "OnoJ-C3R_VPmUxll-Bhv2",
+      "registration": "YM92 UAC",
+      "vin": "YDRAWN5Y992J4P7T1",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "Base",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 8459,
+      "price": 9329,
+      "vatQualifying": false,
+      "features": {
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-09-03T20:49:44.769Z",
+      "updatedAt": "2025-11-18T20:49:44.769Z",
+      "events": [
+        {
+          "id": "cgG_dCffXqgeR3Lk2YHX3",
+          "type": "Valuation",
+          "amount": 8823,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-01-25T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "-XkkQHq1LTituHc12Jnhs",
+          "type": "Listing",
+          "amount": 10540,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-11-24T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "hupluy2ltvFZa_HvduKk1",
+          "type": "Price Change",
+          "amount": 9533,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-11-22T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7463,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "rCmkT7YPbnbjDCBR11c3I",
+      "registration": "WL67 XXT",
+      "vin": "J62CP3J7STUMAFMSS",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "M Sport",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 1653,
+      "price": 18585,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-01-25T20:49:44.769Z",
+      "updatedAt": "2025-11-03T20:49:44.769Z",
+      "events": [
+        {
+          "id": "yQLoDUpRCygXqa-j7ZGAY",
+          "type": "Valuation",
+          "amount": 17924,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-09-25T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "CUlKOccAKYJ8WndZIac4G",
+          "type": "Listing",
+          "amount": 19113,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-03-08T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14868,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "oDfhweUYq6G1--10ccMKs",
+      "registration": "DG23 WWB",
+      "vin": "ZKMDE18JLSD9J1MYM",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 2668,
+      "price": 10486,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-18T20:49:44.769Z",
+      "updatedAt": "2025-10-27T20:49:44.769Z",
+      "events": [
+        {
+          "id": "pJKKs1gVGE8D1P62Pn57n",
+          "type": "Valuation",
+          "amount": 18648,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-05-14T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "Vs7vJerIJOerJVdRU2ZzU",
+          "type": "Listing",
+          "amount": 19598,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-07-16T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "1FizHQybOFaDcysBfza8x",
+          "type": "Price Change",
+          "amount": 18982,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-06-28T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8389,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "xtg9qgCTzxE2yhQK06w2I",
+      "registration": "UX79 KCL",
+      "vin": "2CCMUV8213L7VAAB5",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "TE",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 10751,
+      "price": 17474,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-10-01T20:49:44.769Z",
+      "createdAt": "2024-12-12T20:49:44.769Z",
+      "updatedAt": "2025-10-27T20:49:44.769Z",
+      "events": [
+        {
+          "id": "Am-c52oDKoMXTvgC2wVoL",
+          "type": "Valuation",
+          "amount": 10183,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-01-02T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "sS4vvUi9nhjXNoy-AvTo0",
+          "type": "Listing",
+          "amount": 11067,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-06-14T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13979,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "rVJXO3FgNLvs-xxsVWvLl",
+      "registration": "YV37 HFJ",
+      "vin": "E7XLGRRKP9KESMFAL",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2020,
+      "status": "Available",
+      "mileage": 10271,
+      "price": 17335,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true,
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-08-30T20:49:44.769Z",
+      "updatedAt": "2025-11-14T20:49:44.769Z",
+      "events": [
+        {
+          "id": "4As4jtu8gBOCap2DeQ2Eu",
+          "type": "Valuation",
+          "amount": 7665,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-07-23T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "AYvRCKhtSuDZ8vsMIXBdi",
+          "type": "Listing",
+          "amount": 8426,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-10-26T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13868,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "OF4QZgvswPUN-z8_P43hF",
+      "registration": "AG75 SZV",
+      "vin": "YJ3A89D0GRM5Z55N8",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 6311,
+      "price": 12431,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-08-05T20:49:44.769Z",
+      "createdAt": "2024-12-09T20:49:44.769Z",
+      "updatedAt": "2025-10-30T20:49:44.769Z",
+      "events": [
+        {
+          "id": "3DPSqTXfE8zlNO5eJkUQX",
+          "type": "Valuation",
+          "amount": 12700,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-05-20T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "-aeb6iSolsATP42JRCSLw",
+          "type": "Listing",
+          "amount": 14288,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-09-24T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "79v1zpsj67qzs4uen4vrr",
+          "type": "Price Change",
+          "amount": 13659,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-08-08T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9945,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "qw0lL0I_qxIhAvcdt4G18",
+      "registration": "JV61 SGG",
+      "vin": "SSHC9G3N1AB99B350",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "TE",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 3959,
+      "price": 12206,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-11-19T20:49:44.769Z",
+      "updatedAt": "2025-11-26T21:29:26.352Z",
+      "events": [
+        {
+          "id": "f-V_6rbpKtD2ojJOIiSco",
+          "type": "Valuation",
+          "amount": 12870,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-08-19T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "ALFCsUbAYfqaW5hkPS4T2",
+          "type": "Listing",
+          "amount": 13919,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-07-26T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "Dl8KkVoT8pPq89JFyN5Xc",
+          "type": "Price Change",
+          "amount": 13775,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-08-09T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "status_id": "sold",
+      "acquisition": {
+        "buyInPrice": 9765,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "9w_L5hjp53Ri2Y4_0d7_l",
+      "registration": "VE88 KWY",
+      "vin": "JXRH941647DE1UDZ2",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 8152,
+      "price": 17473,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-22T20:49:44.769Z",
+      "updatedAt": "2025-11-07T20:49:44.769Z",
+      "events": [
+        {
+          "id": "3OT6T6gBNNenDv6vakMZH",
+          "type": "Valuation",
+          "amount": 8380,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-11-24T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "bsgF9wlsellyKP_HvfdOg",
+          "type": "Listing",
+          "amount": 10175,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-06-24T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13978,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "sfmzmD4i4aOvvRbetKfwa",
+      "registration": "PP49 EOB",
+      "vin": "TPUXMK4L3XFCSZM4L",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 4189,
+      "price": 12822,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-10-23T20:49:44.769Z",
+      "createdAt": "2025-01-27T20:49:44.769Z",
+      "updatedAt": "2025-10-26T20:49:44.769Z",
+      "events": [
+        {
+          "id": "GLr-sV7eiYNKXkBhn_6RI",
+          "type": "Valuation",
+          "amount": 15728,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-10-20T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "eULpYsQ8nskLw80drgxfB",
+          "type": "Listing",
+          "amount": 16972,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Showroom"
+          },
+          "createdAt": "2025-04-02T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10258,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "dPl5rEDbgV_jFP-vWZLFX",
+      "registration": "SJ81 RLF",
+      "vin": "ADX1JUG7CLV5WTX0V",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 4989,
+      "price": 18385,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-11-06T20:49:44.769Z",
+      "createdAt": "2025-04-06T20:49:44.769Z",
+      "updatedAt": "2025-11-25T20:49:44.769Z",
+      "events": [
+        {
+          "id": "rqtSj3EH6Q7vVGouH8ftN",
+          "type": "Valuation",
+          "amount": 10537,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-09-06T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "gA9bOHcENw8OKKxNCCxg-",
+          "type": "Listing",
+          "amount": 11617,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-09-28T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14708,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "sOFSU_fVgfeu3gQ9gdX_4",
+      "registration": "YD52 AKP",
+      "vin": "UW2W1XEXPNXGYCGS3",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "TE Low",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 9158,
+      "price": 8709,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-23T20:49:44.769Z",
+      "updatedAt": "2025-11-22T20:49:44.769Z",
+      "events": [
+        {
+          "id": "I8eiRnTmRKshDBjbtAOIT",
+          "type": "Valuation",
+          "amount": 7081,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-11-20T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "Jbh2Yr7qGaIjKoAEBpGqM",
+          "type": "Listing",
+          "amount": 8489,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-08-20T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6967,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "XvhDLR8VkqnN5DuLPEqg9",
+      "registration": "YA24 TFK",
+      "vin": "B5ZM36GR5UVPYZ5PY",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "Base",
+      "modelYear": 2020,
+      "status": "Available",
+      "mileage": 478,
+      "price": 11257,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-07-04T20:49:44.769Z",
+      "createdAt": "2025-03-20T20:49:44.769Z",
+      "updatedAt": "2025-11-12T20:49:44.769Z",
+      "events": [
+        {
+          "id": "auhzj8dZmjBYzs8iN7G5m",
+          "type": "Valuation",
+          "amount": 16572,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-30T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "oeH8wOaL3qxjAz7vH7Co-",
+          "type": "Listing",
+          "amount": 18174,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-03-28T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9006,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "ZxPs1BRrIi8k0G6YlS0jr",
+      "registration": "BV91 LDR",
+      "vin": "YTLX4BJ0RW6WF4T43",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2023,
+      "status": "Available",
+      "mileage": 3428,
+      "price": 16471,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-09T20:49:44.769Z",
+      "updatedAt": "2025-11-15T20:49:44.769Z",
+      "events": [
+        {
+          "id": "nKsakqhR7TmFM6mY1Ho00",
+          "type": "Valuation",
+          "amount": 7074,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-07-23T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "ehWTNucv1ZPgcAwAJX4Qe",
+          "type": "Listing",
+          "amount": 7855,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-11-02T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13177,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "9aUJbHOovKC48pB5yeBk4",
+      "registration": "BW14 GMX",
+      "vin": "KK1GWBKTSLFK8ZBU9",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 3072,
+      "price": 12190,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-29T20:49:44.769Z",
+      "updatedAt": "2025-10-30T20:49:44.769Z",
+      "events": [
+        {
+          "id": "SczUxMibhTQGC6GrHuZ3F",
+          "type": "Valuation",
+          "amount": 18316,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-10-11T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "ZUj8SeJbhI_1C_fiw_XJK",
+          "type": "Listing",
+          "amount": 19461,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-11-07T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "f-ihN0vN49wC75qEw5dnF",
+          "type": "Price Change",
+          "amount": 18820,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-10-18T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9752,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "CnyPMlYQ0_yJGhata_YmN",
+      "registration": "KW76 KEV",
+      "vin": "SR0GEH8BJVZ8DHCH9",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "TE Low",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 5644,
+      "price": 8952,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-02-27T20:49:44.769Z",
+      "updatedAt": "2025-11-19T20:49:44.769Z",
+      "events": [
+        {
+          "id": "eBcmfC6YZ1u5S2bMRrzIq",
+          "type": "Valuation",
+          "amount": 15030,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-15T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "cA1NIk4cuP6ASMrRXwSkP",
+          "type": "Listing",
+          "amount": 16702,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-10-28T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7162,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "dpSBzFn46cVKKfXq8UmW7",
+      "registration": "WU45 XWM",
+      "vin": "0C92FTF0F6UNKHT8S",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "Sport",
+      "modelYear": 2024,
+      "status": "Available",
+      "mileage": 9208,
+      "price": 17511,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2024-12-01T20:49:44.769Z",
+      "createdAt": "2025-02-03T20:49:44.769Z",
+      "updatedAt": "2025-10-27T20:49:44.769Z",
+      "events": [
+        {
+          "id": "5l43QCURT8whYX6SyHgW8",
+          "type": "Valuation",
+          "amount": 13058,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-10-17T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "M6m6ZqsJw9gtQDwK6SogY",
+          "type": "Listing",
+          "amount": 14116,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-06-13T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14009,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "ZaNd7l2EDSGsdYagK46eC",
+      "registration": "AZ60 DNL",
+      "vin": "YDZAY3V2ABE4RJH57",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2018,
+      "status": "Available",
+      "mileage": 1703,
+      "price": 14879,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": "2025-11-13T20:49:44.769Z",
+      "createdAt": "2025-01-27T20:49:44.769Z",
+      "updatedAt": "2025-11-10T20:49:44.769Z",
+      "events": [
+        {
+          "id": "FX6ZboC1bEHvdttYWJih8",
+          "type": "Valuation",
+          "amount": 8815,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-09-23T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "kGgJeJ5l227c33BhozC1Z",
+          "type": "Listing",
+          "amount": 10808,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Auto Trader"
+          },
+          "createdAt": "2025-08-18T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "VfYuwBd8Pbt6pYRPpT3qh",
+          "type": "Price Change",
+          "amount": 9880,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-06-19T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11903,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "tKwKEdoC1lkY1rFf2i2R-",
+      "registration": "VR10 LOV",
+      "vin": "33UZRHBE7AG2YJU6G",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2023,
+      "status": "Available",
+      "mileage": 3522,
+      "price": 12911,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true,
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-27T20:49:44.769Z",
+      "updatedAt": "2025-10-29T20:49:44.769Z",
+      "events": [
+        {
+          "id": "GgLOFQ3riNVfLZArGQUMZ",
+          "type": "Valuation",
+          "amount": 9512,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-03-12T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "jDBNxq517dB436WYhqop_",
+          "type": "Listing",
+          "amount": 10925,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-09-21T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "8kmqHULRrU64n1TZE-eGW",
+          "type": "Price Change",
+          "amount": 10079,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Market adjustment"
+          },
+          "createdAt": "2025-06-12T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10329,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "k2rZWekaDKPYp62nfRBcR",
+      "registration": "LW53 KYN",
+      "vin": "AEEDDDN7C4RRGRZKM",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2022,
+      "status": "Available",
+      "mileage": 9410,
+      "price": 18089,
+      "vatQualifying": false,
+      "features": {
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": "2024-12-18T20:49:44.769Z",
+      "createdAt": "2025-01-06T20:49:44.769Z",
+      "updatedAt": "2025-10-29T20:49:44.769Z",
+      "events": [
+        {
+          "id": "zN7NnICKI_hJtITfSQgzx",
+          "type": "Valuation",
+          "amount": 10604,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-04-04T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "cLpUeB0TQ-AN-obGpZ3bM",
+          "type": "Listing",
+          "amount": 12322,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-11-08T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "M6Z3jNlELn97LRCEfVamD",
+          "type": "Price Change",
+          "amount": 11270,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Campaign"
+          },
+          "createdAt": "2025-11-06T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14471,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "n6vkFn2315bHv4v2Xuchh",
+      "registration": "FM33 SJY",
+      "vin": "9V5R2H48DL52UKTC5",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2019,
+      "status": "Available",
+      "mileage": 6691,
+      "price": 14410,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-09-22T20:49:44.769Z",
+      "createdAt": "2025-05-31T20:49:44.769Z",
+      "updatedAt": "2025-11-21T20:49:44.769Z",
+      "events": [
+        {
+          "id": "X4f_9ZG48vcxOdr7P7nEw",
+          "type": "Valuation",
+          "amount": 7269,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2024-12-02T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "hM9KB6M2TmoLsDd9ypKQy",
+          "type": "Listing",
+          "amount": 9138,
+          "notes": "Bike listed on Auto Trader and showroom.",
+          "meta": {
+            "channel": "Web site"
+          },
+          "createdAt": "2025-07-12T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "Z5gUsgVLSgfLZi7k2MUlb",
+          "type": "Price Change",
+          "amount": 7485,
+          "notes": "Price adjusted in line with market.",
+          "meta": {
+            "reason": "Manager offer"
+          },
+          "createdAt": "2025-06-17T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11528,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "F5g_vsKX_sfq6tWoun1tt",
+      "registration": "OT47 WUM",
+      "vin": "B324CFFT2CEYJ1YFB",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2023,
+      "status": "Valuation",
+      "mileage": 7470,
+      "price": 8874,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-09-24T20:49:44.769Z",
+      "updatedAt": "2025-10-28T20:49:44.769Z",
+      "events": [
+        {
+          "id": "_T0-g2aCL4B2Kepy_x1zA",
+          "type": "Valuation",
+          "amount": 17391,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-01-17T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7099,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "mwx8-HoMEMgmD0H2_6oGe",
+      "registration": "MV94 NMN",
+      "vin": "DL242HCTDUNVRPBSN",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2018,
+      "status": "Valuation",
+      "mileage": 8435,
+      "price": 15391,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-10-22T20:49:44.769Z",
+      "createdAt": "2025-09-07T20:49:44.769Z",
+      "updatedAt": "2025-11-02T20:49:44.769Z",
+      "events": [
+        {
+          "id": "w1IMUqS-dHNQnsCeycZc2",
+          "type": "Valuation",
+          "amount": 14811,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-05T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 12313,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "wAUoM9vuaTXcnLqe47uo4",
+      "registration": "RK59 UAD",
+      "vin": "MXXEU81KTHTPAL7LP",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2018,
+      "status": "Valuation",
+      "mileage": 6486,
+      "price": 8489,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-30T20:49:44.769Z",
+      "updatedAt": "2025-11-08T20:49:44.769Z",
+      "events": [
+        {
+          "id": "R01-Q27NIEA-nY4RUu8dV",
+          "type": "Valuation",
+          "amount": 9098,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-08-17T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "rkk0haXt1s9w_OMwZshRn",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer considering options.",
+          "meta": {},
+          "createdAt": "2025-11-16T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6791,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "cL288_2xNQB0EI_QRJ-Pp",
+      "registration": "MG80 YOM",
+      "vin": "MB4AAXA3NPLURM9X2",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2022,
+      "status": "Valuation",
+      "mileage": 5468,
+      "price": 14496,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-08-15T20:49:44.769Z",
+      "updatedAt": "2025-11-08T20:49:44.769Z",
+      "events": [
+        {
+          "id": "mNFRz3QqsDh1HXkv2wXqx",
+          "type": "Valuation",
+          "amount": 14544,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-09-05T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11597,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "uJFCTeAxEHiRKE5o7_9qO",
+      "registration": "FM15 WPB",
+      "vin": "AXVCLJWSEH2TPME0N",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2019,
+      "status": "Valuation",
+      "mileage": 7609,
+      "price": 8072,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2024-12-31T20:49:44.769Z",
+      "createdAt": "2025-03-12T20:49:44.769Z",
+      "updatedAt": "2025-11-01T20:49:44.769Z",
+      "events": [
+        {
+          "id": "IIPeO7zpcQ1DX9QtjRE4h",
+          "type": "Valuation",
+          "amount": 15333,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2024-12-01T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6458,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "ZZqliZNI45jiBIo84j9Ly",
+      "registration": "GR40 RJZ",
+      "vin": "1FSRLDGG1143RXLPH",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2021,
+      "status": "Valuation",
+      "mileage": 9171,
+      "price": 14102,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-09T20:49:44.769Z",
+      "updatedAt": "2025-11-13T20:49:44.769Z",
+      "events": [
+        {
+          "id": "BJbZWjalUZQLMzeWsQnNU",
+          "type": "Valuation",
+          "amount": 13986,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-05-31T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "KjHuvVfueWf7KuDkDKk1e",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer will come back after payday.",
+          "meta": {},
+          "createdAt": "2025-10-26T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11282,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "V-ukRVwtyGaCdeYBCpgUm",
+      "registration": "GR38 NGX",
+      "vin": "PG67B92PVYAE2LUZ5",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2018,
+      "status": "Valuation",
+      "mileage": 5095,
+      "price": 13234,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": "2025-03-26T20:49:44.769Z",
+      "createdAt": "2025-05-26T20:49:44.769Z",
+      "updatedAt": "2025-11-25T20:49:44.769Z",
+      "events": [
+        {
+          "id": "sXw1kmlVY2GpWvQiN-in3",
+          "type": "Valuation",
+          "amount": 7465,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-01-20T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10587,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "U2EmuUb_RBUrjXyNc1myj",
+      "registration": "RT72 AWX",
+      "vin": "8ZCP7HT5PSK3KLDU7",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2019,
+      "status": "Valuation",
+      "mileage": 2863,
+      "price": 8126,
+      "vatQualifying": true,
+      "features": {
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": "2024-12-06T20:49:44.769Z",
+      "createdAt": "2025-03-30T20:49:44.769Z",
+      "updatedAt": "2025-11-02T20:49:44.769Z",
+      "events": [
+        {
+          "id": "0ccpRH-IBuLvgWWvMNOnr",
+          "type": "Valuation",
+          "amount": 18511,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-11-10T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "Nls2RwFWvNEFSHqkVpI2Q",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer went away to think.",
+          "meta": {},
+          "createdAt": "2025-09-26T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6501,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "Qr1QhB9b7gb6ycUBErycw",
+      "registration": "HU73 EJL",
+      "vin": "TFYS0Z15FH781UR8G",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2022,
+      "status": "Valuation",
+      "mileage": 8686,
+      "price": 14961,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-11-25T20:49:44.769Z",
+      "updatedAt": "2025-11-15T20:49:44.769Z",
+      "events": [
+        {
+          "id": "b8HtPrzvWjOwX7aBBLUhw",
+          "type": "Valuation",
+          "amount": 17133,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-09-08T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11969,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "CO-3oUu6xb3y-l6uRY0yE",
+      "registration": "BD23 KHZ",
+      "vin": "LH9WP4GXVNS7Y3NLZ",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2020,
+      "status": "Valuation",
+      "mileage": 405,
+      "price": 18806,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-20T20:49:44.769Z",
+      "updatedAt": "2025-11-03T20:49:44.769Z",
+      "events": [
+        {
+          "id": "j25Dd4jz1OhSi9IbW8ku9",
+          "type": "Valuation",
+          "amount": 9186,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-04-09T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 15045,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "Y0euDfoxvbLNSnT6TfxHW",
+      "registration": "XE98 GHV",
+      "vin": "9NJ1W72Z0R61KWK33",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "SE",
+      "modelYear": 2023,
+      "status": "Valuation",
+      "mileage": 4632,
+      "price": 16718,
+      "vatQualifying": true,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-07-08T20:49:44.769Z",
+      "createdAt": "2025-06-15T20:49:44.769Z",
+      "updatedAt": "2025-11-20T20:49:44.769Z",
+      "events": [
+        {
+          "id": "hvxcZIRaXDED5sT18cZHq",
+          "type": "Valuation",
+          "amount": 15877,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2024-11-26T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "ndCViG4n8Xc-qJsQdUp2Q",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer went away to think.",
+          "meta": {},
+          "createdAt": "2025-11-03T20:49:44.769Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13374,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "WCZ0gG_3NZzA6i4QxXWoJ",
+      "registration": "AS24 ZFD",
+      "vin": "WWXGUC3A8FY3U6Z8C",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2025,
+      "status": "Valuation",
+      "mileage": 1290,
+      "price": 17877,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2024-12-30T20:49:44.769Z",
+      "createdAt": "2025-05-23T20:49:44.769Z",
+      "updatedAt": "2025-11-20T20:49:44.769Z",
+      "events": [
+        {
+          "id": "-Az1X8hSrG8alzkuDEtds",
+          "type": "Valuation",
+          "amount": 15393,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-03-21T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "0w3tgWpI39dDRNKVcKnzw",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer declined offer.",
+          "meta": {},
+          "createdAt": "2025-11-15T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14302,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "8wA91a2v4t5xfIDXH7P5X",
+      "registration": "OX47 HDG",
+      "vin": "1BJARJMGC42WWLW1U",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "TE",
+      "modelYear": 2019,
+      "status": "Valuation",
+      "mileage": 8481,
+      "price": 10653,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-08-08T20:49:44.769Z",
+      "updatedAt": "2025-11-04T20:49:44.769Z",
+      "events": [
+        {
+          "id": "Xrj5S90eBqjjLMjSnDXdV",
+          "type": "Valuation",
+          "amount": 13611,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2024-12-16T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "dWnogIJKF04cxy4FuPIO_",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer went away to think.",
+          "meta": {},
+          "createdAt": "2025-11-21T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8522,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "lxqpOiRm4aWhDoy64CvUX",
+      "registration": "YW34 BBJ",
+      "vin": "X97JFSGXL9GE44H2U",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "Transcontinental",
+      "modelYear": 2025,
+      "status": "Valuation",
+      "mileage": 7468,
+      "price": 16298,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-03-09T20:49:44.769Z",
+      "createdAt": "2025-10-15T20:49:44.769Z",
+      "updatedAt": "2025-11-17T20:49:44.769Z",
+      "events": [
+        {
+          "id": "0pW4OCat8kA87gH1B_c2f",
+          "type": "Valuation",
+          "amount": 11802,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-11-09T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13038,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "JZ0xj6aiEz2Wi9mJ-QHhf",
+      "registration": "ZE84 LWA",
+      "vin": "UXGK2PF3PXN77U65D",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Rallye TE",
+      "modelYear": 2022,
+      "status": "Valuation",
+      "mileage": 4470,
+      "price": 14500,
+      "vatQualifying": true,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-05-06T20:49:44.769Z",
+      "createdAt": "2025-01-18T20:49:44.769Z",
+      "updatedAt": "2025-11-09T20:49:44.769Z",
+      "events": [
+        {
+          "id": "EkpF9jyMPKcZYUt7-riVX",
+          "type": "Valuation",
+          "amount": 10525,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2024-12-25T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "9zeHuS7M4vGXy73_cZOid",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer considering options.",
+          "meta": {},
+          "createdAt": "2025-10-03T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11600,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "JIeMPtUdViNxc8h6hnrXz",
+      "registration": "XU36 ULA",
+      "vin": "06308HEWNALMWM1H6",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "M Sport",
+      "modelYear": 2018,
+      "status": "Valuation",
+      "mileage": 7198,
+      "price": 8810,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-07-25T20:49:44.769Z",
+      "createdAt": "2025-09-02T20:49:44.769Z",
+      "updatedAt": "2025-11-13T20:49:44.769Z",
+      "events": [
+        {
+          "id": "ZJ7CMVqI8uvatoIfutY8t",
+          "type": "Valuation",
+          "amount": 9994,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-19T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7048,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "kn7NJmMFaZmiyuzBcIEay",
+      "registration": "HW67 JDM",
+      "vin": "CX3CWVNS5R123L0ZY",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2022,
+      "status": "Valuation",
+      "mileage": 2211,
+      "price": 17452,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-09-25T20:49:44.769Z",
+      "createdAt": "2025-11-23T20:49:44.769Z",
+      "updatedAt": "2025-11-12T20:49:44.769Z",
+      "events": [
+        {
+          "id": "5nttAWsQA9XAcAJE6JnlO",
+          "type": "Valuation",
+          "amount": 16682,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2024-12-08T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "S8WAZ0aCrSf4LdQBcFhXI",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer declined offer.",
+          "meta": {},
+          "createdAt": "2025-11-11T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13962,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "5ds0uKAr3FijoaV6M0wmm",
+      "registration": "NK43 ZAU",
+      "vin": "2M5GD4NRG8T7MJTD7",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "Transcontinental",
+      "modelYear": 2023,
+      "status": "Valuation",
+      "mileage": 882,
+      "price": 12953,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-01-24T20:49:44.769Z",
+      "updatedAt": "2025-11-04T20:49:44.769Z",
+      "events": [
+        {
+          "id": "sZfT5ncL6DVhqom1QaHO_",
+          "type": "Valuation",
+          "amount": 15180,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-15T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10362,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "nqqWXfxRe0Pf8RYHLOFai",
+      "registration": "SP58 AMS",
+      "vin": "R2ZHZ06WYT72NHLXP",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2021,
+      "status": "Valuation",
+      "mileage": 4620,
+      "price": 11619,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-01-06T20:49:44.769Z",
+      "updatedAt": "2025-11-18T20:49:44.769Z",
+      "events": [
+        {
+          "id": "otVmp-6XnO_3k1yUT0AJG",
+          "type": "Valuation",
+          "amount": 12691,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-15T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9295,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "zGXYk9FkjzQF0BMLx4oNI",
+      "registration": "XH27 OMA",
+      "vin": "YUVLLD7ZXGXFAVS8E",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "Rallye TE",
+      "modelYear": 2023,
+      "status": "Valuation",
+      "mileage": 10249,
+      "price": 12746,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-09T20:49:44.769Z",
+      "updatedAt": "2025-11-25T20:49:44.769Z",
+      "events": [
+        {
+          "id": "ABnu_rutOeEKTB2qpGDj4",
+          "type": "Valuation",
+          "amount": 10418,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-03-13T20:49:44.769Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "XwAtjJm5PCFuVKiEnrilB",
+          "type": "Note",
+          "amount": null,
+          "notes": "Customer considering options.",
+          "meta": {},
+          "createdAt": "2025-11-25T20:49:44.769Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10197,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "AndXlEqSY0AdUcl_v9nwc",
+      "registration": "MK33 LLD",
+      "vin": "ABTFT7GBTGKK2MY8V",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 848,
+      "price": 10609,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-02-28T20:49:44.769Z",
+      "createdAt": "2025-08-03T20:49:44.769Z",
+      "updatedAt": "2025-11-18T20:49:44.769Z",
+      "events": [
+        {
+          "id": "ZwJRC3qMpgONwbfx_Yoi8",
+          "type": "Valuation",
+          "amount": 10302,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-06-03T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "z8eiGNwX060Il1wQbvMSy",
+          "type": "Offer",
+          "amount": 12659,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-08-10T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "af9AXxMJPgfznlPHEBtE_",
+          "type": "Sale",
+          "amount": 12659,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-07-08T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "cZPUyt2rqYt_Sn-5Jpaja",
+          "type": "Warranty",
+          "amount": 350,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Fuel pump"
+          },
+          "createdAt": "2025-10-06T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8487,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "2EBzWzm2OtwJKmBH1-GaL",
+      "registration": "WU94 EMF",
+      "vin": "LAVU2XVZUB6F1CYBL",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "First Edition",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 4100,
+      "price": 12891,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-08T20:49:44.769Z",
+      "updatedAt": "2025-11-14T20:49:44.769Z",
+      "events": [
+        {
+          "id": "d8K30bc0Gb5zPp7s_2Tr5",
+          "type": "Valuation",
+          "amount": 16657,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-08-08T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "jAqOnwLiklhABMpBNXduI",
+          "type": "Offer",
+          "amount": 18442,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-06-21T20:49:44.769Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "Vlv1yhv7mWgJj8-OS0EZU",
+          "type": "Sale",
+          "amount": 18442,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": false
+          },
+          "createdAt": "2025-07-24T20:49:44.769Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "KujE0iC0hd51YKRQnan2x",
+          "type": "Service",
+          "amount": 390,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "Annual service"
+          },
+          "createdAt": "2025-09-07T20:49:44.769Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10313,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "0dUnH8J97-1cPpUGNUGvK",
+      "registration": "LO31 UJT",
+      "vin": "AVW8LKBUWRBTH8F57",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Sold",
+      "mileage": 7901,
+      "price": 18944,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-09-15T20:49:44.769Z",
+      "createdAt": "2025-03-27T20:49:44.769Z",
+      "updatedAt": "2025-11-15T20:49:44.769Z",
+      "events": [
+        {
+          "id": "ATEYJXHErU9sgQVisvHmY",
+          "type": "Valuation",
+          "amount": 18064,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-07-20T20:49:44.769Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "i22xS13catwCbJU9kFMkY",
+          "type": "Offer",
+          "amount": 19359,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-09-03T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "q1HMnZ9Lh_qD5KgFRkK5Z",
+          "type": "Sale",
+          "amount": 19359,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-08-21T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 15155,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "zEJX3MHYBENdm8n2Lvz-Z",
+      "registration": "PY13 SDB",
+      "vin": "AFE0V9SMZTC3TDG4L",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "TE",
+      "modelYear": 2024,
+      "status": "Sold",
+      "mileage": 5971,
+      "price": 9209,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-10-07T20:49:44.769Z",
+      "createdAt": "2025-06-03T20:49:44.769Z",
+      "updatedAt": "2025-11-07T20:49:44.769Z",
+      "events": [
+        {
+          "id": "XoWr1HDBM0NPEYc5KJim-",
+          "type": "Valuation",
+          "amount": 13305,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-01-17T20:49:44.769Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "KFF5V7vvJHqqFvxoOlxQz",
+          "type": "Offer",
+          "amount": 13810,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-08-08T20:49:44.769Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "s1u91iM_6oL9rCfehX_Ge",
+          "type": "Sale",
+          "amount": 13810,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": false
+          },
+          "createdAt": "2025-11-09T20:49:44.769Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7367,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "fyXzgdHMOCLaBwLRm83DT",
+      "registration": "NP78 PFP",
+      "vin": "VN0TMFW1LG511WL5A",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "Transcontinental",
+      "modelYear": 2020,
+      "status": "Sold",
+      "mileage": 10302,
+      "price": 10588,
+      "vatQualifying": true,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-23T20:49:44.769Z",
+      "updatedAt": "2025-11-13T20:49:44.769Z",
+      "events": [
+        {
+          "id": "KAu92YeoYQ_msa16AUDZ0",
+          "type": "Valuation",
+          "amount": 17201,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-09-08T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "0coGlX4vK5dy26S2lT1xJ",
+          "type": "Offer",
+          "amount": 18209,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-06-06T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "M9P4X9uz6TAdnSxgdVvN7",
+          "type": "Sale",
+          "amount": 18209,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-09-22T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "zfIgacXliuA5YRhQoyqLw",
+          "type": "Warranty",
+          "amount": 595,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Switch gear"
+          },
+          "createdAt": "2025-10-05T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "O-iAapm4x8nM4YAiqEGz6",
+          "type": "Service",
+          "amount": 243,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "Annual service"
+          },
+          "createdAt": "2025-10-16T20:49:44.770Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8470,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "yhcW3zJ6VnUBeiDBbroLD",
+      "registration": "RH11 RPP",
+      "vin": "FVT77HPFUHLWT8JGS",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "Base",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 2856,
+      "price": 10253,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-10-29T20:49:44.770Z",
+      "updatedAt": "2025-11-06T20:49:44.770Z",
+      "events": [
+        {
+          "id": "9in3e3tMMEBp2JbjS8XsU",
+          "type": "Valuation",
+          "amount": 17676,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-09-12T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "CisktuL0oiXunUCnAEf7c",
+          "type": "Offer",
+          "amount": 18935,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-11-16T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "vPLp8hqVeMjEamD2l0sXP",
+          "type": "Sale",
+          "amount": 18935,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": true
+          },
+          "createdAt": "2025-08-08T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "wFpayVLLHSyDbk95T-deE",
+          "type": "Warranty",
+          "amount": 434,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Fuel pump"
+          },
+          "createdAt": "2025-08-11T20:49:44.770Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8202,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "JnZRDaWd4CSwLW68eYr5D",
+      "registration": "JC19 FVE",
+      "vin": "ZRZSHPKE6RXK1FY80",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "SE",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 5113,
+      "price": 8100,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-13T20:49:44.770Z",
+      "updatedAt": "2025-11-25T20:49:44.770Z",
+      "events": [
+        {
+          "id": "6_SqsLNEGB-i0q3dDVSX4",
+          "type": "Valuation",
+          "amount": 13769,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-05-24T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "M61a7bVt4n-dAXcY9yTZZ",
+          "type": "Offer",
+          "amount": 15813,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-08-10T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "5CHchXlBem1TVzJbB9Q9D",
+          "type": "Sale",
+          "amount": 15813,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": false
+          },
+          "createdAt": "2025-09-13T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "4RhJcFgdHA8DwQEf7ZNlX",
+          "type": "Service",
+          "amount": 316,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "Oil & filter"
+          },
+          "createdAt": "2025-11-13T20:49:44.770Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 6480,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "2JtEgNq2RPIRT33z50H6b",
+      "registration": "CE76 VTS",
+      "vin": "76PXZWXK8ZC5SDWP1",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Sold",
+      "mileage": 9603,
+      "price": 11615,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-17T20:49:44.770Z",
+      "updatedAt": "2025-11-22T20:49:44.770Z",
+      "events": [
+        {
+          "id": "jCf7ITzvwn2QlXXEtFJl4",
+          "type": "Valuation",
+          "amount": 17627,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-19T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "fLT_svnNFy2WC95gEW75x",
+          "type": "Offer",
+          "amount": 18755,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-09-27T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "c8VWOe8Lg30CIORiXsRKa",
+          "type": "Sale",
+          "amount": 18755,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-10-15T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "saydBI0vF2UjNPKX3t-TG",
+          "type": "Service",
+          "amount": 196,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "Annual service"
+          },
+          "createdAt": "2025-10-10T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9292,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "iaieew3knjpmMD9AMr1fo",
+      "registration": "NW56 NFW",
+      "vin": "4WKD7R0K69A9RHEXD",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 4252,
+      "price": 12716,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-23T20:49:44.770Z",
+      "updatedAt": "2025-11-02T20:49:44.770Z",
+      "events": [
+        {
+          "id": "DDuBGeQBbFOF9dxgwrQx2",
+          "type": "Valuation",
+          "amount": 11706,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-09-04T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "F8gvvQ9bI2HBq2Oj3i_I6",
+          "type": "Offer",
+          "amount": 12717,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-06-13T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "4ILcmsmp0oHVVnpyNLYKE",
+          "type": "Sale",
+          "amount": 12717,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-10-10T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "iqd8QfAknZDuA0kpuu2S1",
+          "type": "Warranty",
+          "amount": 703,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Switch gear"
+          },
+          "createdAt": "2025-09-17T20:49:44.770Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10173,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "LEOr9CKzg3she6sxFiw0K",
+      "registration": "JF31 WOT",
+      "vin": "6KUY06N2G7KGJXV8K",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "GS Trophy",
+      "modelYear": 2019,
+      "status": "Sold",
+      "mileage": 2655,
+      "price": 17621,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-02-18T20:49:44.770Z",
+      "createdAt": "2025-01-09T20:49:44.770Z",
+      "updatedAt": "2025-11-08T20:49:44.770Z",
+      "events": [
+        {
+          "id": "TACo_DXaeR9nSVezENdld",
+          "type": "Valuation",
+          "amount": 10373,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-06-07T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "ZnOXI2i5K5pfdzgO-Cb-e",
+          "type": "Offer",
+          "amount": 11075,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-08-14T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "DmkAULp2spEXP9qBpCyAR",
+          "type": "Sale",
+          "amount": 11075,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-08-01T20:49:44.770Z",
+          "createdBy": "Sonia"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14097,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "rDr7gbaLVAUZEjHWRDpz3",
+      "registration": "HU35 HAM",
+      "vin": "WNEANDRMG3WDEGLST",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 6811,
+      "price": 13356,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-03-20T20:49:44.770Z",
+      "updatedAt": "2025-11-15T20:49:44.770Z",
+      "events": [
+        {
+          "id": "i9NU_Kw3zqfQiYeBYo1dk",
+          "type": "Valuation",
+          "amount": 12953,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-08-16T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "araK2LGpA6BIaKjU6F8qc",
+          "type": "Offer",
+          "amount": 15012,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-07-07T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "dg9YDHt56-R_eImuBWQnn",
+          "type": "Sale",
+          "amount": 15012,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-09-20T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10685,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "2OoZq2IVaoEGpI_LQvpJ5",
+      "registration": "MP45 MRJ",
+      "vin": "AK8E6L0FG8WH8VZ36",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 6391,
+      "price": 16348,
+      "vatQualifying": true,
+      "features": {
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-11-26T20:49:44.770Z",
+      "updatedAt": "2025-11-13T20:49:44.770Z",
+      "events": [
+        {
+          "id": "K0_fmlgJ8oxW7WwlXQDP4",
+          "type": "Valuation",
+          "amount": 16809,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-08-12T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "0Bef73sDioFET_IaWjjak",
+          "type": "Offer",
+          "amount": 18017,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-08-30T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "_PFEnfvali79cXtyFAPMd",
+          "type": "Sale",
+          "amount": 18017,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-10-24T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "OFj4cbQthHvOMCNgsvRfA",
+          "type": "Warranty",
+          "amount": 200,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Switch gear"
+          },
+          "createdAt": "2025-08-25T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "asy6sHJAo4TsykyLkxhTF",
+          "type": "Service",
+          "amount": 204,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "Annual service"
+          },
+          "createdAt": "2025-10-08T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13078,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "nC8wUDqDnVJJ5J0tVwbm7",
+      "registration": "UJ23 XWD",
+      "vin": "FD8T6KBP6HYSGX5V9",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 8431,
+      "price": 15097,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-10-13T20:49:44.770Z",
+      "updatedAt": "2025-11-06T20:49:44.770Z",
+      "events": [
+        {
+          "id": "fsKFnUcio2fH2GZdzF-lL",
+          "type": "Valuation",
+          "amount": 17200,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-06-21T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        },
+        {
+          "id": "g0UUeX-o0OXB85YXqA5Ap",
+          "type": "Offer",
+          "amount": 18562,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-06-10T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "HS6pP5b8OEc-cYY0roVur",
+          "type": "Sale",
+          "amount": 18562,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": true
+          },
+          "createdAt": "2025-06-23T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "gCxhkfZWd69Vlc9B-zffX",
+          "type": "Warranty",
+          "amount": 686,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Fuel pump"
+          },
+          "createdAt": "2025-08-23T20:49:44.770Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 12078,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "6F5TEo4Y_jvvfdJDZuh3E",
+      "registration": "BX79 YAB",
+      "vin": "UB01FV23766GLER3S",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Sold",
+      "mileage": 9317,
+      "price": 10813,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-06T20:49:44.770Z",
+      "updatedAt": "2025-11-02T20:49:44.770Z",
+      "events": [
+        {
+          "id": "O6gt7ECha9IyBV9TTH4MH",
+          "type": "Valuation",
+          "amount": 11006,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-11-15T20:49:44.770Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "aZFX21p6-X7qbneqA-SGd",
+          "type": "Offer",
+          "amount": 12289,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-06-26T20:49:44.770Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "zR141IRUSo91VhjnlxNZB",
+          "type": "Sale",
+          "amount": 12289,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": false
+          },
+          "createdAt": "2025-07-07T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "065AqG-phqAJRdp4r8D_1",
+          "type": "Service",
+          "amount": 306,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "600 mile service"
+          },
+          "createdAt": "2025-11-12T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8650,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "ELXaEbDl2THdUayOVZMEr",
+      "registration": "BC65 TKN",
+      "vin": "0FH944KPYZNMSZ71K",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2020,
+      "status": "Sold",
+      "mileage": 2816,
+      "price": 12944,
+      "vatQualifying": true,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2025-07-14T20:49:44.770Z",
+      "updatedAt": "2025-10-31T20:49:44.770Z",
+      "events": [
+        {
+          "id": "7cYDZc0yfbiXnE3YovUop",
+          "type": "Valuation",
+          "amount": 8440,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2024-11-25T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "DVvMUyMmeVVau4ljeJhl6",
+          "type": "Offer",
+          "amount": 9054,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-09-22T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "m5vAbclCrBO5Os7VZMwg4",
+          "type": "Sale",
+          "amount": 9054,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-09-16T20:49:44.770Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10355,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "8lgbxZtAHZCc8T6TOXt0E",
+      "registration": "RS36 YGW",
+      "vin": "S67XB8PZ1CRNFCGGA",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "Transcontinental",
+      "modelYear": 2023,
+      "status": "Sold",
+      "mileage": 6582,
+      "price": 17950,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-08-26T20:49:44.770Z",
+      "updatedAt": "2025-11-01T20:49:44.770Z",
+      "events": [
+        {
+          "id": "A3HBnSQ9FFNsOH2B7Pq69",
+          "type": "Valuation",
+          "amount": 7727,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-03-31T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "5Qlfdsf57AkuUy-ANpl0y",
+          "type": "Offer",
+          "amount": 9748,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-08-08T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "AYxIMBt_XHHvQ21fWdWMg",
+          "type": "Sale",
+          "amount": 9748,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-11-24T20:49:44.770Z",
+          "createdBy": "Paul"
+        },
+        {
+          "id": "-R_dw8Q-zIyXIH08MzO91",
+          "type": "Service",
+          "amount": 283,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "600 mile service"
+          },
+          "createdAt": "2025-10-04T20:49:44.770Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14360,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "gbNdnMpU5RbbNbUEaJ_cj",
+      "registration": "ZM88 NTJ",
+      "vin": "71UHDFEUJUAY0NP4Z",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 8212,
+      "price": 13954,
+      "vatQualifying": true,
+      "features": {
+        "Cruise Control": true,
+        "Quickshifter": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-06-05T20:49:44.770Z",
+      "updatedAt": "2025-11-24T20:49:44.770Z",
+      "events": [
+        {
+          "id": "etIU-6bFzwrBS9vO74-sG",
+          "type": "Valuation",
+          "amount": 7831,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-09-16T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "xhAaBYwCfIivQ80N_le97",
+          "type": "Offer",
+          "amount": 9421,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-08-20T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        },
+        {
+          "id": "NTdevihmg7oBY0048g4ap",
+          "type": "Sale",
+          "amount": 9421,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-08-14T20:49:44.770Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11163,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "_YklnnOT_qCXbHSIK3L8H",
+      "registration": "XE49 FMS",
+      "vin": "GEJR4FKMDLSRYJ3TM",
+      "make": "BMW",
+      "model": "R 1250 GS Adventure",
+      "trim": "TE",
+      "modelYear": 2021,
+      "status": "Sold",
+      "mileage": 8135,
+      "price": 17896,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-05-20T20:49:44.770Z",
+      "createdAt": "2025-04-06T20:49:44.770Z",
+      "updatedAt": "2025-11-02T20:49:44.770Z",
+      "events": [
+        {
+          "id": "MW2c4IDG5WtF9q3DZ3YCs",
+          "type": "Valuation",
+          "amount": 18482,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-11-20T20:49:44.770Z",
+          "createdBy": "Sonia"
+        },
+        {
+          "id": "p-Dn6oGQ4vq911M5z60n3",
+          "type": "Offer",
+          "amount": 19302,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-09-23T20:49:44.770Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "NKF-v-HU6uU6Qa8su8CWS",
+          "type": "Sale",
+          "amount": 19302,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": false,
+            "gardx": true
+          },
+          "createdAt": "2025-10-04T20:49:44.770Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 14317,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "xJpbo2CZux769rog_olz2",
+      "registration": "VK28 PLL",
+      "vin": "9297RR1Z1SSJJAAZN",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "Base",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 3225,
+      "price": 10325,
+      "vatQualifying": false,
+      "features": {
+        "Seat Height Reduced": true,
+        "Heated Grips": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-05-12T20:49:44.770Z",
+      "createdAt": "2025-03-13T20:49:44.770Z",
+      "updatedAt": "2025-10-30T20:49:44.770Z",
+      "events": [
+        {
+          "id": "II06BJNgneuwdNw9VvlqQ",
+          "type": "Valuation",
+          "amount": 15820,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-03-06T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "mWb8L4mkePYAvvz-6ik47",
+          "type": "Offer",
+          "amount": 18083,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": false
+          },
+          "createdAt": "2025-05-30T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "8Pa-JFPbORMYWXJB_YHhs",
+          "type": "Sale",
+          "amount": 18083,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": false
+          },
+          "createdAt": "2025-10-22T20:49:44.770Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "Io981587sKSpaTSCRXl1Q",
+          "type": "Warranty",
+          "amount": 442,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "ESA fault"
+          },
+          "createdAt": "2025-09-23T20:49:44.770Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8260,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "QzdFtzOfDMys3TiBNyAtq",
+      "registration": "TL73 UTA",
+      "vin": "VE45MTA0ZHFBA2N35",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "Sport",
+      "modelYear": 2025,
+      "status": "Sold",
+      "mileage": 5263,
+      "price": 14762,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-03-08T20:49:44.770Z",
+      "createdAt": "2024-12-06T20:49:44.770Z",
+      "updatedAt": "2025-11-14T20:49:44.770Z",
+      "events": [
+        {
+          "id": "84DElNsS9FTWax-pUpHHb",
+          "type": "Valuation",
+          "amount": 18625,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-05-08T20:49:44.770Z",
+          "createdBy": "Tarin"
+        },
+        {
+          "id": "xffnbuikc1TxOUsNP2QbG",
+          "type": "Offer",
+          "amount": 19387,
+          "notes": "Customer agreed deal subject to PX and finance.",
+          "meta": {
+            "finance": true
+          },
+          "createdAt": "2025-09-13T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "LGoczW8qtgJ4hab00s1oq",
+          "type": "Sale",
+          "amount": 19387,
+          "notes": "Bike sold and handed over.",
+          "meta": {
+            "finance": true,
+            "gardx": true
+          },
+          "createdAt": "2025-11-11T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "UmkaPA86v-RLXMqHTvbd_",
+          "type": "Warranty",
+          "amount": 452,
+          "notes": "Warranty claim processed.",
+          "meta": {
+            "job": "Fuel pump"
+          },
+          "createdAt": "2025-09-29T20:49:44.770Z",
+          "createdBy": "System"
+        },
+        {
+          "id": "K9zH2aJQ_AqgKuvPxzxjJ",
+          "type": "Service",
+          "amount": 364,
+          "notes": "Post-sale service or check.",
+          "meta": {
+            "type": "600 mile service"
+          },
+          "createdAt": "2025-09-28T20:49:44.770Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 11810,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "DrWubKHida875qxNW8Vr1",
+      "registration": "PT68 NWN",
+      "vin": "8GMDZ6HUJB8UEUJYB",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2024,
+      "status": "Prep",
+      "mileage": 375,
+      "price": 15012,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-27T20:49:44.770Z",
+      "updatedAt": "2025-11-20T20:49:44.770Z",
+      "events": [
+        {
+          "id": "R8stKSkpl1W0GXw1vmZ_q",
+          "type": "Valuation",
+          "amount": 16140,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-11-21T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 12010,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "l4-bNPWtO3YDbWp3i2MFO",
+      "registration": "UU70 DNX",
+      "vin": "W969WWGUE1WEU5UFP",
+      "make": "BMW",
+      "model": "R 18",
+      "trim": "Transcontinental",
+      "modelYear": 2025,
+      "status": "Service",
+      "mileage": 3685,
+      "price": 9892,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": "2025-11-15T20:49:44.770Z",
+      "createdAt": "2025-08-10T20:49:44.770Z",
+      "updatedAt": "2025-11-01T20:49:44.770Z",
+      "events": [
+        {
+          "id": "J81JdHJVL7nLNeBEc3DVb",
+          "type": "Valuation",
+          "amount": 12525,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-01-31T20:49:44.770Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7914,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "IyY4sLo-k_nsl8jCo6cCi",
+      "registration": "TX35 YTO",
+      "vin": "U3U78P1HRVSV58EVH",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "Base",
+      "modelYear": 2018,
+      "status": "Service",
+      "mileage": 7918,
+      "price": 15024,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true,
+        "LED Headlight": true
+      },
+      "serviceHistory": "Full BMW service history",
+      "motExpiry": "2025-07-02T20:49:44.770Z",
+      "createdAt": "2025-09-21T20:49:44.770Z",
+      "updatedAt": "2025-11-22T20:49:44.770Z",
+      "events": [
+        {
+          "id": "Eum7QrTixOqV9SQzs5zT1",
+          "type": "Valuation",
+          "amount": 16619,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-03-30T20:49:44.770Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 12019,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "OvLAP3MNcQhYBiI_P49Kp",
+      "registration": "FF70 CKK",
+      "vin": "F1V0P2T8JBYARAY6T",
+      "make": "BMW",
+      "model": "S 1000 XR",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Prep",
+      "mileage": 8089,
+      "price": 16428,
+      "vatQualifying": false,
+      "features": {
+        "LED Headlight": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-04T20:49:44.770Z",
+      "updatedAt": "2025-11-04T20:49:44.770Z",
+      "events": [
+        {
+          "id": "WrInw7g5mMweg2fd_OWhA",
+          "type": "Valuation",
+          "amount": 9380,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-22T20:49:44.770Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 13142,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "NX83qoWS6MC79qjHIAnNM",
+      "registration": "YH27 SWV",
+      "vin": "A8MCFWXJZ915D54CR",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2025,
+      "status": "Service",
+      "mileage": 3228,
+      "price": 11889,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-10-23T20:49:44.770Z",
+      "updatedAt": "2025-11-21T20:49:44.770Z",
+      "events": [
+        {
+          "id": "N7aWO60_Efk4h3aWywd2v",
+          "type": "Valuation",
+          "amount": 9364,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-04-19T20:49:44.771Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 9511,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "g8VPhdOGE7UThWra7M--N",
+      "registration": "HX53 ZMY",
+      "vin": "BLMFRU8UZKMT2TRFD",
+      "make": "BMW",
+      "model": "F 900 XR",
+      "trim": "TE",
+      "modelYear": 2024,
+      "status": "Service",
+      "mileage": 6003,
+      "price": 9099,
+      "vatQualifying": false,
+      "features": {
+        "Quickshifter": true
+      },
+      "serviceHistory": "Independent service history",
+      "motExpiry": null,
+      "createdAt": "2025-04-06T20:49:44.771Z",
+      "updatedAt": "2025-10-29T20:49:44.771Z",
+      "events": [
+        {
+          "id": "3JcpJ9azfAburWxOPJHz-",
+          "type": "Valuation",
+          "amount": 17355,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2024-12-23T20:49:44.771Z",
+          "createdBy": "Jamie Fitzsimmons"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 7279,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "oPdE5fv95BFv-rYhG7MAO",
+      "registration": "JJ84 KMX",
+      "vin": "C2WDHUJ5YX6860HFV",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2020,
+      "status": "Offer",
+      "mileage": 9360,
+      "price": 10935,
+      "vatQualifying": false,
+      "features": {
+        "Cruise Control": true
+      },
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": "2025-10-29T20:49:44.771Z",
+      "createdAt": "2025-04-16T20:49:44.771Z",
+      "updatedAt": "2025-11-05T20:49:44.771Z",
+      "events": [
+        {
+          "id": "ceGJSnWvz3Ijwyr9CqVAg",
+          "type": "Valuation",
+          "amount": 15542,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-11-16T20:49:44.771Z",
+          "createdBy": "Paul"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 8748,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "4kDNYbf5t2Pd3HvMFfoM8",
+      "registration": "EA62 PNP",
+      "vin": "75D2MNVEFV6BKA9DL",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2024,
+      "status": "Warranty",
+      "mileage": 9215,
+      "price": 12978,
+      "vatQualifying": false,
+      "features": {
+        "Heated Grips": true,
+        "Cruise Control": true
+      },
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2025-05-06T20:49:44.771Z",
+      "updatedAt": "2025-11-25T20:49:44.771Z",
+      "events": [
+        {
+          "id": "TasWxEYVuoertRIZntdB2",
+          "type": "Valuation",
+          "amount": 9792,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Walk-in"
+          },
+          "createdAt": "2025-10-04T20:49:44.771Z",
+          "createdBy": "Joe Wicks"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10382,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "Bb4IGYi8TlFKsZfc8WSuN",
+      "registration": "HT59 YAP",
+      "vin": "V6GTVVKWMRHBWAV4Y",
+      "make": "BMW",
+      "model": "F 900 R",
+      "trim": "Sport",
+      "modelYear": 2022,
+      "status": "Price Change",
+      "mileage": 6543,
+      "price": 13453,
+      "vatQualifying": false,
+      "features": {},
+      "serviceHistory": "Limited service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-30T20:49:44.771Z",
+      "updatedAt": "2025-11-16T20:49:44.771Z",
+      "events": [
+        {
+          "id": "IRjQgh0aIBhaWxXhpDaNP",
+          "type": "Valuation",
+          "amount": 14897,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Web enquiry"
+          },
+          "createdAt": "2025-07-15T20:49:44.771Z",
+          "createdBy": "System"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10762,
+        "source": "retail_part_exchange"
+      }
+    },
+    {
+      "id": "y-mcaiOayXVaM_WVR3A9b",
+      "registration": "YF74 RTG",
+      "vin": "4AAYELLRRAJWYGJ7G",
+      "make": "BMW",
+      "model": "S 1000 R",
+      "trim": "M Sport",
+      "modelYear": 2018,
+      "status": "Service",
+      "mileage": 9083,
+      "price": 13324,
+      "vatQualifying": true,
+      "features": {},
+      "serviceHistory": "Part BMW service history",
+      "motExpiry": null,
+      "createdAt": "2024-12-22T20:49:44.771Z",
+      "updatedAt": "2025-10-30T20:49:44.771Z",
+      "events": [
+        {
+          "id": "W-aavleZ_WoofBMZXk6IB",
+          "type": "Valuation",
+          "amount": 7258,
+          "notes": "Initial part-ex valuation.",
+          "meta": {
+            "source": "Phone enquiry"
+          },
+          "createdAt": "2025-06-26T20:49:44.771Z",
+          "createdBy": "Tarin"
+        }
+      ],
+      "acquisition": {
+        "buyInPrice": 10659,
+        "source": "retail_part_exchange"
+      }
+    }
+  ]
+}

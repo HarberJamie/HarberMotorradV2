@@ -1,42 +1,56 @@
 // src/pages/Bikes/BikesPage.jsx
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import { useBikes } from "@/lib/bikesStore.js";
+// import { useBikeEvents } from "@/lib/bikeEventsStore.js"; // ⬅️ removed for now
 import SearchBar from "./SearchBar.jsx";
 import ResultsList from "./ResultsList.jsx";
 import SelectedBike from "./SelectedBike.jsx";
 import Modal from "@/components/Modal.jsx";
-import BikeDetailsForm from "./BikeDetailsForm.jsx";
+import AddBike from "./AddBike.jsx";
 
 export default function BikesPage() {
   const { bikes } = useBikes();
   const [params, setParams] = useSearchParams();
 
-  // Selected bike (by id in URL)
-  const [selectedId, setSelectedId] = useState(() => params.get("id") || null);
+  // ----------------------- selection via URL param ------------------------ //
+  const [selectedId, setSelectedId] = useState(
+    () => params.get("id") || null
+  );
 
-  // Keep selectedId in sync if the URL param changes elsewhere (e.g., back/forward nav)
+  // Keep selectedId in sync if the URL param changes elsewhere
   useEffect(() => {
     const urlId = params.get("id");
     setSelectedId(urlId || null);
   }, [params]);
 
-  // Add Bike modal + prefill support
+  // -------------------------- Add Bike modal ----------------------------- //
   const [addOpen, setAddOpen] = useState(false);
-  const [prefillData, setPrefillData] = useState(null);
 
-  // Helper to open Add Bike with optional defaults (e.g., from PX/reg lookup)
-  const openAddBike = useCallback((data = null) => {
-    setPrefillData(data);
-    setAddOpen(true);
-  }, []);
+  // ---------------------- keep selection valid --------------------------- //
+  const clearSelection = useCallback(() => {
+    setSelectedId(null);
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("id");
+        return next;
+      },
+      { replace: true }
+    );
+  }, [setParams]);
 
-  // Keep selection valid when bikes list changes
   useEffect(() => {
     if (!Array.isArray(bikes) || bikes.length === 0) {
       if (selectedId) setSelectedId(null);
       return;
     }
+
     if (selectedId && !bikes.some((b) => b.id === selectedId)) {
       clearSelection();
     }
@@ -44,7 +58,10 @@ export default function BikesPage() {
   }, [bikes]);
 
   const selectedBike = useMemo(
-    () => (Array.isArray(bikes) ? bikes.find((b) => b.id === selectedId) : null),
+    () =>
+      Array.isArray(bikes)
+        ? bikes.find((b) => b.id === selectedId) || null
+        : null,
     [bikes, selectedId]
   );
 
@@ -66,36 +83,30 @@ export default function BikesPage() {
     [setParams]
   );
 
-  const clearSelection = useCallback(() => {
-    setSelectedId(null);
-    setParams(
-      (prev) => {
-        const next = new URLSearchParams(prev);
-        next.delete("id");
-        return next;
-      },
-      { replace: true }
-    );
-  }, [setParams]);
+  const handleSelect = useCallback(
+    (id) => setSelection(id),
+    [setSelection]
+  );
 
-  const handleSelect = useCallback((id) => setSelection(id), [setSelection]);
-
-  // ⛔️ While the Add Bike modal is open, ignore search param changes
+  // While Add Bike modal is open, ignore search param changes from the UI
   const handleSearchChange = useCallback(
     (nextParamsObj) => {
       if (addOpen) return;
 
       const next = new URLSearchParams(params);
       Object.entries(nextParamsObj).forEach(([k, v]) => {
-        if (v === null || v === "" || typeof v === "undefined") next.delete(k);
-        else next.set(k, String(v));
+        if (v === null || v === "" || typeof v === "undefined") {
+          next.delete(k);
+        } else {
+          next.set(k, String(v));
+        }
       });
       setParams(next, { replace: true });
     },
     [params, setParams, addOpen]
   );
 
-  // Build filters object from the URL params for ResultsList
+  // ---------------------------- filters ---------------------------------- //
   const filters = useMemo(() => {
     const get = (k) => {
       const v = params.get(k);
@@ -105,7 +116,7 @@ export default function BikesPage() {
     return {
       registration: get("registration"),
       vin: get("vin"),
-      keyword: get("keyword"),        // 👈 NEW: wire keyword through
+      keyword: get("keyword"),
       make: get("make"),
       model: get("model"),
       mileageMin: get("mileageMin"),
@@ -115,64 +126,50 @@ export default function BikesPage() {
       priceMin: get("priceMin"),
       priceMax: get("priceMax"),
       vatQualifying: get("vatQualifying"),
-      // serviceHistory: get("serviceHistory"), // intentionally not used right now
+      // serviceHistory: get("serviceHistory"), // reserved for future use
     };
   }, [params]);
 
+  // --------------------------- modal title ------------------------------- //
   const modalTitle = selectedBike
-    ? (selectedBike.registration
-        ? `${selectedBike.registration} — ${selectedBike.make || ""} ${selectedBike.model || ""}`.trim()
-        : `${selectedBike.make || ""} ${selectedBike.model || ""}`.trim())
+    ? selectedBike.registration
+      ? `${selectedBike.registration} — ${
+          selectedBike.make || ""
+        } ${selectedBike.model || ""}`.trim()
+      : `${selectedBike.make || ""} ${
+          selectedBike.model || ""
+        }`.trim()
     : "";
 
+  // ----------------------------------------------------------------------- //
+  //                                  JSX
+  // ----------------------------------------------------------------------- //
   return (
-    <div
-      className="bikes-page"
-      style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%" }}
-    >
-      {/* Search bar */}
-      <div className="bikes-page__search" style={{ width: "100%" }}>
+    <div className="flex w-full flex-col gap-4">
+      {/* Search bar / top controls */}
+      <div className="w-full">
         <SearchBar onChange={handleSearchChange} />
       </div>
 
-      {/* Info message bar (full width, shown only when nothing selected) */}
+      {/* Info bar when nothing is selected */}
       {!selectedBike && (
-        <div
-          className="bikes-page__info"
-          style={{
-            width: "100%",
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 12,
-            padding: "12px 16px",
-            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-            color: "#cfd3ff",
-          }}
-        >
+        <div className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-indigo-100 shadow-lg shadow-black/40">
           <span>Select a bike from the list — or </span>
           <button
             type="button"
-            onClick={() => openAddBike()}
-            className="underline"
-            style={{
-              color: "#6aa9ff",
-              textUnderlineOffset: "3px",
-              background: "transparent",
-              border: 0,
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
+            onClick={() => setAddOpen(true)}
+            className="font-semibold text-sky-400 underline underline-offset-2 hover:text-sky-300"
             aria-label="Add Bike"
             title="Add a new bike"
           >
-            Add Bike
+            add a new bike
           </button>
           .
         </div>
       )}
 
-      {/* Full-width ResultsList */}
-      <div className="bikes-page__results" style={{ width: "100%" }}>
+      {/* Results list */}
+      <div className="w-full">
         <ResultsList
           selectedId={selectedId}
           onSelect={handleSelect}
@@ -189,34 +186,23 @@ export default function BikesPage() {
         closeOnBackdrop={true}
         closeOnEsc={true}
       >
-        {selectedBike && <SelectedBike bike={selectedBike} />}
+        {selectedBike && (
+          // History tab inside SelectedBike will currently
+          // use bike.events (if present) or show "No history recorded".
+          <SelectedBike bike={selectedBike} />
+        )}
       </Modal>
 
-      {/* Add Bike modal showing the full "Details" form */}
+      {/* Add Bike modal */}
       <Modal
         open={addOpen}
-        onClose={() => {
-          setAddOpen(false);
-          setPrefillData(null);
-        }}
+        onClose={() => setAddOpen(false)}
         title="Add a New Bike"
         widthClass="w-[min(900px,92vw)]"
         closeOnBackdrop={true}
         closeOnEsc={true}
       >
-        <BikeDetailsForm
-          initial={prefillData || {}}
-          onCancel={() => {
-            setAddOpen(false);
-            setPrefillData(null);
-          }}
-          onSaved={(bike) => {
-            setAddOpen(false);
-            setPrefillData(null);
-            // Immediately select the newly-added bike to open the SelectedBike modal:
-            setSelection(bike.id);
-          }}
-        />
+        <AddBike onClose={() => setAddOpen(false)} />
       </Modal>
     </div>
   );

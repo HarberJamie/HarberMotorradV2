@@ -2,313 +2,372 @@
 import React, { useMemo } from "react";
 import { useBikes } from "@/lib/bikesStore.js";
 import { normalizeKey } from "@/lib/normalizeKey.js";
-import { STATUS_TYPES, EVENT_TYPES, toLabel as labelFrom } from "@/lib/enums.js";
-import { getFeatureFields } from "@/lib/catalog";
+import {
+  STATUS_TYPES,
+  EVENT_TYPES,
+  toLabel as labelFrom,
+} from "@/lib/enums.js";
 
 const COLS = [
   { label: "Registration" },
   { label: "Make" },
   { label: "Model" },
   { label: "Trim" },
-  { label: "Vin" },
+  { label: "VIN (last 7)" },
   { label: "Status" },
   { label: "Latest Event" },
   {
     label: "Total Miles",
-    fmt: (v) => (isFinite(Number(v)) ? Number(v).toLocaleString() : "–"),
+    fmt: (v) =>
+      isFinite(Number(v)) ? Number(v).toLocaleString() : "–",
   },
   {
     label: "Price",
     fmt: (v) =>
-      v === null || v === undefined || v === "" || isNaN(Number(v))
+      v === null ||
+      v === undefined ||
+      v === "" ||
+      isNaN(Number(v))
         ? "–"
         : `£${Number(v).toLocaleString()}`,
   },
-  {
-    label: "VAT Qualifying",
-    fmt: (v) => (typeof v === "boolean" ? (v ? "Yes" : "No") : v ?? "–"),
-  },
+  { label: "VAT Qualifying" },
 ];
 
-// Fix legacy key naming issues
-const KEY_OVERRIDES = {
-  preperationCosts: "preparationCosts",
-};
-
-// ---------- helpers ----------
-const norm = (v) => (typeof v === "string" ? v.trim().toLowerCase() : v);
-const lc = (v) => String(v ?? "").toLowerCase();
-
-const toNum = (v) => {
-  if (v === null || v === undefined || v === "") return null;
-  const n = Number(String(v).replace(/[^\d.-]/g, ""));
-  return Number.isFinite(n) ? n : null;
-};
-
-const truthyStringToBool = (v) => {
-  if (v === true || v === false) return v;
-  if (typeof v !== "string") return null;
-  const s = v.toLowerCase();
-  if (s === "true" || s === "yes") return true;
-  if (s === "false" || s === "no") return false;
-  return null;
-};
-
-// Get a raw field value by column label
-function getByLabel(row, label) {
-  const k = normalizeKey(label);
-  const key = KEY_OVERRIDES[k] || k;
-  return row?.[key];
-}
-
-// Format for display
-function fmt(raw, col) {
-  const v = raw ?? (raw === 0 ? 0 : null);
-  if (v === null || v === "") return "–";
-  if (col?.fmt) return col.fmt(v);
-  if (typeof v === "boolean") return v ? "Yes" : "No";
-  return String(v);
-}
-
-// VIN masking helper (list view only)
-function maskVin(vin) {
-  if (!vin) return "–";
-  const s = String(vin);
-  return s.length > 7 ? s.slice(-7).toUpperCase() : s.toUpperCase();
-}
-
-// Compute display value for each column
-function getCell(row, col) {
-  switch (col.label) {
-    case "Status":
-      return labelFrom(STATUS_TYPES, row?.status_id) || row?.status || "–";
-    case "Latest Event":
-      return labelFrom(EVENT_TYPES, row?.latest_event_id) || row?.latestEvent || "–";
-    case "Vin":
-      return maskVin(row?.vin || row?.VIN || "");
-    default:
-      return getByLabel(row, col.label);
-  }
-}
-
-/* ---------------------- Feature / Spec keyword match ---------------------- */
-
-function getFeatureLabelsForBike(bike) {
-  const ids = Array.isArray(bike.features) ? bike.features : [];
-  if (!ids.length) return [];
-
-  const options = getFeatureFields(bike.make, bike.model); // [{id,label}]
-  const map = new Map(options.map((o) => [o.id, o.label]));
-  return ids.map((id) => lc(map.get(id) || id));
-}
-
-function getSpecTokensForBike(bike) {
-  const out = [];
-  const specs = bike?.specs && typeof bike.specs === "object" ? bike.specs : {};
-
-  for (const [key, value] of Object.entries(specs)) {
-    if (value === null || value === undefined || value === "") continue;
-
-    const keyPretty = String(key)
-      .replace(/[_-]+/g, " ")
-      .replace(/([a-z\d])([A-Z])/g, "$1 $2")
-      .replace(/\s+/g, " ")
-      .toLowerCase()
-      .trim();
-
-    out.push(lc(keyPretty));
-    out.push(lc(String(value)));
-  }
-
-  return out;
-}
-
-function matchesKeyword(bike, keywordQ) {
-  if (!keywordQ) return true; // nothing typed
-  const q = lc(keywordQ);
-  if (!q) return true;
-
-  const core = [
-    bike.registration,
-    bike.vin,
-    bike.VIN,
-    bike.make,
-    bike.model,
-    bike.trim,
-    bike.colour,
-    bike.color,
-    bike.status,
-  ].map(lc);
-
-  if (core.some((t) => t.includes(q))) return true;
-
-  const featureLabels = getFeatureLabelsForBike(bike);
-  if (featureLabels.some((t) => t.includes(q))) return true;
-
-  const specTokens = getSpecTokensForBike(bike);
-  if (specTokens.some((t) => t.includes(q))) return true;
-
-  return false;
+/**
+ * Safely normalise a status value to a comparable string.
+ * Handles things like "Available" vs "AVAILABLE".
+ */
+function normalizeStatus(value) {
+  if (!value) return "";
+  return value.toString().trim().toLowerCase();
 }
 
 /**
- * Props:
- *  - selectedId?: string
- *  - onSelect?: (id: string) => void
- *  - filters?: {
- *      registration, vin, make, model,
- *      mileageMin, mileageMax,
- *      status, modelYear,
- *      priceMin, priceMax,
- *      vatQualifying,
- *      keyword
- *    }
+ * Get a human-friendly label for a status, if STATUS_TYPES is present.
  */
-export default function ResultsList({ selectedId, onSelect, filters = {} }) {
-  const { bikes = [] } = useBikes();
+function statusLabel(status) {
+  if (!status) return "";
+  if (STATUS_TYPES && typeof STATUS_TYPES === "object") {
+    // STATUS_TYPES may be an enum-like object – try to map it
+    const norm = normalizeStatus(status);
+    const matchKey = Object.keys(STATUS_TYPES).find(
+      (k) => normalizeStatus(STATUS_TYPES[k]) === norm
+    );
+    if (matchKey) {
+      return labelFrom
+        ? labelFrom("STATUS_TYPES", STATUS_TYPES[matchKey])
+        : STATUS_TYPES[matchKey];
+    }
+  }
+  // Fallback: prettify the raw string
+  const norm = status.toString().trim();
+  return norm.charAt(0).toUpperCase() + norm.slice(1);
+}
 
-  const filtered = useMemo(() => {
-    if (!Array.isArray(bikes) || bikes.length === 0) return [];
+/**
+ * Get a human-friendly label for an event type, if EVENT_TYPES is present.
+ */
+function eventLabel(type) {
+  if (!type) return "";
+  if (EVENT_TYPES && typeof EVENT_TYPES === "object") {
+    const norm = normalizeStatus(type);
+    const matchKey = Object.keys(EVENT_TYPES).find(
+      (k) => normalizeStatus(EVENT_TYPES[k]) === norm
+    );
+    if (matchKey) {
+      return labelFrom
+        ? labelFrom("EVENT_TYPES", EVENT_TYPES[matchKey])
+        : EVENT_TYPES[matchKey];
+    }
+  }
+  const norm = type.toString().trim();
+  return norm.charAt(0).toUpperCase() + norm.slice(1);
+}
 
-    const f = filters || {};
+/**
+ * Filter bikes based on filters from BikesPage.
+ * Filters structure:
+ * {
+ *   registration, vin, keyword, make, model,
+ *   mileageMin, mileageMax, status,
+ *   modelYear, priceMin, priceMax, vatQualifying
+ * }
+ */
+function applyFilters(bikes, filters = {}) {
+  if (!Array.isArray(bikes) || bikes.length === 0) return [];
 
-    const regQ = norm(f.registration);
-    const vinQ = norm(f.vin);
-    const makeQ = norm(f.make);
-    const modelQ = norm(f.model);
-    const keywordQ =
-      typeof f.keyword === "string" && f.keyword.trim().length > 0
-        ? f.keyword.trim()
-        : "";
+  const {
+    registration,
+    vin,
+    keyword,
+    make,
+    model,
+    mileageMin,
+    mileageMax,
+    status,
+    modelYear,
+    priceMin,
+    priceMax,
+    vatQualifying,
+  } = filters;
 
-    const mileageMin = toNum(f.mileageMin);
-    const mileageMax = toNum(f.mileageMax);
-    const priceMin = toNum(f.priceMin);
-    const priceMax = toNum(f.priceMax);
+  const regFilter = registration
+    ? registration.trim().toUpperCase()
+    : null;
+  const vinFilter = vin ? vin.trim().toUpperCase() : null;
+  const keywordFilter = keyword
+    ? keyword.trim().toLowerCase()
+    : null;
+  const makeFilter = make ? make.trim().toLowerCase() : null;
+  const modelFilter = model ? model.trim().toLowerCase() : null;
+  const statusFilter = status
+    ? status.toString().trim().toLowerCase()
+    : null;
+  const modelYearFilter = modelYear ? Number(modelYear) : null;
+  const mileageMinNum = mileageMin ? Number(mileageMin) : null;
+  const mileageMaxNum = mileageMax ? Number(mileageMax) : null;
+  const priceMinNum = priceMin ? Number(priceMin) : null;
+  const priceMaxNum = priceMax ? Number(priceMax) : null;
+  const vatFilter =
+    typeof vatQualifying === "string" &&
+    vatQualifying.trim() !== ""
+      ? vatQualifying
+      : null;
 
-    // Default behaviour: show Available bikes unless user selects another status
-    const statusQ = f.status === null || f.status === "" ? "Available" : f.status;
-    const modelYearQ = toNum(f.modelYear);
-    const vatQ = truthyStringToBool(f.vatQualifying); // null = any
+  return bikes.filter((b) => {
+    if (!b) return false;
 
-    const statusMatches = (b) => {
-      if (statusQ === "Any") return true;
-      const byId = String(b.status_id ?? "").toLowerCase();
-      const byLabel = (labelFrom(STATUS_TYPES, b.status_id) || b.status || "").toLowerCase();
-      const want = String(statusQ).toLowerCase();
-      return byId === want || byLabel === want;
-    };
+    // Registration exact/partial match (case-insensitive)
+    if (regFilter) {
+      const reg = (b.registration || "")
+        .toString()
+        .toUpperCase();
+      if (!reg.includes(regFilter)) return false;
+    }
 
-    return bikes.filter((b) => {
-      const bReg = norm(b.registration || "");
-      const bVin = norm(b.vin || b.VIN || "");
-      const bMake = norm(b.make || "");
-      const bModel = norm(b.model || "");
+    // VIN partial match (case-insensitive)
+    if (vinFilter) {
+      const vinValue = (b.vin || "").toString().toUpperCase();
+      if (!vinValue.includes(vinFilter)) return false;
+    }
 
-      const bMiles = toNum(b.totalMiles ?? b.mileage ?? b.odometer);
-      const bPrice = toNum(b.price);
-      const bYear = toNum(b.modelYear ?? b.year);
+    // Keyword search across a few fields
+    if (keywordFilter) {
+      const haystack = [
+        b.registration,
+        b.make,
+        b.model,
+        b.trim,
+        b.notes,
+      ]
+        .map((x) =>
+          (x || "").toString().toLowerCase()
+        )
+        .join(" ");
 
-      const bVat =
-        typeof b.vatQualifying === "boolean"
-          ? b.vatQualifying
-          : typeof b.vat === "boolean"
-          ? b.vat
-          : null;
+      if (!haystack.includes(keywordFilter)) return false;
+    }
 
-      // Keyword match (includes features & specs)
-      if (!matchesKeyword(b, keywordQ)) return false;
+    // Make
+    if (makeFilter) {
+      const makeValue = (b.make || "")
+        .toString()
+        .toLowerCase();
+      if (makeValue !== makeFilter) return false;
+    }
 
-      // Registration / VIN contains
-      if (regQ && !bReg?.includes(regQ)) return false;
-      if (vinQ && !(bVin?.includes(vinQ) || bVin?.endsWith(vinQ))) return false;
+    // Model
+    if (modelFilter) {
+      const modelValue = (b.model || "")
+        .toString()
+        .toLowerCase();
+      if (modelValue !== modelFilter) return false;
+    }
 
-      // Make / Model contains
-      if (makeQ && !bMake?.includes(makeQ)) return false;
-      if (modelQ && !bModel?.includes(modelQ)) return false;
+    // Status – ONLY if a status filter is set.
+    // (If no status filter, we show all statuses so your seed data is visible.)
+    if (statusFilter) {
+      const bikeStatus = normalizeStatus(b.status);
+      if (bikeStatus !== statusFilter) return false;
+    }
 
-      // Status (default = Available)
-      if (!statusMatches(b)) return false;
+    // Model year
+    if (modelYearFilter && Number(b.modelYear) !== modelYearFilter) {
+      return false;
+    }
 
-      // Model Year exact
-      if (modelYearQ !== null && modelYearQ !== undefined) {
-        if (bYear !== modelYearQ) return false;
+    // Mileage range
+    const mileage = Number(b.mileage);
+    if (!Number.isNaN(mileage)) {
+      if (
+        mileageMinNum !== null &&
+        mileage < mileageMinNum
+      ) {
+        return false;
       }
+      if (
+        mileageMaxNum !== null &&
+        mileage > mileageMaxNum
+      ) {
+        return false;
+      }
+    }
 
-      // Mileage band
-      if (mileageMin !== null && bMiles !== null && bMiles < mileageMin) return false;
-      if (mileageMax !== null && bMiles !== null && bMiles > mileageMax) return false;
+    // Price range
+    const price = Number(b.price);
+    if (!Number.isNaN(price)) {
+      if (priceMinNum !== null && price < priceMinNum) {
+        return false;
+      }
+      if (priceMaxNum !== null && price > priceMaxNum) {
+        return false;
+      }
+    }
 
-      // Price band
-      if (priceMin !== null && bPrice !== null && bPrice < priceMin) return false;
-      if (priceMax !== null && bPrice !== null && bPrice > priceMax) return false;
+    // VAT qualifying filter ("yes" / "no")
+    if (vatFilter) {
+      const isVatQualifying = !!b.vatQualifying;
+      if (
+        vatFilter === "yes" &&
+        !isVatQualifying
+      ) {
+        return false;
+      }
+      if (
+        vatFilter === "no" &&
+        isVatQualifying
+      ) {
+        return false;
+      }
+    }
 
-      // VAT qualifying
-      if (vatQ !== null && bVat !== null && bVat !== vatQ) return false;
+    return true;
+  });
+}
 
-      return true;
+export default function ResultsList({
+  selectedId,
+  onSelect,
+  filters,
+}) {
+  const { bikes } = useBikes();
+
+  const filtered = useMemo(
+    () => applyFilters(bikes, filters),
+    [bikes, filters]
+  );
+
+  // Simple default sort: newest first by createdAt, then registration
+  const sorted = useMemo(() => {
+    return [...filtered].sort((a, b) => {
+      const aTime = a.createdAt ? Date.parse(a.createdAt) : 0;
+      const bTime = b.createdAt ? Date.parse(b.createdAt) : 0;
+      if (bTime !== aTime) return bTime - aTime;
+
+      const aReg = (a.registration || "").toString();
+      const bReg = (b.registration || "").toString();
+      return aReg.localeCompare(bReg);
     });
-  }, [bikes, filters]);
+  }, [filtered]);
+
+  const handleRowClick = (id) => {
+    if (typeof onSelect === "function") {
+      onSelect(id);
+    }
+  };
+
+  if (!Array.isArray(sorted) || sorted.length === 0) {
+    return (
+      <div className="rounded-xl border border-white/10 bg-black/40 px-4 py-6 text-sm text-slate-200 shadow-lg shadow-black/40">
+        No bikes match the current filters.
+      </div>
+    );
+  }
 
   return (
-    <div
-      style={{
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: 12,
-        padding: 18,
-        boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-        width: "100%",
-      }}
-    >
-      <h2 style={{ marginBottom: 12 }}>Bikes</h2>
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-lg shadow-black/40">
+      <table className="min-w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-white/5 text-xs uppercase tracking-wide text-slate-300">
+            {COLS.map((col) => (
+              <th
+                key={col.label}
+                className="px-3 py-2 text-left font-semibold"
+              >
+                {col.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((bike) => {
+            const isSelected = bike.id === selectedId;
+            const latestEvent = Array.isArray(bike.events)
+              ? bike.events
+                  .slice()
+                  .sort(
+                    (a, b) =>
+                      new Date(b.createdAt || 0) -
+                      new Date(a.createdAt || 0)
+                  )[0]
+              : null;
 
-      {!Array.isArray(filtered) || filtered.length === 0 ? (
-        <p>No bikes match the current filters.</p>
-      ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", fontSize: 14, borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ textAlign: "left", background: "#1b2143" }}>
-                {COLS.map((c) => (
-                  <th key={c.label} style={{ padding: 8 }}>
-                    {c.label}
-                  </th>
-                ))}
+            const vinLast7 = bike.vin
+              ? bike.vin.toString().slice(-7)
+              : "";
+
+            return (
+              <tr
+                key={bike.id}
+                className={`cursor-pointer border-t border-white/5 ${
+                  isSelected
+                    ? "bg-sky-900/60"
+                    : "hover:bg-white/5"
+                }`}
+                onClick={() => handleRowClick(bike.id)}
+              >
+                <td className="px-3 py-2 font-semibold text-slate-50">
+                  {bike.registration || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {bike.make || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {bike.model || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-200">
+                  {bike.trim || "—"}
+                </td>
+                <td className="px-3 py-2 font-mono text-slate-200">
+                  {vinLast7 || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {statusLabel(bike.status)}
+                </td>
+                <td className="px-3 py-2 text-slate-200">
+                  {latestEvent
+                    ? eventLabel(latestEvent.type)
+                    : "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {COLS[7].fmt
+                    ? COLS[7].fmt(bike.mileage)
+                    : bike.mileage || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {COLS[8].fmt
+                    ? COLS[8].fmt(bike.price)
+                    : bike.price || "—"}
+                </td>
+                <td className="px-3 py-2 text-slate-100">
+                  {bike.vatQualifying ? "Yes" : "No"}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filtered.map((b) => {
-                const isActive = (b.id || b.vin) === selectedId;
-                return (
-                  <tr
-                    key={b.id || b.vin}
-                    onClick={() => onSelect?.(b.id || b.vin)}
-                    style={{
-                      borderTop: "1px solid rgba(255,255,255,0.08)",
-                      background: isActive ? "rgba(59,130,246,0.15)" : "transparent",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {COLS.map((c) => (
-                      <td
-                        key={c.label}
-                        style={{
-                          padding: 8,
-                          fontFamily: "ui-sans-serif, system-ui, sans-serif",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {fmt(getCell(b, c), c)}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,295 +1,205 @@
 // src/lib/bikesStore.js
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "harbermotorrad:bikes";
-const BUS_EVENT = "harber:bikes-updated";
-
-/* ---------------------------
- * Schema normalisation
- * --------------------------- */
+const API_BASE_URL = "http://localhost:4000/api";
+const BIKES_ENDPOINT = `${API_BASE_URL}/bikes`;
 
 /**
- * Normalise a raw bike object so it always has the fields we expect.
- * This is the backbone for Part Exchange, acquisition and profit chain.
+ * Module-level cache so every component using useBikes()
+ * shares the same data without each doing its own fetch.
  */
-function normalizeBike(raw) {
-  if (!raw || typeof raw !== "object") return null;
+let bikesCache = [];
+let hasLoadedOnce = false;
+const listeners = new Set();
 
-  const id = raw.id || (typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : String(Date.now()));
+/* -------------------------------------------------------------------------- */
+/* Helpers                                                                    */
+/* -------------------------------------------------------------------------- */
 
-  // Status & sale type
-  const status = raw.status || "Available"; // fallback if unset
-  const soldType =
-    raw.soldType && ["Private", "Company", "TradedOut"].includes(raw.soldType)
-      ? raw.soldType
-      : null;
-
-  // Acquisition (where we got the bike + buy-in)
-  const acquisition = {
-    source: raw.acquisition?.source || raw.source || null, // legacy "source" support
-    buyInPrice:
-      raw.acquisition && "buyInPrice" in raw.acquisition
-        ? raw.acquisition.buyInPrice
-        : null,
-    acquiredAt:
-      raw.acquisition?.acquiredAt ||
-      raw.acquiredAt ||
-      null,
-    linkedDealId: raw.acquisition?.linkedDealId || null,
-    linkedPxValuationId: raw.acquisition?.linkedPxValuationId || null,
-  };
-
-  // Valuations (PX v1, v2, v3…)
-  const valuations = Array.isArray(raw.valuations) ? raw.valuations : [];
-
-  // Finance (PX outstanding finance info)
-  const finance = {
-    hasFinance:
-      raw.finance && typeof raw.finance.hasFinance === "boolean"
-        ? raw.finance.hasFinance
-        : false,
-    settlementAmount:
-      raw.finance && "settlementAmount" in raw.finance
-        ? raw.finance.settlementAmount
-        : null,
-    provider: raw.finance?.provider || "",
-    confirmed:
-      raw.finance && typeof raw.finance.confirmed === "boolean"
-        ? raw.finance.confirmed
-        : false,
-  };
-
-  // Photos (PX appraisal photos, stock photos, damage pics etc.)
-  const photos = Array.isArray(raw.photos) ? raw.photos : [];
-
-  // HPI / provenance report
-  const hpiReport = raw.hpiReport || {
-    status: "not_checked", // "not_checked" | "done" | "issue_found"
-    checkedAt: null,
-    checkedBy: null,
-    notes: "",
-  };
-
-  // Prep (we may later derive totalPrepCost from events, but keep a slot)
-  const prep = raw.prep || {
-    totalPrepCost: null,
-  };
-
-  return {
-    ...raw,
-    id,
-    status,
-    soldType,
-    acquisition,
-    valuations,
-    finance,
-    photos,
-    hpiReport,
-    prep,
-  };
-}
-
-/* ---------------------------
- * Storage helpers
- * --------------------------- */
-export function getBikes() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    if (!Array.isArray(parsed)) return [];
-
-    const normalized = parsed
-      .map((b) => normalizeBike(b))
-      .filter(Boolean);
-
-    return normalized;
-  } catch {
-    return [];
-  }
-}
-
-// saveBikes(bikes, { emit: boolean })
-export function saveBikes(bikes, opts = { emit: true }) {
-  const safe = Array.isArray(bikes)
-    ? bikes.map((b) => normalizeBike(b)).filter(Boolean)
-    : [];
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(safe));
-  if (opts.emit) {
-    // Notify same-tab listeners only when we intend to
-    window.dispatchEvent(new Event(BUS_EVENT));
-  }
-}
-
-function isSameArray(a, b) {
-  try {
-    return JSON.stringify(a) === JSON.stringify(b);
-  } catch {
-    return false;
-  }
-}
-
-/* ----------------------------------------------------
- * Plain functions API (usable anywhere, emit updates)
- * ---------------------------------------------------- */
-
-/**
- * Add a bike (used from non-React code).
- * Automatically normalises schema (acquisition, valuations, etc.).
- */
-export function addBike(bike) {
-  const list = getBikes();
-  const newBike = normalizeBike(bike);
-  const next = [...list, newBike];
-  saveBikes(next, { emit: true });
-  return newBike;
-}
-
-/**
- * Update a bike by id with partial updates.
- * Nested objects (acquisition, finance, hpiReport) are merged shallowly.
- */
-export function updateBike(id, updates) {
-  const list = getBikes();
-  const next = list.map((b) => {
-    if (b.id !== id) return b;
-
-    const merged = {
-      ...b,
-      ...updates,
-      acquisition: {
-        ...b.acquisition,
-        ...(updates.acquisition || {}),
-      },
-      finance: {
-        ...b.finance,
-        ...(updates.finance || {}),
-      },
-      hpiReport: {
-        ...b.hpiReport,
-        ...(updates.hpiReport || {}),
-      },
-      prep: {
-        ...b.prep,
-        ...(updates.prep || {}),
-      },
-    };
-
-    if (updates.valuations) {
-      merged.valuations = updates.valuations;
-    }
-    if (updates.photos) {
-      merged.photos = updates.photos;
-    }
-
-    return normalizeBike(merged);
+async function fetchJson(url, options = {}) {
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+    ...options,
   });
 
-  saveBikes(next, { emit: true });
-  return next.find((b) => b.id === id) || null;
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(
+      `Request failed: ${res.status} ${res.statusText}${text ? ` – ${text}` : ""}`
+    );
+  }
+
+  return res.json();
 }
 
-export function removeBike(id) {
-  const list = getBikes();
-  const next = list.filter((b) => b.id !== id);
-  saveBikes(next, { emit: true });
-  return true;
+function notifyListeners() {
+  for (const listener of listeners) {
+    listener(bikesCache);
+  }
 }
 
-export function clearBikes() {
-  saveBikes([], { emit: true });
-  return true;
+function subscribe(listener) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 }
 
-/* ---------------------------
- * React Hook API
- * --------------------------- */
+/* -------------------------------------------------------------------------- */
+/* Backend integration (load / add / update)                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Load all bikes from the fake backend and update the cache.
+ */
+export async function reloadBikes() {
+  const data = await fetchJson(BIKES_ENDPOINT);
+  bikesCache = Array.isArray(data) ? data : [];
+  hasLoadedOnce = true;
+  notifyListeners();
+  return bikesCache;
+}
+
+/**
+ * Snapshot of the current cache (synchronous).
+ * Useful if you need the latest bikes outside React.
+ */
+export function getBikes() {
+  return bikesCache;
+}
+
+/**
+ * Add a bike via POST to the backend.
+ * The backend is the source of truth for `id` etc.
+ */
+export async function addBike(bikeInput) {
+  // Ensure we always send something reasonable
+  const payload = {
+    // Keep any id the caller already set, otherwise let json-server assign
+    ...bikeInput,
+  };
+
+  const created = await fetchJson(BIKES_ENDPOINT, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+
+  bikesCache = [...bikesCache, created];
+  notifyListeners();
+
+  return created;
+}
+
+/**
+ * Update a bike via PATCH to the backend.
+ */
+export async function updateBike(id, updates) {
+  if (!id) {
+    throw new Error("updateBike requires a bike id");
+  }
+
+  const updatedFromServer = await fetchJson(`${BIKES_ENDPOINT}/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(updates),
+  });
+
+  bikesCache = bikesCache.map((bike) =>
+    bike.id === id ? { ...bike, ...updatedFromServer } : bike
+  );
+  notifyListeners();
+
+  return updatedFromServer;
+}
+
+/* -------------------------------------------------------------------------- */
+/* React hook                                                                 */
+/* -------------------------------------------------------------------------- */
+
 export function useBikes() {
-  const [bikes, setBikes] = useState(getBikes);
+  const [bikes, setBikes] = useState(bikesCache);
+  const [loading, setLoading] = useState(!hasLoadedOnce);
+  const [error, setError] = useState(null);
 
-  // Listen for cross-tab storage changes and same-tab bus events
   useEffect(() => {
-    const handleStorage = (e) => {
-      if (e.key !== STORAGE_KEY) return;
-      const next = getBikes();
-      setBikes((prev) => (isSameArray(prev, next) ? prev : next));
-    };
-    const handleBus = () => {
-      const next = getBikes();
-      setBikes((prev) => (isSameArray(prev, next) ? prev : next));
-    };
+    let isMounted = true;
 
-    window.addEventListener("storage", handleStorage);
-    window.addEventListener(BUS_EVENT, handleBus);
+    // Subscribe to module-level cache updates
+    const unsubscribe = subscribe((nextBikes) => {
+      if (isMounted) setBikes(nextBikes);
+    });
+
+    // First mount -> fetch from backend if not already done
+    if (!hasLoadedOnce) {
+      setLoading(true);
+      reloadBikes()
+        .catch((err) => {
+          console.error("Failed to load bikes from backend", err);
+          if (isMounted) setError(err);
+        })
+        .finally(() => {
+          if (isMounted) setLoading(false);
+        });
+    }
+
     return () => {
-      window.removeEventListener("storage", handleStorage);
-      window.removeEventListener(BUS_EVENT, handleBus);
+      isMounted = false;
+      unsubscribe();
     };
   }, []);
 
-  // Persist whenever local state changes via the hook’s mutators
-  // IMPORTANT: do NOT emit here (we already have the state locally)
-  useEffect(() => {
-    saveBikes(bikes, { emit: false });
-  }, [bikes]);
+  const add = useCallback(
+    async (bike) => {
+      setLoading(true);
+      try {
+        const created = await addBike(bike);
+        return created;
+      } catch (err) {
+        console.error("Failed to add bike", err);
+        setError(err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
-  // Hook-bound mutators update state (ideal inside React components)
-  const addViaHook = (bike) => {
-    const newBike = normalizeBike(bike);
-    setBikes((prev) => [...prev, newBike]);
-    return newBike;
-  };
+  const update = useCallback(
+    async (id, updates) => {
+      setLoading(true);
+      try {
+        const updated = await updateBike(id, updates);
+        return updated;
+      } catch (err) {
+        console.error("Failed to update bike", err);
+        setError(err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
-  const updateViaHook = (id, updates) => {
-    setBikes((prev) =>
-      prev.map((b) => {
-        if (b.id !== id) return b;
-
-        const merged = {
-          ...b,
-          ...updates,
-          acquisition: {
-            ...b.acquisition,
-            ...(updates.acquisition || {}),
-          },
-          finance: {
-            ...b.finance,
-            ...(updates.finance || {}),
-          },
-          hpiReport: {
-            ...b.hpiReport,
-            ...(updates.hpiReport || {}),
-          },
-          prep: {
-            ...b.prep,
-            ...(updates.prep || {}),
-          },
-        };
-
-        if (updates.valuations) {
-          merged.valuations = updates.valuations;
-        }
-        if (updates.photos) {
-          merged.photos = updates.photos;
-        }
-
-        return normalizeBike(merged);
-      })
-    );
-  };
-
-  const removeViaHook = (id) => {
-    setBikes((prev) => prev.filter((b) => b.id !== id));
-  };
-
-  const clearViaHook = () => setBikes([]);
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      await reloadBikes();
+    } catch (err) {
+        console.error("Failed to reload bikes", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+  }, []);
 
   return {
     bikes,
-    addBike: addViaHook,
-    updateBike: updateViaHook,
-    removeBike: removeViaHook,
-    clearBikes: clearViaHook,
+    loading,
+    error,
+    addBike: add,
+    updateBike: update,
+    reloadBikes: refresh,
   };
 }
