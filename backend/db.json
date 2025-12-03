@@ -5295,6 +5295,121 @@
         "buyInPrice": 10659,
         "source": "retail_part_exchange"
       }
+    },
+    {
+      "id": "85beb47b-9d0f-4b5f-83ea-30fa6d4049d1",
+      "registration": "MOE651X",
+      "make": "BMW",
+      "model": "R nineT",
+      "trim": "TE",
+      "vin": "",
+      "totalMiles": null,
+      "modelYear": "",
+      "status": "Valuation",
+      "source": "PX",
+      "acquisition": {
+        "source": "PX",
+        "buyInPrice": "11000",
+        "acquiredAt": null,
+        "linkedDealId": null,
+        "linkedPxValuationId": "b68b39b4-cb76-48cb-abb3-b9f3b497799d",
+        "linkedDeal": {
+          "targetRegistration": "DE22 ABC",
+          "financeRequired": true,
+          "additionalDeposit": "2000"
+        }
+      },
+      "valuations": [
+        {
+          "id": "b68b39b4-cb76-48cb-abb3-b9f3b497799d",
+          "amount": "11000",
+          "marketRetailPrice": "14000",
+          "estTechPrep": "800",
+          "estCosmeticPrep": "150",
+          "estWarranty": "80",
+          "distributionCost": "",
+          "channel": "Retail",
+          "taxFlag": "Margin",
+          "notes": "",
+          "createdAt": "2025-12-01T20:32:15.786Z",
+          "createdBy": "TODO-user",
+          "approvedAt": "2025-12-01T20:32:50.308Z",
+          "approvedBy": "TODO-manager"
+        }
+      ],
+      "events": [
+        {
+          "id": "4f684e38-e85b-4d12-b1c5-6956066dd753",
+          "type": "valuation",
+          "label": "Valuation approved",
+          "date": "2025-12-01T20:32:50.308Z",
+          "valuation": "11000",
+          "mileage": null
+        },
+        {
+          "id": "f5023580-cb13-4096-8be9-0997a3bd3bfd",
+          "type": "valuation",
+          "label": "Valuation approved",
+          "date": "2025-12-01T20:32:48.182Z",
+          "valuation": "11000",
+          "mileage": null
+        },
+        {
+          "id": "4e56bfd0-f64f-4600-97cf-708eace8382f",
+          "type": "valuation",
+          "label": "HPI check completed",
+          "date": "2025-12-01T20:29:52.337Z",
+          "hpiStatus": "Clear",
+          "mileage": null
+        }
+      ],
+      "createdAt": "2025-12-01T20:28:07.877Z",
+      "updatedAt": "2025-12-02T21:03:23.997Z",
+      "appraisal": {
+        "appraisedBy": "Jamie Fitzsimmons",
+        "appraisedAt": "2025-12-01T20:29",
+        "commonIssuesChecks": {
+          "rninet-fork-seals": {
+            "checked": true,
+            "costRequired": false
+          }
+        },
+        "condition": {
+          "rearTyre": {
+            "costRequired": false,
+            "estimatedCost": ""
+          }
+        }
+      },
+      "hpiReport": {
+        "status": "Clear",
+        "checkedAt": "2025-12-01T20:29:52.337Z",
+        "checkedBy": "Jamie Fitzsimmons"
+      },
+      "finance": {
+        "hasFinance": true,
+        "settlementAmount": "10000",
+        "provider": "BMW FS"
+      },
+      "features": {
+        "keyless-ride": true,
+        "heated-seat": true
+      },
+      "pxSpec": {
+        "extras": {
+          "tallScreen": true
+        },
+        "serviceHistoryType": "Full"
+      },
+      "photos": [
+        {
+          "id": "1fecccc1-b83d-4c74-b8a9-ce44706daacd",
+          "url": "placeholder://local-photo",
+          "uploadedAt": "2025-12-01T20:31:49.752Z",
+          "uploadedBy": "Jamie Fitzsimmons",
+          "tag": "Walkaround"
+        }
+      ]
     }
   ]
 }

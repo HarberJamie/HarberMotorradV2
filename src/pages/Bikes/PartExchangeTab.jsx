@@ -87,8 +87,49 @@ const TABS = [
   { id: "bikeDetails", label: "Bike Details" },
   { id: "specification", label: "Specification" },
   { id: "condition", label: "Condition & History" },
-  { id: "valuation", label: "Valuation" },
   { id: "summary", label: "Summary & Insights" },
+  { id: "valuation", label: "Valuation" },
+];
+
+/**
+ * Condition line-item fields that support Cost Required + Estimated Cost.
+ */
+const CONDITION_LINE_ITEMS = [
+  {
+    key: "frontTyre",
+    label: "Front tyre",
+    placeholder: "e.g. 4mm, even wear",
+  },
+  {
+    key: "rearTyre",
+    label: "Rear tyre",
+    placeholder: "e.g. 3mm, may need replacing soon",
+  },
+  {
+    key: "bodywork",
+    label: "Bodywork",
+    placeholder: "e.g. light marks on tank, no dents",
+  },
+  {
+    key: "mirrors",
+    label: "Mirrors",
+    placeholder: "e.g. original, light marks only",
+  },
+  {
+    key: "engine",
+    label: "Engine",
+    placeholder: "e.g. dry, no leaks, starts/runs well",
+  },
+  {
+    key: "corrosion",
+    label: "Corrosion",
+    placeholder: "e.g. minor on fasteners / exhaust hanger",
+  },
+  {
+    key: "exhaust",
+    label: "Exhaust",
+    placeholder: "e.g. OE, no damage / blowing",
+  },
 ];
 
 export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
@@ -193,6 +234,25 @@ export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
     });
   };
 
+  /**
+   * Service history costs: one small cost object per field.
+   * Keys: history, lastServiceDate, lastServiceMiles, nextMajorServiceDate
+   */
+  const updateServiceHistoryCost = (fieldKey, patch) => {
+    ensureBikeInStore();
+    const prevCosts = bike.pxSpec?.serviceHistoryCosts || {};
+    const prev = prevCosts[fieldKey] || {};
+    updatePxSpec({
+      serviceHistoryCosts: {
+        ...prevCosts,
+        [fieldKey]: {
+          ...prev,
+          ...patch,
+        },
+      },
+    });
+  };
+
   const updateAppraisal = (partial) => {
     ensureBikeInStore();
     onSave({
@@ -203,15 +263,32 @@ export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
     });
   };
 
-  const updateConditionField = (field, value) => {
+  /**
+   * Update a condition line item.
+   * Supports both legacy string values and new object shape:
+   * { notes, costRequired, estimatedCost }
+   */
+  const updateConditionField = (fieldKey, patch) => {
     ensureBikeInStore();
     const prevCondition = (bike.appraisal && bike.appraisal.condition) || {};
-    updateAppraisal({
-      condition: {
-        ...prevCondition,
-        [field]: value,
+    const prevValue = prevCondition[fieldKey];
+
+    let base = {};
+    if (typeof prevValue === "string") {
+      base = { notes: prevValue };
+    } else if (prevValue && typeof prevValue === "object") {
+      base = prevValue;
+    }
+
+    const nextCondition = {
+      ...prevCondition,
+      [fieldKey]: {
+        ...base,
+        ...patch,
       },
-    });
+    };
+
+    updateAppraisal({ condition: nextCondition });
   };
 
   const updateCommonIssueCheck = (issueId, field, value) => {
@@ -1159,128 +1236,119 @@ export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
               </h3>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-                {/* History type dropdown */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">
-                    Service History
-                  </label>
-                  <select
-                    className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100"
-                    value={bike.pxSpec?.serviceHistoryType || ""}
-                    onChange={(e) =>
-                      updatePxSpec({ serviceHistoryType: e.target.value })
+                {/* Service History type */}
+                <ServiceHistoryField
+                  label="Service History"
+                  type="select"
+                  value={bike.pxSpec?.serviceHistoryType || ""}
+                  onValueChange={(val) =>
+                    updatePxSpec({ serviceHistoryType: val })
+                  }
+                  options={[
+                    { value: "", label: "Select…" },
+                    { value: "Full", label: "Full" },
+                    { value: "Partial", label: "Partial" },
+                    { value: "Self", label: "Self" },
+                    { value: "None", label: "None" },
+                  ]}
+                  cost={
+                    bike.pxSpec?.serviceHistoryCosts?.history || {
+                      costRequired: false,
+                      estimatedCost: "",
                     }
-                  >
-                    <option value="">Select…</option>
-                    <option value="Full">Full</option>
-                    <option value="Partial">Partial</option>
-                    <option value="Self">Self</option>
-                    <option value="None">None</option>
-                  </select>
-                </div>
+                  }
+                  onCostChange={(patch) =>
+                    updateServiceHistoryCost("history", patch)
+                  }
+                />
 
                 {/* Date of last service */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">
-                    Date of Last Service
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100"
-                    value={bike.pxSpec?.lastServiceDate || ""}
-                    onChange={(e) =>
-                      updatePxSpec({ lastServiceDate: e.target.value })
+                <ServiceHistoryField
+                  label="Date of Last Service"
+                  type="date"
+                  value={bike.pxSpec?.lastServiceDate || ""}
+                  onValueChange={(val) =>
+                    updatePxSpec({ lastServiceDate: val })
+                  }
+                  cost={
+                    bike.pxSpec?.serviceHistoryCosts?.lastServiceDate || {
+                      costRequired: false,
+                      estimatedCost: "",
                     }
-                  />
-                </div>
+                  }
+                  onCostChange={(patch) =>
+                    updateServiceHistoryCost("lastServiceDate", patch)
+                  }
+                />
 
                 {/* Miles at last service */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">
-                    Miles at Last Service
-                  </label>
-                  <input
-                    type="number"
-                    className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100"
-                    value={bike.pxSpec?.lastServiceMiles || ""}
-                    onChange={(e) =>
-                      updatePxSpec({ lastServiceMiles: e.target.value })
+                <ServiceHistoryField
+                  label="Miles at Last Service"
+                  type="number"
+                  value={bike.pxSpec?.lastServiceMiles || ""}
+                  onValueChange={(val) =>
+                    updatePxSpec({ lastServiceMiles: val })
+                  }
+                  cost={
+                    bike.pxSpec?.serviceHistoryCosts?.lastServiceMiles || {
+                      costRequired: false,
+                      estimatedCost: "",
                     }
-                  />
-                </div>
+                  }
+                  onCostChange={(patch) =>
+                    updateServiceHistoryCost("lastServiceMiles", patch)
+                  }
+                />
 
                 {/* Next major service due */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">
-                    Next Major Service Due
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100"
-                    value={bike.pxSpec?.nextMajorServiceDate || ""}
-                    onChange={(e) =>
-                      updatePxSpec({ nextMajorServiceDate: e.target.value })
+                <ServiceHistoryField
+                  label="Next Major Service Due"
+                  type="date"
+                  value={bike.pxSpec?.nextMajorServiceDate || ""}
+                  onValueChange={(val) =>
+                    updatePxSpec({ nextMajorServiceDate: val })
+                  }
+                  cost={
+                    bike.pxSpec?.serviceHistoryCosts?.nextMajorServiceDate || {
+                      costRequired: false,
+                      estimatedCost: "",
                     }
-                  />
-                </div>
+                  }
+                  onCostChange={(patch) =>
+                    updateServiceHistoryCost("nextMajorServiceDate", patch)
+                  }
+                />
               </div>
             </section>
 
             {/* Condition summary + common issues in a 2-column layout */}
             <div className="grid gap-4 md:grid-cols-2">
-              {/* Condition summary – structured fields */}
+              {/* Condition summary – structured fields with Cost Required + Estimated Cost */}
               <section className="rounded-2xl bg-slate-900/80 p-4 shadow">
                 <h3 className="text-sm font-semibold text-slate-200 mb-2">
                   Condition Summary
                 </h3>
                 <p className="text-[11px] text-slate-500 mb-3">
-                  Record the condition of key components to support prep
-                  estimates and transparency with the customer.
+                  Record the condition of key components, and flag any items
+                  where a prep cost is required.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <ConditionField
-                    label="Front tyre"
-                    placeholder="e.g. 4mm, even wear"
-                    value={bike.appraisal?.condition?.frontTyre || ""}
-                    onChange={(v) => updateConditionField("frontTyre", v)}
-                  />
-                  <ConditionField
-                    label="Rear tyre"
-                    placeholder="e.g. 3mm, may need replacing soon"
-                    value={bike.appraisal?.condition?.rearTyre || ""}
-                    onChange={(v) => updateConditionField("rearTyre", v)}
-                  />
-                  <ConditionField
-                    label="Bodywork"
-                    placeholder="e.g. light marks on tank, no dents"
-                    value={bike.appraisal?.condition?.bodywork || ""}
-                    onChange={(v) => updateConditionField("bodywork", v)}
-                  />
-                  <ConditionField
-                    label="Mirrors"
-                    placeholder="e.g. original, light marks only"
-                    value={bike.appraisal?.condition?.mirrors || ""}
-                    onChange={(v) => updateConditionField("mirrors", v)}
-                  />
-                  <ConditionField
-                    label="Engine"
-                    placeholder="e.g. dry, no leaks, starts/runs well"
-                    value={bike.appraisal?.condition?.engine || ""}
-                    onChange={(v) => updateConditionField("engine", v)}
-                  />
-                  <ConditionField
-                    label="Corrosion"
-                    placeholder="e.g. minor on fasteners / exhaust hanger"
-                    value={bike.appraisal?.condition?.corrosion || ""}
-                    onChange={(v) => updateConditionField("corrosion", v)}
-                  />
-                  <ConditionField
-                    label="Exhaust"
-                    placeholder="e.g. OE, no damage / blowing"
-                    value={bike.appraisal?.condition?.exhaust || ""}
-                    onChange={(v) => updateConditionField("exhaust", v)}
-                  />
+                  {CONDITION_LINE_ITEMS.map((field) => (
+                    <ConditionField
+                      key={field.key}
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      condition={
+                        bike.appraisal?.condition?.[field.key] ??
+                        bike.appraisal?.condition?.[field.key] ??
+                        ""
+                      }
+                      onChange={(patch) =>
+                        updateConditionField(field.key, patch)
+                      }
+                    />
+                  ))}
                 </div>
 
                 <div className="mt-3">
@@ -1291,22 +1359,33 @@ export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
                     rows={3}
                     className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-xs text-slate-100"
                     placeholder="Summary of overall condition, any notable damage or positives."
-                    value={bike.appraisal?.condition?.overallNotes || ""}
+                    value={
+                      (() => {
+                        const v =
+                          bike.appraisal?.condition?.overallNotes ?? "";
+                        if (typeof v === "string") return v;
+                        if (v && typeof v === "object") return v.notes || "";
+                        return "";
+                      })()
+                    }
                     onChange={(e) =>
-                      updateConditionField("overallNotes", e.target.value)
+                      updateConditionField("overallNotes", {
+                        notes: e.target.value,
+                      })
                     }
                   />
                 </div>
               </section>
 
-              {/* Common issues – static + data-driven */}
+              {/* Common issues – static + data-driven, with Cost Required + Estimated Cost */}
               <section className="rounded-2xl bg-slate-900/80 p-4 shadow">
                 <h3 className="text-sm font-semibold text-slate-200 mb-2">
                   Common Issues
                 </h3>
                 <p className="text-[11px] text-slate-500 mb-3">
                   Model-specific checks plus patterns from Warranty / Service /
-                  Prep events on similar bikes.
+                  Prep events on similar bikes. You can also flag cost
+                  implications for each issue.
                 </p>
 
                 {combinedCommonIssues.length === 0 ? (
@@ -1320,26 +1399,69 @@ export default function PartExchangeTab({ bike, onSave, onOpenDeal }) {
                     {combinedCommonIssues.map((issue) => {
                       const checks =
                         bike.appraisal?.commonIssuesChecks?.[issue.id] || {};
+                      const costRequired = !!checks.costRequired;
+                      const estimatedCost = checks.estimatedCost ?? "";
+
                       return (
                         <div
                           key={issue.id}
                           className="rounded-xl border border-slate-800 bg-slate-950/60 p-2.5 space-y-1.5"
                         >
-                          <label className="flex items-center gap-2 text-xs text-slate-200">
-                            <input
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"
-                              checked={!!checks.checked}
-                              onChange={(e) =>
-                                updateCommonIssueCheck(
-                                  issue.id,
-                                  "checked",
-                                  e.target.checked
-                                )
-                              }
-                            />
-                            <span>{issue.label}</span>
-                          </label>
+                          <div className="flex flex-col gap-1">
+                            <label className="flex items-center gap-2 text-xs text-slate-200">
+                              <input
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"
+                                checked={!!checks.checked}
+                                onChange={(e) =>
+                                  updateCommonIssueCheck(
+                                    issue.id,
+                                    "checked",
+                                    e.target.checked
+                                  )
+                                }
+                              />
+                              <span>{issue.label}</span>
+                            </label>
+
+                            <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-300">
+                              <label className="inline-flex items-center gap-1">
+                                <input
+                                  type="checkbox"
+                                  className="h-3.5 w-3.5 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"
+                                  checked={costRequired}
+                                  onChange={(e) =>
+                                    updateCommonIssueCheck(
+                                      issue.id,
+                                      "costRequired",
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                                <span>Cost Required</span>
+                              </label>
+                              {costRequired && (
+                                <div className="flex items-center gap-1">
+                                  <span>Estimated Cost (£)</span>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    className="w-24 rounded-md bg-slate-900 border border-slate-700 px-2 py-1 text-[11px] text-slate-100"
+                                    value={estimatedCost}
+                                    onChange={(e) =>
+                                      updateCommonIssueCheck(
+                                        issue.id,
+                                        "estimatedCost",
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
                           <textarea
                             rows={2}
                             className="w-full rounded-lg bg-slate-900 border border-slate-800 px-2 py-1.5 text-[11px] text-slate-100"
@@ -1933,20 +2055,171 @@ function FieldNumber({ label, value, onChange }) {
   );
 }
 
-/* Helper for condition summary fields */
-function ConditionField({ label, value, onChange, placeholder }) {
+/**
+ * Condition field with notes + Cost Required + Estimated Cost.
+ * Accepts either a legacy string or an object { notes, costRequired, estimatedCost }.
+ */
+function ConditionField({ label, condition, onChange, placeholder }) {
+  let notes = "";
+  let costRequired = false;
+  let estimatedCost = "";
+
+  if (typeof condition === "string") {
+    notes = condition;
+  } else if (condition && typeof condition === "object") {
+    notes = condition.notes || "";
+    costRequired = !!condition.costRequired;
+    estimatedCost = condition.estimatedCost ?? "";
+  }
+
+  const handleNotesChange = (e) => {
+    onChange({ notes: e.target.value });
+  };
+
+  const handleCostRequiredChange = (e) => {
+    const checked = e.target.checked;
+    onChange({
+      costRequired: checked,
+      estimatedCost: checked ? estimatedCost : "",
+    });
+  };
+
+  const handleEstimatedCostChange = (e) => {
+    onChange({ estimatedCost: e.target.value });
+  };
+
   return (
-    <div>
-      <label className="block text-[11px] font-medium text-slate-400 mb-1">
-        {label}
-      </label>
+    <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <label className="text-[11px] font-medium text-slate-200">
+          {label}
+        </label>
+        <label className="inline-flex items-center gap-1 text-[11px] text-slate-300">
+          <input
+            type="checkbox"
+            className="h-3.5 w-3.5 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"
+            checked={costRequired}
+            onChange={handleCostRequiredChange}
+          />
+          <span>Cost Required</span>
+        </label>
+      </div>
+
       <input
         type="text"
         className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-1.5 text-xs text-slate-100"
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
+        value={notes}
+        onChange={handleNotesChange}
         placeholder={placeholder}
       />
+
+      {costRequired && (
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[11px] text-slate-300">
+            Estimated Cost (£)
+          </span>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            className="w-24 rounded-md bg-slate-900 border border-slate-700 px-2 py-1 text-[11px] text-slate-100"
+            value={estimatedCost}
+            onChange={handleEstimatedCostChange}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Service history field with Cost Required + Estimated Cost.
+ * `type` controls the main input type (select, date, number, text).
+ */
+function ServiceHistoryField({
+  label,
+  type,
+  value,
+  onValueChange,
+  options = [],
+  cost,
+  onCostChange,
+}) {
+  const costRequired = !!cost.costRequired;
+  const estimatedCost = cost.estimatedCost ?? "";
+
+  const handleCostRequiredChange = (e) => {
+    const checked = e.target.checked;
+    onCostChange({
+      costRequired: checked,
+      estimatedCost: checked ? estimatedCost : "",
+    });
+  };
+
+  const handleEstimatedCostChange = (e) => {
+    onCostChange({
+      estimatedCost: e.target.value,
+    });
+  };
+
+  const baseInputClasses =
+    "w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100";
+
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between gap-2">
+        <label className="block text-xs font-medium text-slate-400">
+          {label}
+        </label>
+        <label className="inline-flex items-center gap-1 text-[11px] text-slate-300">
+          <input
+            type="checkbox"
+            className="h-3.5 w-3.5 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"
+            checked={costRequired}
+            onChange={handleCostRequiredChange}
+          />
+          <span>Cost Required</span>
+        </label>
+      </div>
+
+      {/* Main value field */}
+      {type === "select" ? (
+        <select
+          className={baseInputClasses}
+          value={value}
+          onChange={(e) => onValueChange(e.target.value)}
+        >
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type={type}
+          className={baseInputClasses}
+          value={value}
+          onChange={(e) => onValueChange(e.target.value)}
+        />
+      )}
+
+      {/* Estimated Cost */}
+      {costRequired && (
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[11px] text-slate-300">
+            Estimated Cost (£)
+          </span>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            className="w-24 rounded-md bg-slate-900 border border-slate-700 px-2 py-1 text-[11px] text-slate-100"
+            value={estimatedCost}
+            onChange={handleEstimatedCostChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
