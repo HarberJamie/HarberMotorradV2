@@ -1,0 +1,179 @@
+[1mdiff --git a/src/components/PxConditionField.jsx b/src/components/PxConditionField.jsx[m
+[1mindex e69de29..7a00a2b 100644[m
+[1m--- a/src/components/PxConditionField.jsx[m
+[1m+++ b/src/components/PxConditionField.jsx[m
+[36m@@ -0,0 +1,84 @@[m
+[32m+[m[32m// src/components/PxConditionField.jsx[m
+[32m+[m[32mimport React from "react";[m
+[32m+[m
+[32m+[m[32m/**[m
+[32m+[m[32m * Condition field with notes + Cost Required + Estimated Cost.[m
+[32m+[m[32m * Accepts either a legacy string or an object { notes, costRequired, estimatedCost }.[m
+[32m+[m[32m */[m
+[32m+[m[32mexport default function PxConditionField({[m
+[32m+[m[32m  label,[m
+[32m+[m[32m  condition,[m
+[32m+[m[32m  onChange,[m
+[32m+[m[32m  placeholder,[m
+[32m+[m[32m}) {[m
+[32m+[m[32m  let notes = "";[m
+[32m+[m[32m  let costRequired = false;[m
+[32m+[m[32m  let estimatedCost = "";[m
+[32m+[m
+[32m+[m[32m  if (typeof condition === "string") {[m
+[32m+[m[32m    notes = condition;[m
+[32m+[m[32m  } else if (condition && typeof condition === "object") {[m
+[32m+[m[32m    notes = condition.notes || "";[m
+[32m+[m[32m    costRequired = !!condition.costRequired;[m
+[32m+[m[32m    estimatedCost = condition.estimatedCost ?? "";[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  const handleNotesChange = (e) => {[m
+[32m+[m[32m    onChange({ notes: e.target.value });[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleCostRequiredChange = (e) => {[m
+[32m+[m[32m    const checked = e.target.checked;[m
+[32m+[m[32m    onChange({[m
+[32m+[m[32m      costRequired: checked,[m
+[32m+[m[32m      estimatedCost: checked ? estimatedCost : "",[m
+[32m+[m[32m    });[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleEstimatedCostChange = (e) => {[m
+[32m+[m[32m    onChange({ estimatedCost: e.target.value });[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 space-y-2">[m
+[32m+[m[32m      <div className="flex items-center justify-between gap-2">[m
+[32m+[m[32m        <label className="text-[11px] font-medium text-slate-200">[m
+[32m+[m[32m          {label}[m
+[32m+[m[32m        </label>[m
+[32m+[m[32m        <label className="inline-flex items-center gap-1 text-[11px] text-slate-300">[m
+[32m+[m[32m          <input[m
+[32m+[m[32m            type="checkbox"[m
+[32m+[m[32m            className="h-3.5 w-3.5 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"[m
+[32m+[m[32m            checked={costRequired}[m
+[32m+[m[32m            onChange={handleCostRequiredChange}[m
+[32m+[m[32m          />[m
+[32m+[m[32m          <span>Cost Required</span>[m
+[32m+[m[32m        </label>[m
+[32m+[m[32m      </div>[m
+[32m+[m
+[32m+[m[32m      <input[m
+[32m+[m[32m        type="text"[m
+[32m+[m[32m        className="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-1.5 text-xs text-slate-100"[m
+[32m+[m[32m        value={notes}[m
+[32m+[m[32m        onChange={handleNotesChange}[m
+[32m+[m[32m        placeholder={placeholder}[m
+[32m+[m[32m      />[m
+[32m+[m
+[32m+[m[32m      {costRequired && ([m
+[32m+[m[32m        <div className="flex items-center justify-between gap-2">[m
+[32m+[m[32m          <span className="text-[11px] text-slate-300">[m
+[32m+[m[32m            Estimated Cost (£)[m
+[32m+[m[32m          </span>[m
+[32m+[m[32m          <input[m
+[32m+[m[32m            type="number"[m
+[32m+[m[32m            min="0"[m
+[32m+[m[32m            step="1"[m
+[32m+[m[32m            className="w-24 rounded-md bg-slate-900 border border-slate-700 px-2 py-1 text-[11px] text-slate-100"[m
+[32m+[m[32m            value={estimatedCost}[m
+[32m+[m[32m            onChange={handleEstimatedCostChange}[m
+[32m+[m[32m          />[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m      )}[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/PxFieldNumber.jsx b/src/components/PxFieldNumber.jsx[m
+[1mindex e69de29..1945abc 100644[m
+[1m--- a/src/components/PxFieldNumber.jsx[m
+[1m+++ b/src/components/PxFieldNumber.jsx[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32m// src/components/PxFieldNumber.jsx[m
+[32m+[m[32mimport React from "react";[m
+[32m+[m
+[32m+[m[32mexport default function PxFieldNumber({ label, value, onChange }) {[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div>[m
+[32m+[m[32m      <label className="block text-[11px] font-medium text-slate-400 mb-1">[m
+[32m+[m[32m        {label}[m
+[32m+[m[32m      </label>[m
+[32m+[m[32m      <input[m
+[32m+[m[32m        type="number"[m
+[32m+[m[32m        className="w-full rounded-lg bg-slate-800 border border-slate-700 px-2 py-1.5 text-xs text-slate-100"[m
+[32m+[m[32m        value={value || ""}[m
+[32m+[m[32m        onChange={(e) => onChange(e.target.value)}[m
+[32m+[m[32m      />[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/PxServiceHistoryField.jsx b/src/components/PxServiceHistoryField.jsx[m
+[1mindex e69de29..316cc5e 100644[m
+[1m--- a/src/components/PxServiceHistoryField.jsx[m
+[1m+++ b/src/components/PxServiceHistoryField.jsx[m
+[36m@@ -0,0 +1,94 @@[m
+[32m+[m[32m// src/components/PxServiceHistoryField.jsx[m
+[32m+[m[32mimport React from "react";[m
+[32m+[m
+[32m+[m[32m/**[m
+[32m+[m[32m * Service history field with Cost Required + Estimated Cost.[m
+[32m+[m[32m * `type` controls the main input type (select, date, number, text).[m
+[32m+[m[32m */[m
+[32m+[m[32mexport default function PxServiceHistoryField({[m
+[32m+[m[32m  label,[m
+[32m+[m[32m  type,[m
+[32m+[m[32m  value,[m
+[32m+[m[32m  onValueChange,[m
+[32m+[m[32m  options = [],[m
+[32m+[m[32m  cost,[m
+[32m+[m[32m  onCostChange,[m
+[32m+[m[32m}) {[m
+[32m+[m[32m  const costRequired = !!cost.costRequired;[m
+[32m+[m[32m  const estimatedCost = cost.estimatedCost ?? "";[m
+[32m+[m
+[32m+[m[32m  const handleCostRequiredChange = (e) => {[m
+[32m+[m[32m    const checked = e.target.checked;[m
+[32m+[m[32m    onCostChange({[m
+[32m+[m[32m      costRequired: checked,[m
+[32m+[m[32m      estimatedCost: checked ? estimatedCost : "",[m
+[32m+[m[32m    });[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleEstimatedCostChange = (e) => {[m
+[32m+[m[32m    onCostChange({[m
+[32m+[m[32m      estimatedCost: e.target.value,[m
+[32m+[m[32m    });[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const baseInputClasses =[m
+[32m+[m[32m    "w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-slate-100";[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className="space-y-1.5">[m
+[32m+[m[32m      <div className="flex items-center justify-between gap-2">[m
+[32m+[m[32m        <label className="block text-xs font-medium text-slate-400">[m
+[32m+[m[32m          {label}[m
+[32m+[m[32m        </label>[m
+[32m+[m[32m        <label className="inline-flex items-center gap-1 text-[11px] text-slate-300">[m
+[32m+[m[32m          <input[m
+[32m+[m[32m            type="checkbox"[m
+[32m+[m[32m            className="h-3.5 w-3.5 rounded border-slate-500 bg-slate-900 text-sky-500 focus:ring-sky-500"[m
+[32m+[m[32m            checked={costRequired}[m
+[32m+[m[32m            onChange={handleCostRequiredChange}[m
+[32m+[m[32m          />[m
+[32m+[m[32m          <span>Cost Required</span>[m
+[32m+[m[32m        </label>[m
+[32m+[m[32m      </div>[m
+[32m+[m
+[32m+[m[32m      {/* Main value field */}[m
+[32m+[m[32m      {type === "select" ? ([m
+[32m+[m[32m        <select[m
+[32m+[m[32m          className={baseInputClasses}[m
+[32m+[m[32m          value={value}[m
+[32m+[m[32m          onChange={(e) => onValueChange(e.target.value)}[m
+[32m+[m[32m        >[m
+[32m+[m[32m          {options.map((opt) => ([m
+[32m+[m[32m            <option key={opt.value} value={o
