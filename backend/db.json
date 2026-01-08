@@ -5300,12 +5300,12 @@
       "id": "85beb47b-9d0f-4b5f-83ea-30fa6d4049d1",
       "registration": "MOE651X",
       "make": "BMW",
-      "model": "R nineT",
+      "model": "R 1250 GS Adventure",
       "trim": "TE",
       "vin": "",
       "totalMiles": null,
       "modelYear": "",
-      "status": "Valuation",
+      "status": "PX Submitted",
       "source": "PX",
       "acquisition": {
         "source": "PX",
@@ -5316,7 +5316,9 @@
         "linkedDeal": {
           "targetRegistration": "DE22 ABC",
           "financeRequired": true,
-          "additionalDeposit": "2000"
+          "additionalDeposit": "2000",
+          "createdDealId": "dba0e8fb-18f4-4aab-9de3-d412985e5a71",
+          "createdAt": "2025-12-11T20:52:31.092Z"
         }
       },
       "valuations": [
@@ -5364,7 +5366,7 @@
         }
       ],
       "createdAt": "2025-12-01T20:28:07.877Z",
-      "updatedAt": "2025-12-02T21:03:23.997Z",
+      "updatedAt": "2025-12-11T20:52:31.117Z",
       "appraisal": {
         "appraisedBy": "Jamie Fitzsimmons",
         "appraisedAt": "2025-12-01T20:29",
@@ -5378,6 +5380,11 @@
           "rearTyre": {
             "costRequired": false,
             "estimatedCost": ""
+          },
+          "frontTyre": {
+            "costRequired": false,
+            "estimatedCost": "",
+            "notes": ","
           }
         }
       },
@@ -5397,9 +5404,15 @@
       },
       "pxSpec": {
         "extras": {
-          "tallScreen": true
+          "tallScreen": false
         },
-        "serviceHistoryType": "Full"
+        "serviceHistoryType": "Partial",
+        "serviceHistoryCosts": {
+          "overallService": {
+            "costRequired": true,
+            "estimatedCost": ""
+          }
+        }
       },
       "photos": [
         {
@@ -5410,6 +5423,94 @@
           "tag": "Walkaround"
         }
       ]
+    },
+    {
+      "id": "76a4dd4d-c8f0-410d-a110-4e0710632fdf",
+      "registration": "DE12ABC",
+      "make": "BMW",
+      "model": "R 1300 GS",
+      "trim": "TE",
+      "vin": "6k12245",
+      "totalMiles": 1000,
+      "modelYear": "2024",
+      "status": "Valuation",
+      "source": "PX",
+      "acquisition": {
+        "source": "PX",
+        "buyInPrice": null,
+        "acquiredAt": null,
+        "linkedDealId": null,
+        "linkedPxValuationId": null
+      },
+      "valuations": [],
+      "events": [],
+      "createdAt": "2025-12-18T14:58:51.828Z",
+      "updatedAt": "2025-12-18T14:58:51.828Z"
+    },
+    {
+      "id": "dac4ad23-b214-4ade-b17d-dbb079790009",
+      "registration": "DE24ABC",
+      "make": "BMW",
+      "model": "R 1250 GS",
+      "trim": "",
+      "vin": "6k12245",
+      "totalMiles": 2000,
+      "modelYear": "2024",
+      "status": "Valuation",
+      "source": "PX",
+      "acquisition": {
+        "source": "PX",
+        "buyInPrice": null,
+        "acquiredAt": null,
+        "linkedDealId": null,
+        "linkedPxValuationId": null,
+        "linkedDeal": {
+          "targetRegistration": "FL74VCN",
+          "financeRequired": true,
+          "additionalDeposit": "1000"
+        }
+      },
+      "valuations": [],
+      "events": [
+        {
+          "id": "2234e6a9-f4fd-4c66-8a05-58917e9300db",
+          "type": "valuation",
+          "label": "HPI check completed",
+          "date": "2025-12-18T15:02:23.107Z",
+          "hpiStatus": "Clear",
+          "mileage": 2000
+        }
+      ],
+      "createdAt": "2025-12-18T15:01:41.872Z",
+      "updatedAt": "2025-12-18T15:04:26.224Z",
+      "appraisal": {
+        "appraisedBy": "Brandon Verdu",
+        "appraisedAt": "2025-12-18T15:01",
+        "commonIssuesChecks": {
+          "r1250gs-rear-suspension": {
+            "checked": true,
+            "costRequired": true,
+            "estimatedCost": "500"
+          }
+        }
+      },
+      "hpiReport": {
+        "status": "Clear",
+        "checkedAt": "2025-12-18T15:02:23.107Z",
+        "checkedBy": "Brandon Verdu"
+      },
+      "finance": {
+        "hasFinance": true,
+        "settlementAmount": "41000",
+        "provider": "Dave"
+      },
+      "features": {
+        "adaptive_headlight": true,
+        "alarm": true
+      },
+      "pxSpec": {
+        "serviceHistoryType": "Full"
+      }
     }
   ]
 }
